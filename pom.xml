@@ -7,11 +7,11 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>sk.oxygene.stash</groupId>
     <artifactId>stash-all-pull-requests</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
     <organization>
         <name>Lukáš Lalinský</name>
-        <url>https://oxygene.sk/</url>
+        <url>http://oxygene.sk/</url>
     </organization>
 
     <name>All Pull Requests</name>
