@@ -1,0 +1,55 @@
+<atlassian-plugin key="${project.groupId}.${project.artifactId}" name="${project.name}" plugins-version="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${project.version}</version>
+        <vendor name="${project.organization.name}" url="${project.organization.url}" />
+        <param name="plugin-icon">images/pluginIcon.png</param>
+        <param name="plugin-logo">images/pluginLogo.png</param>
+    </plugin-info>
+
+    <resource type="i18n" name="i18n" location="stash-all-pull-requests"/>
+
+    <servlet key="all-pull-requests-servlet" class="sk.oxygene.stash.allpullrequests.AllPullRequestsServlet">
+        <url-pattern>/all-pull-requests/*</url-pattern>
+    </servlet>
+
+    <rest key="rest-all-pull-requests" path="/all-pull-requests" version="1.0">
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <package>sk.oxygene.stash.allpullrequests.rest</package>
+    </rest>
+
+    <stash-resource key="server-side-soy">
+        <directory location="/soy/">
+            <include>/**/*.soy</include>
+        </directory>
+        <dependency>com.atlassian.stash.stash-web-plugin:global</dependency>
+        <dependency>com.atlassian.stash.stash-web-plugin:server-soy-templates</dependency>
+    </stash-resource>
+
+    <web-resource key="all-pull-requests-resources">
+        <resource type="download" name="all-pull-requests.js" location="/js/all-pull-requests.js"/>
+        <context>stash.page.project.overview</context>
+        <dependency>com.atlassian.stash.stash-web-plugin:global</dependency>
+    </web-resource>
+
+    <web-item key="project-pull-requests-tab" section="atl.project.nav">
+        <label>Pull requests</label>
+        <tooltip>View pull requests for all repositories in this project</tooltip>
+        <link linkId="project-pull-requests-button">/plugins/servlet/all-pull-requests/project/${project.key}</link>
+    </web-item>
+
+    <web-item key="all-pull-requests-tab" section="header.global.primary">
+        <label>Pull requests</label>
+        <tooltip>View pull requests in all repositories</tooltip>
+        <link linkId="all-pull-requests-button">/plugins/servlet/all-pull-requests/all</link>
+    </web-item>
+
+    <component-import key="i18nService" interface="com.atlassian.stash.i18n.I18nService"/>
+    <component-import key="projectService" interface="com.atlassian.stash.project.ProjectService"/>
+    <component-import key="repositoryService" interface="com.atlassian.stash.repository.RepositoryService"/>
+    <component-import key="permissionValidationService" interface="com.atlassian.stash.user.PermissionValidationService"/>
+    <component-import key="soyTemplateRenderer" interface="com.atlassian.soy.renderer.SoyTemplateRenderer"/>
+    <component-import key="applicationPropertiesService" interface="com.atlassian.stash.server.ApplicationPropertiesService"/>
+
+</atlassian-plugin>

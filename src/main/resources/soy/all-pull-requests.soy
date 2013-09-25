@@ -1,0 +1,85 @@
+{namespace plugin.page}
+
+/**
+ * @param project
+ * @param pullRequestPage
+ * @param activeTab
+ */
+{template .projectPullRequests}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="decorator" content="stash.project.general">
+        <meta name="projectKey" content="{$project.key}">
+        <meta name="activeTab" content="project-pull-requests-tab">
+    </head>
+    <body>
+        {call .pullRequests}
+            {param pullRequestPage: $pullRequestPage /}
+            {param activeTab: $activeTab /}
+        {/call}
+    </body>
+</html>
+{/template}
+
+/**
+ * @param pullRequestPage
+ * @param activeTab
+ */
+{template .allPullRequests}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="decorator" content="atl.general">
+    </head>
+    <body>
+        {call widget.aui.pageHeader}
+            {param content}
+                <h2>All Pull Requests</h2>
+            {/param}
+        {/call}
+        {call widget.aui.panel}
+            {param content}
+                {call aui.page.pagePanelContent}
+                    {param content}
+                        {call .pullRequests}
+                            {param pullRequestPage: $pullRequestPage /}
+                            {param activeTab: $activeTab /}
+                        {/call}
+                    {/param}
+                {/call}
+            {/param}
+         {/call}
+    </body>
+</html>
+{/template}
+
+/**
+ * @param activeTab
+ * @param pullRequestPage
+ */
+{template .pullRequests}
+    {call widget.aui.tabChrome data="all"}
+        {param tabItemsContent}
+            {call widget.aui.tabMenuItem}
+                {param url: '?state=open' /}
+                {param text: 'Open' /}
+                {param isActive: $activeTab == 'open' ? true : false /}
+            {/call}
+            {call widget.aui.tabMenuItem}
+                {param url: '?state=merged' /}
+                {param text: 'Merged' /}
+                {param isActive: $activeTab == 'merged' ? true : false /}
+            {/call}
+            {call widget.aui.tabMenuItem}
+                {param url: '?state=declined' /}
+                {param text: 'Declined' /}
+                {param isActive: $activeTab == 'declined' ? true : false /}
+            {/call}
+        {/param}
+    {/call}
+    {call stash.feature.pullRequest.pullRequestTable}
+        {param pullRequestPage: $pullRequestPage /}
+        {param scope: 'global' /}
+    {/call}
+{/template}
