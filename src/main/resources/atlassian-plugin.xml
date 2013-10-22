@@ -40,6 +40,7 @@
     </web-item>
 
     <web-item key="all-pull-requests-tab" section="header.global.primary">
+        <condition class="com.atlassian.stash.web.conditions.IsLoggedInCondition"/>
         <label>Pull requests</label>
         <tooltip>View pull requests in all repositories</tooltip>
         <link linkId="all-pull-requests-button">/plugins/servlet/all-pull-requests/all</link>
