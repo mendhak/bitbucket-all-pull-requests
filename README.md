@@ -1,7 +1,9 @@
 All Pull Requests Add-on for Atlassian Stash
 ============================================
 
-https://marketplace.atlassian.com/plugins/sk.oxygene.stash.stash-all-pull-requests
+<a href="https://marketplace.atlassian.com/plugins/sk.oxygene.stash.stash-all-pull-requests">
+  <img src="https://oxygene.sk/uploads/allpullrequests-small.png" />
+</a>
 
 Development
 -----------
