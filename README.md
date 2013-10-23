@@ -1,6 +1,12 @@
-You have successfully created an Atlassian Plugin!
+All Pull Requests Add-on for Atlassian Stash
+============================================
 
-Here are the SDK commands you'll use immediately:
+https://marketplace.atlassian.com/plugins/sk.oxygene.stash.stash-all-pull-requests
+
+Development
+-----------
+
+Useful Atlassian SDK commands:
 
 * atlas-run   -- installs this plugin into the product and starts it on localhost
 * atlas-debug -- same as atlas-run, but allows a debugger to attach at port 5005
