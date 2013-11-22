@@ -27,10 +27,23 @@
         <dependency>com.atlassian.stash.stash-web-plugin:server-soy-templates</dependency>
     </stash-resource>
 
-    <web-resource key="all-pull-requests-resources">
+    <web-resource key="project-pull-requests-overview-resources">
         <resource type="download" name="all-pull-requests.js" location="/js/all-pull-requests.js"/>
         <context>stash.page.project.overview</context>
         <dependency>com.atlassian.stash.stash-web-plugin:global</dependency>
+    </web-resource>
+
+    <web-resource key="project-pull-requests-resources">
+        <resource type="download" name="all-pull-requests.js" location="/js/all-pull-requests.js"/>
+        <context>${project.groupId}.${project.artifactId}.project</context>
+        <dependency>com.atlassian.stash.stash-web-plugin:global</dependency>
+        <dependency>com.atlassian.stash.stash-web-plugin:pull-request-table</dependency>
+    </web-resource>
+
+    <web-resource key="all-pull-requests-resources">
+        <context>${project.groupId}.${project.artifactId}.all</context>
+        <dependency>com.atlassian.stash.stash-web-plugin:global</dependency>
+        <dependency>com.atlassian.stash.stash-web-plugin:pull-request-table</dependency>
     </web-resource>
 
     <web-item key="project-pull-requests-tab" section="atl.project.nav">
@@ -52,5 +65,6 @@
     <component-import key="permissionValidationService" interface="com.atlassian.stash.user.PermissionValidationService"/>
     <component-import key="soyTemplateRenderer" interface="com.atlassian.soy.renderer.SoyTemplateRenderer"/>
     <component-import key="applicationPropertiesService" interface="com.atlassian.stash.server.ApplicationPropertiesService"/>
+    <component-import key="webResourceManager" interface="com.atlassian.plugin.webresource.WebResourceManager"/>
 
 </atlassian-plugin>

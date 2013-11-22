@@ -1,5 +1,6 @@
 package sk.oxygene.stash.allpullrequests;
 
+import com.atlassian.plugin.webresource.WebResourceManager;
 import com.atlassian.soy.renderer.SoyException;
 import com.atlassian.soy.renderer.SoyTemplateRenderer;
 import com.atlassian.stash.project.Project;
@@ -32,13 +33,16 @@ public class AllPullRequestsServlet extends HttpServlet {
     private final ProjectService projectService;
     private final PullRequestService pullRequestService;
     private final SoyTemplateRenderer soyTemplateRenderer;
+    private final WebResourceManager webResourceManager;
 
     public AllPullRequestsServlet(ProjectService projectService,
                                   PullRequestService pullRequestService,
-                                  SoyTemplateRenderer soyTemplateRenderer) {
+                                  SoyTemplateRenderer soyTemplateRenderer,
+                                  WebResourceManager webResourceManager) {
         this.projectService = projectService;
         this.pullRequestService = pullRequestService;
         this.soyTemplateRenderer = soyTemplateRenderer;
+        this.webResourceManager = webResourceManager;
     }
 
     @Override
@@ -77,9 +81,11 @@ public class AllPullRequestsServlet extends HttpServlet {
 
         String template;
         if (project == null) {
+            webResourceManager.requireResourcesForContext("sk.oxygene.stash.stash-all-pull-requests.all");
             template = "plugin.page.allPullRequests";
         }
         else {
+            webResourceManager.requireResourcesForContext("sk.oxygene.stash.stash-all-pull-requests.project");
             context.put("project", project);
             template = "plugin.page.projectPullRequests";
         }

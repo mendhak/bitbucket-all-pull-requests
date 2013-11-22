@@ -60,6 +60,7 @@
  */
 {template .pullRequests}
     {call widget.aui.tabChrome data="all"}
+        {param isDisabled: true /}
         {param tabItemsContent}
             {call widget.aui.tabMenuItem}
                 {param url: '?state=open' /}

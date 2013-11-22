@@ -1,3 +1,9 @@
+Version 1.2 -- 2013-11-21
+=========================
+
+ - Updated Atlassian SDK version.
+ - Compatibility with Stash 2.9.x.
+
 Version 1.1 -- 2013-10-23
 =========================
 
