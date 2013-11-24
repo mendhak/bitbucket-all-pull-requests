@@ -7,10 +7,11 @@
     <version>1.2</version>
     <organization>
         <name>Lukáš Lalinský</name>
-        <url>http://oxygene.sk/</url>
+        <url>https://oxygene.sk/</url>
     </organization>
     <name>All Pull Requests</name>
     <description>Plugin for Atlassian Stash to display all pull requests on a single page.</description>
+    <url>https://marketplace.atlassian.com/1211626</url>
     <packaging>atlassian-plugin</packaging>
     <dependencyManagement>
         <dependencies>
