@@ -3,6 +3,7 @@
         <description>${project.description}</description>
         <version>${project.version}</version>
         <vendor name="${project.organization.name}" url="${project.organization.url}" />
+        <logo image="images/logo.png"/>
     </plugin-info>
 
     <resource type="i18n" name="i18n" location="stash-all-pull-requests"/>
