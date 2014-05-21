@@ -9,6 +9,7 @@ import com.atlassian.stash.pull.PullRequest;
 import com.atlassian.stash.pull.PullRequestOrder;
 import com.atlassian.stash.pull.PullRequestService;
 import com.atlassian.stash.pull.PullRequestState;
+import com.atlassian.stash.pull.PullRequestSearchRequest;
 import com.atlassian.stash.util.Page;
 import com.atlassian.stash.util.PageImpl;
 import com.atlassian.stash.util.PageRequest;
@@ -107,11 +108,14 @@ public class AllPullRequestsServlet extends HttpServlet {
     }
 
     protected Page<PullRequest> findPullRequests(Project project, PullRequestState state, PageRequest pageRequest) {
+        PullRequestSearchRequest searchRequest = (new PullRequestSearchRequest.Builder()).
+                state(state).order(PullRequestOrder.NEWEST).build();
+
         if (project == null) {
-            return pullRequestService.find(state, PullRequestOrder.NEWEST, pageRequest);
+            return pullRequestService.search(searchRequest, pageRequest);
         }
 
-        // unfortunately, we can't use any PullRequestService method :/
+        // unfortunately, we can't use any PullRequestSearchRequest filter for this :/
 
         List<PullRequest> values = Lists.newLinkedList();
         boolean isLastPage = false;
@@ -119,7 +123,7 @@ public class AllPullRequestsServlet extends HttpServlet {
         int offset = 0;
         PageRequest tmpPageRequest = new PageRequestImpl(0, 10);
         while (tmpPageRequest != null && values.size() < pageRequest.getLimit() && !isLastPage) {
-            Page<PullRequest> pullRequestPage = pullRequestService.find(state, PullRequestOrder.NEWEST, tmpPageRequest);
+            Page<PullRequest> pullRequestPage = pullRequestService.search(searchRequest, tmpPageRequest);
             if (pullRequestPage.getIsLastPage()) {
                 isLastPage = true;
             }
