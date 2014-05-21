@@ -78,6 +78,13 @@
                 {param isActive: $activeTab == 'declined' ? true : false /}
             {/call}
         {/param}
+        {param tabPanesContent}
+            {call widget.aui.tabPane}
+                {param isActive: true /}
+                {param extraClasses: 'pull-request-content' /}
+                {param content}{/param}
+            {/call}
+        {/param}
     {/call}
     {call stash.feature.pullRequest.pullRequestTable}
         {param pullRequestPage: $pullRequestPage /}

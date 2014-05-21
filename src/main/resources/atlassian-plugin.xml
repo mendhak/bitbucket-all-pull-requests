@@ -49,6 +49,7 @@
         <label>Pull requests</label>
         <tooltip>View pull requests for all repositories in this project</tooltip>
         <link linkId="project-pull-requests-button">/plugins/servlet/all-pull-requests/project/${project.key}</link>
+        <param name="stashIconClass">aui-icon icon-pull-requests</param>
     </web-item>
 
     <web-item key="all-pull-requests-tab" section="header.global.primary">

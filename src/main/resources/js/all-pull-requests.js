@@ -6,7 +6,7 @@ define('plugin/all-pull-requests', ['jquery', 'underscore', 'aui', 'model/page-s
             },
             success: function (data) {
                 if (data.count) {
-                    $(buttonSelector).append(' ').append(aui.badges.badge({'text': data.count}));
+                    $(buttonSelector).find('.aui-nav-item-label').before(aui.badges.badge({'text': data.count}));
                 }
             }
         });
