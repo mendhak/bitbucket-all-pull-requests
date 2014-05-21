@@ -1,3 +1,8 @@
+Version 1.3.1 -- 2014-05-21
+===========================
+
+ - Fixes for full compatibility with Stash 3.0.x.
+
 Version 1.3 -- 2014-05-21
 =========================
 
