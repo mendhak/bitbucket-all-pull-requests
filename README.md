@@ -1,6 +1,8 @@
 All Pull Requests Add-on for Atlassian Stash
 ============================================
 
+*ABANDONED -- I no longer use Stash, so this plug-in isn't actively developed anymore. If you would like to take it over, please let me know.*
+
 [![All Pull Requests](https://oxygene.sk/uploads/allpullrequests-small.png)](https://marketplace.atlassian.com/plugins/sk.oxygene.stash.stash-all-pull-requests)
 
 Development
