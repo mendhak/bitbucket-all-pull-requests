@@ -4,6 +4,7 @@
  * @param project
  * @param pullRequestPage
  * @param activeTab
+ * @param currentUser
  */
 {template .projectPullRequests}
 <!DOCTYPE html>
@@ -17,6 +18,7 @@
         {call .pullRequests}
             {param pullRequestPage: $pullRequestPage /}
             {param activeTab: $activeTab /}
+            {param currentUser: $currentUser /}
         {/call}
     </body>
 </html>
@@ -25,6 +27,7 @@
 /**
  * @param pullRequestPage
  * @param activeTab
+ * @param currentUser
  */
 {template .allPullRequests}
 <!DOCTYPE html>
@@ -44,6 +47,7 @@
                     {param content}
                         {call .pullRequests}
                             {param pullRequestPage: $pullRequestPage /}
+                            {param currentUser: $currentUser /}
                             {param activeTab: $activeTab /}
                         {/call}
                     {/param}
@@ -57,6 +61,7 @@
 /**
  * @param activeTab
  * @param pullRequestPage
+ * @param currentUser
  */
 {template .pullRequests}
     {call widget.aui.tabChrome data="all"}
@@ -88,6 +93,7 @@
     {/call}
     {call stash.feature.pullRequest.pullRequestTable}
         {param pullRequestPage: $pullRequestPage /}
+        {param currentUser: $currentUser /}
         {param scope: 'global' /}
     {/call}
 {/template}

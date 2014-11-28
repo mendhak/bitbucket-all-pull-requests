@@ -14,6 +14,7 @@ import com.atlassian.stash.util.Page;
 import com.atlassian.stash.util.PageImpl;
 import com.atlassian.stash.util.PageRequest;
 import com.atlassian.stash.util.PageRequestImpl;
+import com.atlassian.stash.user.StashAuthenticationContext;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.slf4j.Logger;
@@ -35,15 +36,18 @@ public class AllPullRequestsServlet extends HttpServlet {
     private final PullRequestService pullRequestService;
     private final SoyTemplateRenderer soyTemplateRenderer;
     private final WebResourceManager webResourceManager;
+    private final StashAuthenticationContext stashAuthenticationContext;
 
     public AllPullRequestsServlet(ProjectService projectService,
                                   PullRequestService pullRequestService,
                                   SoyTemplateRenderer soyTemplateRenderer,
-                                  WebResourceManager webResourceManager) {
+                                  WebResourceManager webResourceManager,
+                                  StashAuthenticationContext stashAuthenticationContext) {
         this.projectService = projectService;
         this.pullRequestService = pullRequestService;
         this.soyTemplateRenderer = soyTemplateRenderer;
         this.webResourceManager = webResourceManager;
+        this.stashAuthenticationContext = stashAuthenticationContext;
     }
 
     @Override
@@ -79,6 +83,7 @@ public class AllPullRequestsServlet extends HttpServlet {
         Map<String, Object> context = Maps.newHashMap();
         context.put("pullRequestPage", pullRequestPage);
         context.put("activeTab", activeTab);
+        context.put("currentUser", stashAuthenticationContext.getCurrentUser());
 
         String template;
         if (project == null) {
