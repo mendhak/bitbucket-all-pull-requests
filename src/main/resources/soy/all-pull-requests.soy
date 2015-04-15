@@ -91,9 +91,192 @@
             {/call}
         {/param}
     {/call}
-    {call stash.feature.pullRequest.pullRequestTable}
+    {call .pullRequestTable2}
         {param pullRequestPage: $pullRequestPage /}
         {param currentUser: $currentUser /}
         {param scope: 'global' /}
     {/call}
+{/template}
+
+
+/**
+ * @param pullRequestPage the page of pull requests to render in the table
+ * @param currentUser the current user
+ * @param? id table for the id, defaults to 'pull-requests-table'
+ * @param? extraClasses the extra classes for the table
+ * @param? scope options: repository (show id) [default]; global (repo)
+ * @param? alwaysDisplayRepositories When true, ref lozenges will always include repository information.
+                                     When false, the source lozenge will show repository information if
+                                     it doesn't match the target repository.
+ * @param? showStatus toggles the rendering of the status column, the status column will contain OPEN, MERGED or DECLINED lozenges
+ * @param? hideAuthorName toggles the rendering of the author name in addition to their avatar (defaults to false)
+ */
+{template .pullRequestTable2}
+    {call stash.widget.pagedTable}
+        {param id: $id ? $id : 'pull-requests-table' /}
+        {param page: $pullRequestPage /}
+        {param extraClasses: 'pull-requests-table' + ($extraClasses ? ' ' + $extraClasses : '') /}
+        {param theadContent}
+            <tr>
+                {if $scope == 'global'}
+                <th class="repository">{getText('stash.web.pullrequest.list.col.repository')}</th>
+                {else}
+                <th class="id">{getText('stash.web.pullrequest.list.col.id')}</th>
+                {/if}
+                <th class="title">{getText('stash.web.pullrequest.list.col.title')}</th>
+                {if $showStatus}
+                <th class="status">{getText('stash.web.pullrequest.list.col.status')}</th>
+                {/if}
+                <th class="author">{getText('stash.web.pullrequest.list.col.author')}</th>
+                <th class="reviewers">{getText('stash.web.pullrequest.list.col.reviewers')}</th>
+                <th class="comment-count"></th>
+				{foreach $webSection in getWebSections('stash.pull-request.table-column')}
+					<th class="{$webSection.key}" title="{$webSection.labelText}">{$webSection.labelText}</th>
+				{/foreach}
+                <th class="source">{getText('stash.web.pullrequest.list.col.source')}</th>
+                <th class="destination">{getText('stash.web.pullrequest.list.col.destination')}</th>
+                <th class="updated">{getText('stash.web.pullrequest.list.col.update')}</th>
+                <th class="mergeStatusHeader">{getText('pullRequest.mergeStatus')}</th>
+            </tr>
+        {/param}
+        {param content}
+            {if $pullRequestPage}
+                {foreach $pullRequest in $pullRequestPage.values}
+                    {call .pullRequestRow2}
+                        {param pullRequest: $pullRequest /}
+                        {param scope: $scope /}
+                        {param currentUser: $currentUser /}
+                        {param alwaysDisplayRepositories: $alwaysDisplayRepositories /}
+                        {param showStatus: $showStatus /}
+                        {param hideAuthorName: $hideAuthorName /}
+                    {/call}
+                {/foreach}
+            {/if}
+        {/param}
+    {/call}
+{/template}
+
+/**
+ * @param pullRequest the pull request to render for the row
+ * @param? currentUser the current user or null if anonymous
+ * @param? scope options: repository (show id) [default]; global (repo)
+ * @param? alwaysDisplayRepositories When true, ref lozenges will always include repository information.
+                                     When false, the source lozenge will show repository information if
+                                     it doesn't match the target repository.
+ * @param? showStatus toggles the rendering of the status column, the status column will contain OPEN, MERGED or DECLINED lozenges
+ * @param? hideAuthorName toggles the rendering of the author name in addition to their avatar (defaults to true)
+ */
+{template .pullRequestRow2}
+     <tr data-pullrequestid="{$pullRequest.id}" class="pull-request-row
+        {if $currentUser}
+            {if $pullRequest.author.user.name == $currentUser.name}
+                {sp}current-user{if $pullRequest.state != 'OPEN'}{sp}current-user-actioned{/if}
+            {else}
+                {foreach $reviewer in $pullRequest.reviewers}
+                    {if $reviewer.user.name == $currentUser.name}
+                        {sp}current-user{if $reviewer.approved}{sp}current-user-actioned{/if}
+                    {/if}
+                {/foreach}
+            {/if}
+        {/if}
+        ">
+
+        {if $scope == 'global'}
+        <td class="repository">
+            {call stash.feature.project.avatar}
+                {param size: 'small' /}
+                {param project: $pullRequest.toRef.repository.project /}
+            {/call}
+            <span title="{$pullRequest.toRef.repository.name}">{$pullRequest.toRef.repository.slug}</span>
+        </td>
+        {else}
+        <td class="id">
+            <a title="{{getText('stash.web.pullrequest.link.alt', $pullRequest.id, $pullRequest.toRef.repository.slug)}}"
+                href="{nav_pull($pullRequest.toRef.repository.project.key, $pullRequest.toRef.repository.slug, $pullRequest.id)}">#{$pullRequest.id}</a>
+        </td>
+        {/if}
+        <td class="title">
+            <a title="{$pullRequest.title}"
+                href="{nav_pull($pullRequest.toRef.repository.project.key, $pullRequest.toRef.repository.slug, $pullRequest.id)}">{$pullRequest.title|truncate:100|escapeHtml}</a>
+        </td>
+        {if $showStatus}
+         <td class="status">
+            {call stash.widget.lozenge.pullRequestState}
+                {param state: $pullRequest.state /}
+                {param extraClasses: ' aui-lozenge-subtle' /}
+            {/call}
+         </td>
+        {/if}
+        <td class="author">
+            {if $hideAuthorName}
+                {call stash.widget.avatar}
+                    {param size: 'small' /}
+                    {param person: $pullRequest.author.user /}
+                    {param tooltip: $pullRequest.author.user.displayName /}
+                {/call}
+            {else}
+                {call stash.widget.avatarWithName}
+                    {param size: 'small' /}
+                    {param person: $pullRequest.author.user /}
+                    {param link: true /}
+                    {param linkExtraClasses: 'secondary-link' /}
+                {/call}
+            {/if}
+        </td>
+        <td class="reviewers">
+            {call stash.widget.avatarList.participantList}
+                {param participants: $pullRequest.reviewers /}
+                {param menuId: 'reviewers-' + $pullRequest.id /}
+                {param menuClass: 'pull-request-table-reviewers' /}
+                {param maxOpen: 5 /}
+                {param avatarSize: 'small' /}
+            {/call}
+        </td>
+        <td class="comment-count">
+            // Replace with properties in 4.0
+            {if $pullRequest.attributes and $pullRequest.attributes.commentCount}
+                // looped because $changeset.attributes has sets of values, should only ever loop once
+                {foreach $count in $pullRequest.attributes.commentCount}
+                    {call stash.feature.commentCount}
+                        {param count: $count /}
+                    {/call}
+                {/foreach}
+            {/if}
+            //{if $pullRequest.properties and $pullRequest.properties.commentCount}
+            //    {call stash.feature.commentCount}
+            //        {param count: $pullRequest.properties.commentCount /}
+            //    {/call}
+
+        </td>
+        {foreach $webSection in getWebSections('stash.pull-request.table-column')}
+        	{call .pullRequestRowExtras}
+        		{param webSection: $webSection /}
+        		{param pullRequest: $pullRequest /}
+        	{/call}
+        {/foreach}
+        <td class="source">
+            {call stash.feature.repository.refLozenge}
+                {param repository: $alwaysDisplayRepositories or $pullRequest.fromRef.repository.id != $pullRequest.toRef.repository.id ?
+                    $pullRequest.fromRef.repository :
+                    null /}
+                {param ref: $pullRequest.fromRef /}
+            {/call}
+        </td>
+        <td class="destination">
+            {call stash.feature.repository.refLozenge}
+                {param repository: $alwaysDisplayRepositories ?
+                    $pullRequest.toRef.repository :
+                    null /}
+                {param ref: $pullRequest.toRef /}
+            {/call}
+        </td>
+        <td class="updated">
+            {call stash.widget.date.shortAge}
+                {param date: $pullRequest.updatedDate /}
+            {/call}
+        </td>
+        <td class="{$pullRequest.mergeable ? 'mergeStatusOk' : 'mergeStatusNotOk'}">
+        	{$pullRequest.mergeable ? getText('pullRequest.mergeStatusOk') : getText('pullRequest.mergeStatusNotOk')}
+        </td>
+    </tr>
 {/template}

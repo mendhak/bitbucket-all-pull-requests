@@ -1,0 +1,14 @@
+.mergeStatusHeader {
+	font-weight: bold;
+	color: black;
+}
+
+.mergeStatusOk {
+	font-weight: bold;
+	color: green;
+}
+
+.mergeStatusNotOk {
+	font-weight: bold;
+	color: red;
+}

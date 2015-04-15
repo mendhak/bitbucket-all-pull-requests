@@ -17,6 +17,7 @@ import com.atlassian.stash.util.PageRequestImpl;
 import com.atlassian.stash.user.StashAuthenticationContext;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,9 +25,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.SortedMap;
 
 public class AllPullRequestsServlet extends HttpServlet {
 
@@ -78,7 +82,7 @@ public class AllPullRequestsServlet extends HttpServlet {
         }
 
         PageRequest pageRequest = new PageRequestImpl(0, 100);
-        Page<PullRequest> pullRequestPage = findPullRequests(project, state, pageRequest);
+        Page<PullRequestExtended> pullRequestPage = findPullRequests(project, state, pageRequest);
 
         Map<String, Object> context = Maps.newHashMap();
         context.put("pullRequestPage", pullRequestPage);
@@ -112,17 +116,24 @@ public class AllPullRequestsServlet extends HttpServlet {
         }
     }
 
-    protected Page<PullRequest> findPullRequests(Project project, PullRequestState state, PageRequest pageRequest) {
+    protected Page<PullRequestExtended> findPullRequests(Project project, PullRequestState state, PageRequest pageRequest) {
         PullRequestSearchRequest searchRequest = (new PullRequestSearchRequest.Builder()).
                 state(state).order(PullRequestOrder.NEWEST).build();
 
         if (project == null) {
-            return pullRequestService.search(searchRequest, pageRequest);
+            Page<PullRequest> page = pullRequestService.search(searchRequest, pageRequest);
+            SortedMap<Integer, PullRequest> pageRequestsMap = page.getOrdinalIndexedValues();
+            List<PullRequestExtended> values = Lists.newLinkedList();
+            for(Entry<Integer, PullRequest> entry: pageRequestsMap.entrySet()) {
+                PullRequest pullRequest = entry.getValue();
+                values.add(new PullRequestExtended(pullRequest, pullRequestService.canMerge(pullRequest.getToRef().getRepository().getId(), pullRequest.getId()).canMerge()));               
+            }
+            return new PageImpl<PullRequestExtended>(pageRequest, values, page.getIsLastPage());
         }
 
         // unfortunately, we can't use any PullRequestSearchRequest filter for this :/
 
-        List<PullRequest> values = Lists.newLinkedList();
+        List<PullRequestExtended> values = Lists.newLinkedList();
         boolean isLastPage = false;
 
         int offset = 0;
@@ -135,7 +146,7 @@ public class AllPullRequestsServlet extends HttpServlet {
             for (PullRequest pullRequest : pullRequestPage.getValues()) {
                 if (pullRequest.getToRef().getRepository().getProject().getId().equals(project.getId())) {
                     if (offset >= pageRequest.getStart() && values.size() < pageRequest.getLimit()) {
-                        values.add(pullRequest);
+                        values.add(new PullRequestExtended(pullRequest, pullRequestService.canMerge(pullRequest.getToRef().getRepository().getId(), pullRequest.getId()).canMerge()));
                     }
                     offset += 1;
                 }
@@ -143,7 +154,7 @@ public class AllPullRequestsServlet extends HttpServlet {
             tmpPageRequest = pullRequestPage.getNextPageRequest();
         }
 
-        return new PageImpl<PullRequest>(pageRequest, values, isLastPage);
+        return new PageImpl<PullRequestExtended>(pageRequest, values, isLastPage);
     }
 
 }
