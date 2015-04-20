@@ -1,0 +1,8 @@
+{namespace plugin.pullRequest.tableExtraData}
+
+/**
+ * @param pullRequest
+ **/
+{template .additionalColumns}
+	<div class="pullRequestStatusBox {$pullRequest.mergeable ? 'mergeStatusOk' : 'mergeStatusNotOk'}"></div>
+{/template}

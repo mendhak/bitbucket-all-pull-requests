@@ -61,6 +61,21 @@
         <link linkId="all-pull-requests-button">/plugins/servlet/all-pull-requests/all</link>
     </web-item>
 
+	<web-section key="additionalColumnsSecion" name="Additional Columns" location="stash.pull-request.table-column" weight="110">
+        <label key="additionalColumnHeader">Mergeability</label>
+    </web-section>
+
+	<web-panel key="additionalColumnsPanel" location="stash.pull-request.table-column/additionalColumnsSecion">
+    	<resource name="view" type="soy" location="${project.groupId}.${project.artifactId}:additional-column-template/plugin.pullRequest.tableExtraData.additionalColumns"/>
+        <dependency>plugin.pullRequest.tableExtraData:additional-column-template</dependency>
+    </web-panel>
+    
+    <stash-resource key="additional-column-template" name="Additional Column templates">
+        <resource type="download" name="additional-column.soy" location="/soy/additional-column.soy" />
+        <dependency>com.atlassian.stash.stash-web-plugin:global</dependency>
+        <resource type="download" name="images/" location="/images"/>
+    </stash-resource>
+
     <component-import key="i18nService" interface="com.atlassian.stash.i18n.I18nService"/>
     <component-import key="projectService" interface="com.atlassian.stash.project.ProjectService"/>
     <component-import key="repositoryService" interface="com.atlassian.stash.repository.RepositoryService"/>

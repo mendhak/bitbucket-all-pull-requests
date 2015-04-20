@@ -6,9 +6,21 @@
 .mergeStatusOk {
 	font-weight: bold;
 	color: green;
+	background-image: url("images/green_tick.png");
 }
 
 .mergeStatusNotOk {
 	font-weight: bold;
 	color: red;
+	background-image: url("images/red_x.png");
+}
+
+.pullRequestMergeStatusImage {
+	width: 25px;
+}
+
+.pullRequestStatusBox {
+	background-size: 20px;
+	min-height:20px;
+	width: 20px;
 }
