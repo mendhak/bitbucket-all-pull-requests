@@ -23,7 +23,7 @@ import com.atlassian.stash.watcher.Watcher;
  * @author jwagan
  *
  */
-public class PullRequestExtended implements PullRequest{
+public class PullRequestExtended {
     
     private PullRequest pullRequest;
     
@@ -37,7 +37,6 @@ public class PullRequestExtended implements PullRequest{
     /* (non-Javadoc)
      * @see com.atlassian.stash.property.PropertySupport#getProperties()
      */
-    @Override
     public PropertyMap getProperties() {
         return pullRequest.getProperties();
     }
@@ -45,7 +44,6 @@ public class PullRequestExtended implements PullRequest{
     /* (non-Javadoc)
      * @see com.atlassian.stash.content.AttributeSupport#getAttributeValues(java.lang.String)
      */
-    @Override
     public Set<String> getAttributeValues(String arg0) {
         return pullRequest.getAttributeValues(arg0);
     }
@@ -53,7 +51,6 @@ public class PullRequestExtended implements PullRequest{
     /* (non-Javadoc)
      * @see com.atlassian.stash.content.AttributeSupport#getAttributes()
      */
-    @Override
     public AttributeMap getAttributes() {
         return pullRequest.getAttributes();
     }
@@ -61,7 +58,6 @@ public class PullRequestExtended implements PullRequest{
     /* (non-Javadoc)
      * @see com.atlassian.stash.comment.Commentable#accept(com.atlassian.stash.comment.CommentableVisitor)
      */
-    @Override
     public <T> T accept(CommentableVisitor<T> arg0) {
         return pullRequest.accept(arg0);
     }
@@ -69,7 +65,6 @@ public class PullRequestExtended implements PullRequest{
     /* (non-Javadoc)
      * @see com.atlassian.stash.watcher.Watchable#accept(com.atlassian.stash.watcher.WatchableVisitor)
      */
-    @Override
     public <T> T accept(WatchableVisitor<T> arg0) {
         return pullRequest.accept(arg0);
     }
@@ -77,7 +72,6 @@ public class PullRequestExtended implements PullRequest{
     /* (non-Javadoc)
      * @see com.atlassian.stash.watcher.Watchable#getWatchers()
      */
-    @Override
     public Set<? extends Watcher> getWatchers() {
         return pullRequest.getWatchers();
     }
@@ -85,7 +79,6 @@ public class PullRequestExtended implements PullRequest{
     /* (non-Javadoc)
      * @see com.atlassian.stash.pull.PullRequest#getAuthor()
      */
-    @Override
     public PullRequestParticipant getAuthor() {
         return pullRequest.getAuthor();
     }
@@ -93,7 +86,6 @@ public class PullRequestExtended implements PullRequest{
     /* (non-Javadoc)
      * @see com.atlassian.stash.pull.PullRequest#getCreatedDate()
      */
-    @Override
     public Date getCreatedDate() {
         return pullRequest.getCreatedDate();
     }
@@ -101,7 +93,6 @@ public class PullRequestExtended implements PullRequest{
     /* (non-Javadoc)
      * @see com.atlassian.stash.pull.PullRequest#getDescription()
      */
-    @Override
     public String getDescription() {
         return pullRequest.getDescription();
     }
@@ -109,7 +100,6 @@ public class PullRequestExtended implements PullRequest{
     /* (non-Javadoc)
      * @see com.atlassian.stash.pull.PullRequest#getFromRef()
      */
-    @Override
     public PullRequestRef getFromRef() {
         return pullRequest.getFromRef();
     }
@@ -117,7 +107,6 @@ public class PullRequestExtended implements PullRequest{
     /* (non-Javadoc)
      * @see com.atlassian.stash.pull.PullRequest#getId()
      */
-    @Override
     public Long getId() {
         return pullRequest.getId();
     }
@@ -125,7 +114,6 @@ public class PullRequestExtended implements PullRequest{
     /* (non-Javadoc)
      * @see com.atlassian.stash.pull.PullRequest#getParticipants()
      */
-    @Override
     public Set<PullRequestParticipant> getParticipants() {
         return pullRequest.getParticipants();
     }
@@ -133,7 +121,6 @@ public class PullRequestExtended implements PullRequest{
     /* (non-Javadoc)
      * @see com.atlassian.stash.pull.PullRequest#getReviewers()
      */
-    @Override
     public Set<PullRequestParticipant> getReviewers() {
         return pullRequest.getReviewers();
     }
@@ -141,7 +128,6 @@ public class PullRequestExtended implements PullRequest{
     /* (non-Javadoc)
      * @see com.atlassian.stash.pull.PullRequest#getState()
      */
-    @Override
     public PullRequestState getState() {
         return pullRequest.getState();
     }
@@ -149,7 +135,6 @@ public class PullRequestExtended implements PullRequest{
     /* (non-Javadoc)
      * @see com.atlassian.stash.pull.PullRequest#getTitle()
      */
-    @Override
     public String getTitle() {
         return pullRequest.getTitle();
     }
@@ -157,7 +142,6 @@ public class PullRequestExtended implements PullRequest{
     /* (non-Javadoc)
      * @see com.atlassian.stash.pull.PullRequest#getToRef()
      */
-    @Override
     public PullRequestRef getToRef() {
         return pullRequest.getToRef();
     }
@@ -165,7 +149,6 @@ public class PullRequestExtended implements PullRequest{
     /* (non-Javadoc)
      * @see com.atlassian.stash.pull.PullRequest#getUpdatedDate()
      */
-    @Override
     public Date getUpdatedDate() {
         return pullRequest.getUpdatedDate();
     }
@@ -173,7 +156,6 @@ public class PullRequestExtended implements PullRequest{
     /* (non-Javadoc)
      * @see com.atlassian.stash.pull.PullRequest#getVersion()
      */
-    @Override
     public int getVersion() {
         return pullRequest.getVersion();
     }
@@ -181,7 +163,6 @@ public class PullRequestExtended implements PullRequest{
     /* (non-Javadoc)
      * @see com.atlassian.stash.pull.PullRequest#isClosed()
      */
-    @Override
     public boolean isClosed() {
         return pullRequest.isClosed();
     }
@@ -189,7 +170,6 @@ public class PullRequestExtended implements PullRequest{
     /* (non-Javadoc)
      * @see com.atlassian.stash.pull.PullRequest#isCrossRepository()
      */
-    @Override
     public boolean isCrossRepository() {
         return pullRequest.isCrossRepository();
     }
@@ -197,7 +177,6 @@ public class PullRequestExtended implements PullRequest{
     /* (non-Javadoc)
      * @see com.atlassian.stash.pull.PullRequest#isLocked()
      */
-    @Override
     public boolean isLocked() {
         return pullRequest.isLocked();
     }
@@ -205,16 +184,13 @@ public class PullRequestExtended implements PullRequest{
     /* (non-Javadoc)
      * @see com.atlassian.stash.pull.PullRequest#isOpen()
      */
-    @Override
     public boolean isOpen() {
         return pullRequest.isOpen();
     }
-
     
     public PullRequest getPullRequest() {
         return pullRequest;
     }
-
     
     public boolean isMergeable() {
         return mergeable;

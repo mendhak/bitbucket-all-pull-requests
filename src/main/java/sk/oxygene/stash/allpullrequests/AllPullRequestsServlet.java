@@ -104,7 +104,7 @@ public class AllPullRequestsServlet extends HttpServlet {
         try {
             soyTemplateRenderer.render(
                     response.getWriter(),
-                    "sk.oxygene.stash.stash-all-pull-requests:server-side-soy",
+                    "sk.oxygene.stash.stash-all-pull-requests-extra:server-side-soy",
                     template, context);
         } catch (SoyException e) {
             Throwable cause = e.getCause();
