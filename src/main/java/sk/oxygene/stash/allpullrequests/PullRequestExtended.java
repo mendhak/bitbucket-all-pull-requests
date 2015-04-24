@@ -3,18 +3,22 @@
  */
 package sk.oxygene.stash.allpullrequests;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
-
-import javax.ws.rs.GET;
 
 import com.atlassian.stash.comment.CommentableVisitor;
 import com.atlassian.stash.content.AttributeMap;
 import com.atlassian.stash.property.PropertyMap;
 import com.atlassian.stash.pull.PullRequest;
+import com.atlassian.stash.pull.PullRequestMergeVeto;
+import com.atlassian.stash.pull.PullRequestMergeability;
 import com.atlassian.stash.pull.PullRequestParticipant;
 import com.atlassian.stash.pull.PullRequestRef;
 import com.atlassian.stash.pull.PullRequestState;
+import com.atlassian.stash.task.TaskCount;
+import com.atlassian.stash.task.TaskState;
 import com.atlassian.stash.watcher.WatchableVisitor;
 import com.atlassian.stash.watcher.Watcher;
 
@@ -25,13 +29,19 @@ import com.atlassian.stash.watcher.Watcher;
  */
 public class PullRequestExtended {
     
-    private PullRequest pullRequest;
+    private final PullRequest pullRequest;
     
-    private boolean mergeable;
+    private final PullRequestMergeability mergeability;
     
-    public PullRequestExtended(final PullRequest pullRequest, final boolean mergeable) {
+    private final TaskCount taskCount;
+    
+    private final List<PullRequestMergeVeto> customVetoes;
+    
+    public PullRequestExtended(final PullRequest pullRequest, final PullRequestMergeability mergeability, TaskCount taskCount) {
         this.pullRequest = pullRequest;
-        this.mergeable = mergeable;
+        this.mergeability = mergeability;
+        this.taskCount = taskCount;
+        this.customVetoes = new ArrayList<PullRequestMergeVeto>();
     }
 
     /* (non-Javadoc)
@@ -193,6 +203,40 @@ public class PullRequestExtended {
     }
     
     public boolean isMergeable() {
-        return mergeable;
+        return mergeability.canMerge();
+    }
+    
+    public List<String> getVetos() {
+        List<String> allVetoes = new ArrayList<String>();
+        for(PullRequestMergeVeto veto: mergeability.getVetos()) {
+            allVetoes.add(veto.getSummaryMessage());
+        }
+        
+        for(PullRequestMergeVeto veto: customVetoes) {
+            allVetoes.add(veto.getSummaryMessage());
+        }
+        
+        return allVetoes;
+    }
+    
+    public List<MergeBlockerIconKeeper> getVetoIcons() {
+        List<MergeBlockerIconKeeper> allVetoes = new ArrayList<MergeBlockerIconKeeper>();
+        for(PullRequestMergeVeto veto: mergeability.getVetos()) {
+            allVetoes.add(MergeBlockerIconKeeper.getMergeBlockerIconByMessage(veto.getSummaryMessage()));
+        }
+        
+        for(PullRequestMergeVeto veto: customVetoes) {
+            allVetoes.add(MergeBlockerIconKeeper.getMergeBlockerIconByMessage(veto.getSummaryMessage()));
+        }
+        
+        return allVetoes;
+    }
+    
+    public long getOpenedTasksCount() {
+        return taskCount.getCount(TaskState.OPEN);
+    }
+    
+    public void addCustomMergeVeto(PullRequestMergeVeto pullRequestMergeVeto) {
+        customVetoes.add(pullRequestMergeVeto);
     }
 }

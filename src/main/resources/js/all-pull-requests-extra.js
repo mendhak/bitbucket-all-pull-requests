@@ -1,6 +1,6 @@
-define('plugin/all-pull-requests', ['jquery', 'underscore', 'aui', 'model/page-state', 'exports'], function ($, _, AJS, pageState, exports) {
+define('plugin/all-pull-requests-extra', ['jquery', 'underscore', 'aui', 'model/page-state', 'exports'], function ($, _, AJS, pageState, exports) {
     exports.onReady = function (buttonSelector) {
-        $.ajax(AJS.contextPath() + '/rest/all-pull-requests/1.0/count', {
+        $.ajax(AJS.contextPath() + '/rest/all-pull-requests-extra/1.0/count', {
             data: {
                 project: pageState.getProject().get('key')
             },
@@ -14,5 +14,5 @@ define('plugin/all-pull-requests', ['jquery', 'underscore', 'aui', 'model/page-s
 });
 
 AJS.$(function() {
-    require('plugin/all-pull-requests').onReady('#project-pull-requests-button');
+    require('plugin/all-pull-requests-extra').onReady('#project-pull-requests-button-extra');
 });

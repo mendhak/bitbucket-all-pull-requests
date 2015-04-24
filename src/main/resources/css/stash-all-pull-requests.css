@@ -23,4 +23,40 @@
 	background-size: 20px;
 	min-height:20px;
 	width: 20px;
+	float: left;
+	margin: 4px;
+}
+
+li.bulletOk {
+	/* list-style-image: url("images/green_tick.png"); */
+	color: green;
+}
+
+li.bulletNotOk {
+	list-style-image: url("images/red_x_10.png");
+	color: red;
+}
+
+.cross {
+	background-image: url("images/cross_16.png");
+}
+
+.user-minus {
+	background-image: url("images/user-minus_16.png");
+}
+
+.users {
+	background-image: url("images/users_16.png");
+}
+
+.wrench {
+	background-image: url("images/wrench_16.png");
+}
+
+.github {
+	background-image: url("images/github2_16.png");
+}
+
+.paste {
+	background-image: url("images/paste_16.png");
 }

@@ -6,19 +6,19 @@
         <logo image="images/logo.png"/>
     </plugin-info>
 
-    <resource type="i18n" name="i18n" location="stash-all-pull-requests"/>
+    <resource type="i18n" name="i18n" location="stash-all-pull-requests-extra"/>
 
-    <servlet key="all-pull-requests-servlet" class="sk.oxygene.stash.allpullrequests.AllPullRequestsServlet">
-        <url-pattern>/all-pull-requests/*</url-pattern>
+    <servlet key="all-pull-requests-servlet-extra" class="sk.oxygene.stash.allpullrequests.AllPullRequestsServlet">
+        <url-pattern>/all-pull-requests-extra/*</url-pattern>
     </servlet>
 
-    <rest key="rest-all-pull-requests" path="/all-pull-requests" version="1.0">
+    <rest key="rest-all-pull-requests-extra" path="/all-pull-requests-extra" version="1.0">
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
         <package>sk.oxygene.stash.allpullrequests.rest</package>
     </rest>
 
-    <stash-resource key="server-side-soy">
+    <stash-resource key="server-side-soy-extra">
         <directory location="/soy/">
             <include>/**/*.soy</include>
         </directory>
@@ -26,58 +26,64 @@
         <dependency>com.atlassian.stash.stash-web-plugin:server-soy-templates</dependency>
     </stash-resource>
     
-    <web-resource key="general-pull-request-overview">
+    <web-resource key="general-pull-request-overview-extra">
     	<resource type="download" name="stash-all-pull-requests.css" location="/css/stash-all-pull-requests.css"/>
         <resource type="download" name="images/" location="/images"/>
         <context>atl.general</context>
     </web-resource>
 
-    <web-resource key="project-pull-requests-overview-resources">
-        <resource type="download" name="all-pull-requests.js" location="/js/all-pull-requests.js"/>
+    <web-resource key="project-pull-requests-overview-resources-extra">
+        <resource type="download" name="all-pull-requests.js" location="/js/all-pull-requests-extra.js"/>
         <context>stash.page.project.overview</context>
         <dependency>com.atlassian.stash.stash-web-plugin:global</dependency>
     </web-resource>
 
-    <web-resource key="project-pull-requests-resources">
-        <resource type="download" name="all-pull-requests.js" location="/js/all-pull-requests.js"/>
+    <web-resource key="project-pull-requests-resources-extra">
+        <resource type="download" name="all-pull-requests.js" location="/js/all-pull-requests-extra.js"/>
         <context>${project.groupId}.${project.artifactId}.project</context>
         <dependency>com.atlassian.stash.stash-web-plugin:global</dependency>
         <dependency>com.atlassian.stash.stash-web-plugin:pull-request-table</dependency>
     </web-resource>
 
-    <web-resource key="all-pull-requests-resources">
+    <web-resource key="all-pull-requests-resources-extra">
         <context>${project.groupId}.${project.artifactId}.all</context>
         <dependency>com.atlassian.stash.stash-web-plugin:global</dependency>
         <dependency>com.atlassian.stash.stash-web-plugin:pull-request-table</dependency>
     </web-resource>
 
-    <web-item key="project-pull-requests-tab" section="atl.project.nav">
+    <web-item key="project-pull-requests-tab-extra" section="atl.project.nav">
         <label>Pull requests Extra</label>
         <tooltip>View pull requests for all repositories in this project</tooltip>
-        <link linkId="project-pull-requests-button">/plugins/servlet/all-pull-requests/project/${project.key}</link>
+        <link linkId="project-pull-requests-button-extra">/plugins/servlet/all-pull-requests-extra/project/${project.key}</link>
         <param name="stashIconClass">aui-icon icon-pull-requests</param>
+        <styleClass>pullRequestExtraProjectLink</styleClass>
     </web-item>
 
-    <web-item key="all-pull-requests-tab" section="header.global.primary">
+    <web-item key="all-pull-requests-ta-extrab" section="header.global.primary">
         <condition class="com.atlassian.stash.web.conditions.IsLoggedInCondition"/>
         <label>Pull requests Extra</label>
         <tooltip>View pull requests in all repositories</tooltip>
-        <link linkId="all-pull-requests-button">/plugins/servlet/all-pull-requests/all</link>
+        <link linkId="all-pull-requests-button-extra">/plugins/servlet/all-pull-requests-extra/all</link>
     </web-item>
 
-	<web-section key="additionalColumnsSecion" name="Additional Columns" location="stash.pull-request.table-column" weight="110">
-        <label key="additionalColumnHeader">Mergeability</label>
+	<web-section key="mergeabilityColumnSection" name="Mergeability Column" location="stash.pull-request.table-column" weight="110">
+        <label key="mergeabilityColumnHeader">Mergeability</label>
     </web-section>
 
-	<web-panel key="additionalColumnsPanel" location="stash.pull-request.table-column/additionalColumnsSecion">
-    	<resource name="view" type="soy" location="${project.groupId}.${project.artifactId}:additional-column-template/plugin.pullRequest.tableExtraData.additionalColumns"/>
-        <dependency>plugin.pullRequest.tableExtraData:additional-column-template</dependency>
+	<web-panel key="mergeabilityColumnPanel" location="stash.pull-request.table-column/mergeabilityColumnSection">
+    	<resource name="view" type="soy" location="${project.groupId}.${project.artifactId}:mergeability-column-template/plugin.pullRequest.tableExtraData.mergeabilityColumn"/>
+        <dependency>plugin.pullRequest.tableExtraData:mergeability-column-template</dependency>
     </web-panel>
     
-    <stash-resource key="additional-column-template" name="Additional Column templates">
-        <resource type="download" name="additional-column.soy" location="/soy/additional-column.soy" />
+    <stash-resource key="mergeability-column-template" name="Mergeability template">
+        <resource type="download" name="mergeability-column.soy" location="/soy/mergeability-column.soy" />
         <dependency>com.atlassian.stash.stash-web-plugin:global</dependency>
     </stash-resource>
+
+    <component key="defaultPullRequestExtendedFactory" class="sk.oxygene.stash.allpullrequests.DefaultPullRequestExtendedFactory">
+        <description>Factory for PullRequestExtended</description>
+        <interface>sk.oxygene.stash.allpullrequests.PullRequestExtendedFactory</interface>
+    </component>
 
     <component-import key="i18nService" interface="com.atlassian.stash.i18n.I18nService"/>
     <component-import key="projectService" interface="com.atlassian.stash.project.ProjectService"/>
@@ -86,5 +92,6 @@
     <component-import key="soyTemplateRenderer" interface="com.atlassian.soy.renderer.SoyTemplateRenderer"/>
     <component-import key="applicationPropertiesService" interface="com.atlassian.stash.server.ApplicationPropertiesService"/>
     <component-import key="webResourceManager" interface="com.atlassian.plugin.webresource.WebResourceManager"/>
+    <component-import key="repositoryMetadataService" interface="com.atlassian.stash.repository.RepositoryMetadataService" />
 
 </atlassian-plugin>

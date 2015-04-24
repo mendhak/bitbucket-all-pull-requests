@@ -1,5 +1,19 @@
 package sk.oxygene.stash.allpullrequests;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.SortedMap;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.atlassian.plugin.webresource.WebResourceManager;
 import com.atlassian.soy.renderer.SoyException;
 import com.atlassian.soy.renderer.SoyTemplateRenderer;
@@ -7,30 +21,18 @@ import com.atlassian.stash.project.Project;
 import com.atlassian.stash.project.ProjectService;
 import com.atlassian.stash.pull.PullRequest;
 import com.atlassian.stash.pull.PullRequestOrder;
+import com.atlassian.stash.pull.PullRequestSearchRequest;
 import com.atlassian.stash.pull.PullRequestService;
 import com.atlassian.stash.pull.PullRequestState;
-import com.atlassian.stash.pull.PullRequestSearchRequest;
+import com.atlassian.stash.repository.RepositoryMetadataService;
+import com.atlassian.stash.scm.ScmService;
+import com.atlassian.stash.user.StashAuthenticationContext;
 import com.atlassian.stash.util.Page;
 import com.atlassian.stash.util.PageImpl;
 import com.atlassian.stash.util.PageRequest;
 import com.atlassian.stash.util.PageRequestImpl;
-import com.atlassian.stash.user.StashAuthenticationContext;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.SortedMap;
 
 public class AllPullRequestsServlet extends HttpServlet {
 
@@ -41,17 +43,21 @@ public class AllPullRequestsServlet extends HttpServlet {
     private final SoyTemplateRenderer soyTemplateRenderer;
     private final WebResourceManager webResourceManager;
     private final StashAuthenticationContext stashAuthenticationContext;
+    
+    private final PullRequestExtendedFactory pullRequestExtendedFactory;
 
     public AllPullRequestsServlet(ProjectService projectService,
                                   PullRequestService pullRequestService,
                                   SoyTemplateRenderer soyTemplateRenderer,
                                   WebResourceManager webResourceManager,
-                                  StashAuthenticationContext stashAuthenticationContext) {
+                                  StashAuthenticationContext stashAuthenticationContext,
+                                  PullRequestExtendedFactory pullRequestExtendedFactory) {
         this.projectService = projectService;
         this.pullRequestService = pullRequestService;
         this.soyTemplateRenderer = soyTemplateRenderer;
         this.webResourceManager = webResourceManager;
         this.stashAuthenticationContext = stashAuthenticationContext;
+        this.pullRequestExtendedFactory = pullRequestExtendedFactory;
     }
 
     @Override
@@ -91,11 +97,11 @@ public class AllPullRequestsServlet extends HttpServlet {
 
         String template;
         if (project == null) {
-            webResourceManager.requireResourcesForContext("sk.oxygene.stash.stash-all-pull-requests.all");
+            webResourceManager.requireResourcesForContext("sk.oxygene.stash.stash-all-pull-requests-extra.all");
             template = "plugin.page.allPullRequests";
         }
         else {
-            webResourceManager.requireResourcesForContext("sk.oxygene.stash.stash-all-pull-requests.project");
+            webResourceManager.requireResourcesForContext("sk.oxygene.stash.stash-all-pull-requests-extra.project");
             context.put("project", project);
             template = "plugin.page.projectPullRequests";
         }
@@ -104,7 +110,7 @@ public class AllPullRequestsServlet extends HttpServlet {
         try {
             soyTemplateRenderer.render(
                     response.getWriter(),
-                    "sk.oxygene.stash.stash-all-pull-requests-extra:server-side-soy",
+                    "sk.oxygene.stash.stash-all-pull-requests-extra:server-side-soy-extra",
                     template, context);
         } catch (SoyException e) {
             Throwable cause = e.getCause();
@@ -126,7 +132,8 @@ public class AllPullRequestsServlet extends HttpServlet {
             List<PullRequestExtended> values = Lists.newLinkedList();
             for(Entry<Integer, PullRequest> entry: pageRequestsMap.entrySet()) {
                 PullRequest pullRequest = entry.getValue();
-                values.add(new PullRequestExtended(pullRequest, pullRequestService.canMerge(pullRequest.getToRef().getRepository().getId(), pullRequest.getId()).canMerge()));               
+                PullRequestExtended pullRequestExtended = pullRequestExtendedFactory.getPullRequestExtended(pullRequest);
+                values.add(pullRequestExtended);
             }
             return new PageImpl<PullRequestExtended>(pageRequest, values, page.getIsLastPage());
         }
@@ -146,7 +153,8 @@ public class AllPullRequestsServlet extends HttpServlet {
             for (PullRequest pullRequest : pullRequestPage.getValues()) {
                 if (pullRequest.getToRef().getRepository().getProject().getId().equals(project.getId())) {
                     if (offset >= pageRequest.getStart() && values.size() < pageRequest.getLimit()) {
-                        values.add(new PullRequestExtended(pullRequest, pullRequestService.canMerge(pullRequest.getToRef().getRepository().getId(), pullRequest.getId()).canMerge()));
+                        PullRequestExtended pullRequestExtended = pullRequestExtendedFactory.getPullRequestExtended(pullRequest);
+                        values.add(pullRequestExtended);
                     }
                     offset += 1;
                 }
@@ -156,5 +164,4 @@ public class AllPullRequestsServlet extends HttpServlet {
 
         return new PageImpl<PullRequestExtended>(pageRequest, values, isLastPage);
     }
-
 }
