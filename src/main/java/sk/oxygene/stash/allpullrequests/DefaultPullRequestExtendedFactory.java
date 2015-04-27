@@ -24,14 +24,11 @@ public class DefaultPullRequestExtendedFactory implements PullRequestExtendedFac
 
     private final PullRequestService pullRequestService;
     private final ScmService scmService;
-    private final ApplicationPropertiesService applicationPropertiesService;
     
     public DefaultPullRequestExtendedFactory(PullRequestService pullRequestService,
-            ScmService scmService,
-            ApplicationPropertiesService applicationPropertiesService) {
+            ScmService scmService) {
         this.pullRequestService = pullRequestService;
         this.scmService = scmService;
-        this.applicationPropertiesService = applicationPropertiesService;
     }
     
     @Override
