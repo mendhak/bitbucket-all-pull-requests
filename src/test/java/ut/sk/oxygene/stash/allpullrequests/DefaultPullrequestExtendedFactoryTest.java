@@ -34,6 +34,10 @@ import com.atlassian.stash.scm.Command;
 import com.atlassian.stash.scm.ScmService;
 import com.atlassian.stash.scm.pull.ScmPullRequestCommandFactory;
 
+/**
+ * @author jwagan
+ *
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class DefaultPullrequestExtendedFactoryTest {
 

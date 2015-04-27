@@ -4,7 +4,7 @@
 package sk.oxygene.stash.allpullrequests;
 
 /**
- * Since somhow SOY templates doesn't support enums
+ * Since somehow SOY templates doesn't support enum's
  * 
  * @author jwagan
  *
