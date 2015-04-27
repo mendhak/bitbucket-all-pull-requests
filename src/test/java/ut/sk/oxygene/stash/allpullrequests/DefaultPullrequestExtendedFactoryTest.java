@@ -22,6 +22,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import sk.oxygene.stash.allpullrequests.DefaultPullRequestExtendedFactory;
 import sk.oxygene.stash.allpullrequests.PullRequestExtended;
+import sk.oxygene.stash.allpullrequests.utils.PluginLoggerFactory;
 
 import com.atlassian.stash.pull.PullRequest;
 import com.atlassian.stash.pull.PullRequestMergeVeto;
@@ -41,11 +42,14 @@ public class DefaultPullrequestExtendedFactoryTest {
     @Mock
     private ScmService scmService;
     
+    @Mock
+    private PluginLoggerFactory pluginLoggerFactory;
+    
     private DefaultPullRequestExtendedFactory factory;
     
     @Before
     public void setup() {
-        factory = new DefaultPullRequestExtendedFactory(pullRequestService, scmService);
+        factory = new DefaultPullRequestExtendedFactory(pullRequestService, scmService, pluginLoggerFactory);
     }
     
     @Test

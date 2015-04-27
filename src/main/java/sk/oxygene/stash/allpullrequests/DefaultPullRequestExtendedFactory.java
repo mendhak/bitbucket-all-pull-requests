@@ -7,6 +7,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import org.slf4j.Logger;
+
+import sk.oxygene.stash.allpullrequests.utils.PluginLoggerFactory;
+
 import com.atlassian.stash.pull.PullRequest;
 import com.atlassian.stash.pull.PullRequestMergeVeto;
 import com.atlassian.stash.pull.PullRequestService;
@@ -24,11 +28,14 @@ public class DefaultPullRequestExtendedFactory implements PullRequestExtendedFac
 
     private final PullRequestService pullRequestService;
     private final ScmService scmService;
+    private final Logger logger;
     
     public DefaultPullRequestExtendedFactory(PullRequestService pullRequestService,
-            ScmService scmService) {
+            ScmService scmService,
+            PluginLoggerFactory loggerFactory) {
         this.pullRequestService = pullRequestService;
         this.scmService = scmService;
+        this.logger = loggerFactory.getLoggerForThis(this);
     }
     
     @Override
@@ -67,8 +74,7 @@ public class DefaultPullRequestExtendedFactory implements PullRequestExtendedFac
         try {
             properties.load(inputStream);
         } catch (IOException e) {
-            // FIXME: there should be some info to log here
-            e.printStackTrace();
+            logger.warn("Unable to load properties from given file: %s. Error mesage: %s", fileName, e.getMessage());
         }
         return properties;
     }

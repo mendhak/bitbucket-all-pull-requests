@@ -80,6 +80,8 @@
         <dependency>com.atlassian.stash.stash-web-plugin:global</dependency>
     </stash-resource>
 
+	<component key="pullRequestLoggerFactory" class="sk.oxygene.stash.allpullrequests.utils.PluginLoggerFactory"/>
+
     <component key="defaultPullRequestExtendedFactory" class="sk.oxygene.stash.allpullrequests.DefaultPullRequestExtendedFactory">
         <description>Factory for PullRequestExtended</description>
         <interface>sk.oxygene.stash.allpullrequests.PullRequestExtendedFactory</interface>
