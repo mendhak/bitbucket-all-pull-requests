@@ -36,9 +36,10 @@ import com.atlassian.stash.scm.pull.ScmPullRequestCommandFactory;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DefaultPullrequestExtendedFactoryTest {
-    
+
     @Mock
     private PullRequestService pullRequestService;
+    
     @Mock
     private ScmService scmService;
     
@@ -46,6 +47,18 @@ public class DefaultPullrequestExtendedFactoryTest {
     private PluginLoggerFactory pluginLoggerFactory;
     
     private DefaultPullRequestExtendedFactory factory;
+    
+    private Properties properties;
+    
+    {
+        InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("stash-all-pull-requests-extra.properties");
+        properties = new Properties();
+        try {
+            properties.load(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     
     @Before
     public void setup() {
@@ -88,18 +101,7 @@ public class DefaultPullrequestExtendedFactoryTest {
         
         //then
         assertThat(vetos.size(), equalTo(1));
-        assertThat(vetos.get(0), equalTo(getProperties("stash-all-pull-requests-extra.properties").getProperty("pullRequest.mergeConflict.summaryMessage")));
-    }
-
-    private Properties getProperties(String fileName) {
-        InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(fileName);
-        Properties properties = new Properties();
-        try {
-            properties.load(inputStream);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return properties;
+        assertThat(vetos.get(0), equalTo(properties.getProperty("pullRequest.mergeConflict.summaryMessage")));
     }
     
     private PullRequest getPullRequestMock() {
