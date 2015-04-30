@@ -1,8 +1,16 @@
 All Pull Requests Add-on for Atlassian Stash with Mergeability status
-============================================
+=====================================================================
 
 
 [![plugin_screen.PNG](https://bitbucket.org/repo/Lx9E7y/images/573324582-plugin_screen.PNG)](https://marketplace.atlassian.com/vendors/1212031)
+
+It displays as an icon information about what is blocking you to do the merge:
+
+ * Insufficient branch permissions
+ * Not all required builds are successful yet
+ * Requires approvers
+ * Resolve all merge confilcts first
+ * Requires all tasks to be resolved
 
 Development
 -----------
