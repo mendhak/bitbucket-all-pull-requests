@@ -10,17 +10,5 @@
 		{foreach $veto in $pullRequest.vetoIcons}
 			<div class="pullRequestStatusBox {$veto.cssStyleName}" title="{$veto.message}"></div>
 		{/foreach}
-<p></p>
-/*
-		<ul>
-			{foreach $veto in $pullRequest.vetos}
-				{if $veto == 'Requires all tasks to be resolved'}
-					<li class="bulletNotOk">{$veto} <b>({$pullRequest.openedTasksCount})</b></li>
-					{else}
-						<li class="bulletNotOk">{$veto}</li>
-				{/if}
-			{/foreach}
-		</ul>
-*/
 	{/if}
 {/template}

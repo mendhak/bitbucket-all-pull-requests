@@ -1,9 +1,17 @@
-All Pull Requests Add-on for Atlassian Stash
-============================================
+All Pull Requests Add-on for Atlassian Stash with Mergeability status
+=====================================================================
 
-*ABANDONED -- I no longer use Stash, so this plug-in isn't actively developed anymore. If you would like to take it over, please let me know.*
 
-[![All Pull Requests](https://oxygene.sk/uploads/allpullrequests-small.png)](https://marketplace.atlassian.com/plugins/sk.oxygene.stash.stash-all-pull-requests)
+[![plugin_screen.PNG](https://bitbucket.org/repo/Lx9E7y/images/573324582-plugin_screen.PNG)](https://marketplace.atlassian.com/vendors/1212031)
+
+
+It displays as an icon information about what is blocking you to do the merge:
+ * Insufficient branch permissions
+ * Not all required builds are successful yet
+ * Requires approvers
+ * Resolve all merge conflicts first
+ * Requires all tasks to be resolved
+
 
 Development
 -----------

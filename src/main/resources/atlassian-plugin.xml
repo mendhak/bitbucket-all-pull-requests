@@ -4,6 +4,8 @@
         <version>${project.version}</version>
         <vendor name="${project.organization.name}" url="${project.organization.url}" />
         <logo image="images/logo.png"/>
+        <param name="vendor-icon">images/vendor_logo16.png</param>
+        <param name="vendor-logo">images/vendor_logo72.png</param>
     </plugin-info>
 
     <resource type="i18n" name="i18n" location="stash-all-pull-requests-extra"/>

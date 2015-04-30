@@ -9,12 +9,6 @@
 	background-image: url("images/green_tick.png");
 }
 
-.mergeStatusNotOk {
-	font-weight: bold;
-	color: red;
-	background-image: url("images/red_x.png");
-}
-
 .pullRequestMergeStatusImage {
 	width: 25px;
 }
@@ -25,16 +19,6 @@
 	width: 20px;
 	float: left;
 	margin: 4px;
-}
-
-li.bulletOk {
-	/* list-style-image: url("images/green_tick.png"); */
-	color: green;
-}
-
-li.bulletNotOk {
-	list-style-image: url("images/red_x_10.png");
-	color: red;
 }
 
 .cross {
