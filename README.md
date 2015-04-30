@@ -9,7 +9,7 @@ It displays as an icon information about what is blocking you to do the merge:
  * Insufficient branch permissions
  * Not all required builds are successful yet
  * Requires approvers
- * Resolve all merge confilcts first
+ * Resolve all merge conflicts first
  * Requires all tasks to be resolved
 
 Development
