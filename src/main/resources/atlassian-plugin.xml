@@ -10,14 +10,14 @@
 
     <resource type="i18n" name="i18n" location="stash-all-pull-requests-extra"/>
 
-    <servlet key="all-pull-requests-servlet-extra" class="sk.oxygene.stash.allpullrequests.AllPullRequestsServlet">
+    <servlet key="all-pull-requests-servlet-extra" class="com.infusion.stash.allpullrequests.AllPullRequestsServlet">
         <url-pattern>/all-pull-requests-extra/*</url-pattern>
     </servlet>
 
     <rest key="rest-all-pull-requests-extra" path="/all-pull-requests-extra" version="1.0">
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
-        <package>sk.oxygene.stash.allpullrequests.rest</package>
+        <package>com.infusion.stash.allpullrequests.rest</package>
     </rest>
 
     <stash-resource key="server-side-soy-extra">
@@ -82,11 +82,11 @@
         <dependency>com.atlassian.stash.stash-web-plugin:global</dependency>
     </stash-resource>
 
-	<component key="pullRequestLoggerFactory" class="sk.oxygene.stash.allpullrequests.utils.PluginLoggerFactory"/>
+	<component key="pullRequestLoggerFactory" class="com.infusion.stash.allpullrequests.utils.PluginLoggerFactory"/>
 
-    <component key="defaultPullRequestExtendedFactory" class="sk.oxygene.stash.allpullrequests.DefaultPullRequestExtendedFactory">
+    <component key="defaultPullRequestExtendedFactory" class="com.infusion.stash.allpullrequests.DefaultPullRequestExtendedFactory">
         <description>Factory for PullRequestExtended</description>
-        <interface>sk.oxygene.stash.allpullrequests.PullRequestExtendedFactory</interface>
+        <interface>com.infusion.stash.allpullrequests.PullRequestExtendedFactory</interface>
     </component>
 
     <component-import key="i18nService" interface="com.atlassian.stash.i18n.I18nService"/>

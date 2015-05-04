@@ -1,4 +1,4 @@
-package sk.oxygene.stash.allpullrequests.rest;
+package com.infusion.stash.allpullrequests.rest;
 
 import java.util.Map;
 

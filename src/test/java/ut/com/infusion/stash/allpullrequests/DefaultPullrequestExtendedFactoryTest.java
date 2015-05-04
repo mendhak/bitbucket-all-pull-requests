@@ -1,4 +1,4 @@
-package ut.sk.oxygene.stash.allpullrequests;
+package ut.com.infusion.stash.allpullrequests;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
@@ -20,10 +20,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import sk.oxygene.stash.allpullrequests.DefaultPullRequestExtendedFactory;
-import sk.oxygene.stash.allpullrequests.PullRequestExtended;
-import sk.oxygene.stash.allpullrequests.utils.PluginLoggerFactory;
-
 import com.atlassian.stash.pull.PullRequest;
 import com.atlassian.stash.pull.PullRequestMergeVeto;
 import com.atlassian.stash.pull.PullRequestMergeability;
@@ -33,6 +29,9 @@ import com.atlassian.stash.repository.Repository;
 import com.atlassian.stash.scm.Command;
 import com.atlassian.stash.scm.ScmService;
 import com.atlassian.stash.scm.pull.ScmPullRequestCommandFactory;
+import com.infusion.stash.allpullrequests.DefaultPullRequestExtendedFactory;
+import com.infusion.stash.allpullrequests.PullRequestExtended;
+import com.infusion.stash.allpullrequests.utils.PluginLoggerFactory;
 
 /**
  * @author jwagan

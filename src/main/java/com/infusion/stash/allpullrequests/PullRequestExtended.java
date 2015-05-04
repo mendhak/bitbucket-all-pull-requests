@@ -1,7 +1,7 @@
 /**
  * 
  */
-package sk.oxygene.stash.allpullrequests;
+package com.infusion.stash.allpullrequests;
 
 import java.util.ArrayList;
 import java.util.Date;

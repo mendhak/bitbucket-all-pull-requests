@@ -2,13 +2,37 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>sk.oxygene.stash</groupId>
+    <groupId>com.infusion.stash</groupId>
     <artifactId>stash-all-pull-requests-extra</artifactId>
     <version>1.4.0-SNAPSHOT</version>
     <organization>
-        <name>Lukáš Lalinský</name>
-        <url>https://oxygene.sk/</url>
+        <name>Infusion</name>
+        <url>http://www.infusion.com/</url>
     </organization>
+    <developers>
+	    <developer>
+	      <id>LukasLalinsky</id>
+	      <name>Lukáš Lalinský</name>
+	      <url>https://oxygene.sk/</url>
+	      <organization>https://oxygene.sk/</organization>
+	      <organizationUrl>https://oxygene.sk/</organizationUrl>
+	      <roles>
+	        <role>author</role>
+	      </roles>
+	    </developer>
+  	</developers>
+  	<contributors>
+	    <contributor>
+	      <name>Jacob Wagan</name>
+	      <email>jwagan@infusion.com</email>
+	      <url>http://www.infusion.com/</url>
+	      <organization>Infusion</organization>
+	      <organizationUrl>http://www.infusion.com/</organizationUrl>
+	      <roles>
+	        <role>developer</role>
+	      </roles>
+	    </contributor>
+  	</contributors>
     <name>All Pull Requests Extra</name>
     <description>Plugin for Atlassian Stash to display all pull requests on a single page.</description>
     <packaging>atlassian-plugin</packaging>

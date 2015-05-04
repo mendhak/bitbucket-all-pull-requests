@@ -1,4 +1,4 @@
-package sk.oxygene.stash.allpullrequests;
+package com.infusion.stash.allpullrequests;
 
 import com.atlassian.stash.pull.PullRequest;
 

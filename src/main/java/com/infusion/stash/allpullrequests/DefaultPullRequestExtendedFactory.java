@@ -1,15 +1,13 @@
 /**
  * 
  */
-package sk.oxygene.stash.allpullrequests;
+package com.infusion.stash.allpullrequests;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
 import org.slf4j.Logger;
-
-import sk.oxygene.stash.allpullrequests.utils.PluginLoggerFactory;
 
 import com.atlassian.stash.pull.PullRequest;
 import com.atlassian.stash.pull.PullRequestMergeVeto;
@@ -18,6 +16,7 @@ import com.atlassian.stash.pull.PullRequestTaskSearchRequest;
 import com.atlassian.stash.scm.ScmService;
 import com.atlassian.stash.server.ApplicationPropertiesService;
 import com.atlassian.stash.task.TaskCount;
+import com.infusion.stash.allpullrequests.utils.PluginLoggerFactory;
 
 
 /**

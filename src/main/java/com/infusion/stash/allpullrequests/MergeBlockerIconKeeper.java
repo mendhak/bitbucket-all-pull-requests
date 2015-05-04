@@ -1,7 +1,7 @@
 /**
  * 
  */
-package sk.oxygene.stash.allpullrequests;
+package com.infusion.stash.allpullrequests;
 
 /**
  * Since somehow SOY templates doesn't support enum's

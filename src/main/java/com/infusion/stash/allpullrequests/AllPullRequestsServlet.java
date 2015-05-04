@@ -1,4 +1,4 @@
-package sk.oxygene.stash.allpullrequests;
+package com.infusion.stash.allpullrequests;
 
 import java.io.IOException;
 import java.util.List;
@@ -97,11 +97,11 @@ public class AllPullRequestsServlet extends HttpServlet {
 
         String template;
         if (project == null) {
-            webResourceManager.requireResourcesForContext("sk.oxygene.stash.stash-all-pull-requests-extra.all");
+            webResourceManager.requireResourcesForContext("com.infusion.stash.stash-all-pull-requests-extra.all");
             template = "plugin.page.allPullRequests";
         }
         else {
-            webResourceManager.requireResourcesForContext("sk.oxygene.stash.stash-all-pull-requests-extra.project");
+            webResourceManager.requireResourcesForContext("com.infusion.stash.stash-all-pull-requests-extra.project");
             context.put("project", project);
             template = "plugin.page.projectPullRequests";
         }
@@ -110,7 +110,7 @@ public class AllPullRequestsServlet extends HttpServlet {
         try {
             soyTemplateRenderer.render(
                     response.getWriter(),
-                    "sk.oxygene.stash.stash-all-pull-requests-extra:server-side-soy-extra",
+                    "com.infusion.stash.stash-all-pull-requests-extra:server-side-soy-extra",
                     template, context);
         } catch (SoyException e) {
             Throwable cause = e.getCause();

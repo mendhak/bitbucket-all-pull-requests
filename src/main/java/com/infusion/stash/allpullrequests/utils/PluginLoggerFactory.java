@@ -1,4 +1,4 @@
-package sk.oxygene.stash.allpullrequests.utils;
+package com.infusion.stash.allpullrequests.utils;
 
 
 import java.io.File;
@@ -23,7 +23,7 @@ import com.atlassian.sal.api.ApplicationProperties;
  */
 public class PluginLoggerFactory {
 
-    private static final String ROOT = "sk.oxygene.stash.allpullrequests";
+    private static final String ROOT = "com.infusion.stash.allpullrequests";
     private static final Logger stashRootLogger = LoggerFactory.getLogger("ROOT");
 
     private LoggerContext context;
