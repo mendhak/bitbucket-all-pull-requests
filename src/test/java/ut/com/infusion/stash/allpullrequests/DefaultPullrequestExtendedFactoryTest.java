@@ -2,6 +2,7 @@ package ut.com.infusion.stash.allpullrequests;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.eq;
@@ -19,6 +20,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.slf4j.Logger;
 
 import com.atlassian.stash.pull.PullRequest;
 import com.atlassian.stash.pull.PullRequestMergeVeto;
@@ -65,6 +67,7 @@ public class DefaultPullrequestExtendedFactoryTest {
     
     @Before
     public void setup() throws IOException {
+        when(pluginLoggerFactory.getLoggerForThis(any())).thenReturn(mock(Logger.class));
         factory = new DefaultPullRequestExtendedFactory(pullRequestService, scmService, pluginLoggerFactory);
     }
     

@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atlassian.stash.pull.PullRequest;
 import com.atlassian.stash.pull.PullRequestMergeVeto;
@@ -25,9 +26,11 @@ import com.infusion.stash.allpullrequests.utils.PluginLoggerFactory;
  */
 public class DefaultPullRequestExtendedFactory implements PullRequestExtendedFactory {
 
+    private final Logger logger;
+    
     private final PullRequestService pullRequestService;
     private final ScmService scmService;
-    private final Logger logger;
+    
     private final Properties properties;
     
     public DefaultPullRequestExtendedFactory(PullRequestService pullRequestService,

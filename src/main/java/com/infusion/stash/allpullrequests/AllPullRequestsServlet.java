@@ -33,10 +33,9 @@ import com.atlassian.stash.util.PageRequest;
 import com.atlassian.stash.util.PageRequestImpl;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.infusion.stash.allpullrequests.utils.PluginLoggerFactory;
 
 public class AllPullRequestsServlet extends HttpServlet {
-
-    private static final Logger log = LoggerFactory.getLogger(AllPullRequestsServlet.class);
 
     private final ProjectService projectService;
     private final PullRequestService pullRequestService;
@@ -63,7 +62,6 @@ public class AllPullRequestsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Project project;
-
         String[] path = request.getPathInfo().split("/");
         if (path.length == 2 && path[1].equals("all")) {
             project = null;

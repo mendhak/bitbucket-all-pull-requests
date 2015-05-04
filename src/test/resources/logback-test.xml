@@ -4,14 +4,15 @@
 
     <!-- It seems the filenames below are relative to stash-home in my testing -->
     <appender name="allPullRequest" class="ch.qos.logback.core.FileAppender">
-        <file>logs/allPullRequest/allPullRequest.log</file>
+        <file>target/logs/allPullRequest.log</file>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <logger name="com.infusion.stash.allpullrequests" level="INFO">
+    <logger name="com.infusion.stash.allpullrequests" level="DEBUG">
         <appender-ref ref="allPullRequest" />
+        <appender-ref ref="allPullRequest-debug" />
     </logger>
 
 
