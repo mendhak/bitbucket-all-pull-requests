@@ -36,18 +36,6 @@ public class MergeBlockerIconKeeper {
     private final String message;
     private final String iconFileName;
     private final String cssStyleName;
-
-    public static String getIconFileNameByMessage(String message) {
-        String tempIconFileName = CROSS.getIconFileName();
-        
-        for(MergeBlockerIconKeeper mergeBlockerIcons : values) {
-            if(message.equalsIgnoreCase(mergeBlockerIcons.getMessage())) {
-                tempIconFileName = mergeBlockerIcons.getIconFileName();
-            }
-        }
-        
-        return tempIconFileName;
-    }
     
     public static MergeBlockerIconKeeper getMergeBlockerIconByMessage(String message) {
         for(MergeBlockerIconKeeper mergeBlockerIcons : values) {

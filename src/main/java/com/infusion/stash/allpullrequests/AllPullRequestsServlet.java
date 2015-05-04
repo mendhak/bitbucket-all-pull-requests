@@ -97,11 +97,11 @@ public class AllPullRequestsServlet extends HttpServlet {
 
         String template;
         if (project == null) {
-            webResourceManager.requireResourcesForContext("com.infusion.stash.stash-all-pull-requests-extra.all");
+            webResourceManager.requireResourcesForContext("com.infusion.stash.stash-all-pull-requests.all");
             template = "plugin.page.allPullRequests";
         }
         else {
-            webResourceManager.requireResourcesForContext("com.infusion.stash.stash-all-pull-requests-extra.project");
+            webResourceManager.requireResourcesForContext("com.infusion.stash.stash-all-pull-requests.project");
             context.put("project", project);
             template = "plugin.page.projectPullRequests";
         }
@@ -110,7 +110,7 @@ public class AllPullRequestsServlet extends HttpServlet {
         try {
             soyTemplateRenderer.render(
                     response.getWriter(),
-                    "com.infusion.stash.stash-all-pull-requests-extra:server-side-soy-extra",
+                    "com.infusion.stash.stash-all-pull-requests:server-side-soy",
                     template, context);
         } catch (SoyException e) {
             Throwable cause = e.getCause();

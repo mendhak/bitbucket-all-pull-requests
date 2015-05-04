@@ -28,13 +28,16 @@ public class DefaultPullRequestExtendedFactory implements PullRequestExtendedFac
     private final PullRequestService pullRequestService;
     private final ScmService scmService;
     private final Logger logger;
+    private final Properties properties;
     
     public DefaultPullRequestExtendedFactory(PullRequestService pullRequestService,
             ScmService scmService,
-            PluginLoggerFactory loggerFactory) {
+            PluginLoggerFactory loggerFactory) throws IOException {
         this.pullRequestService = pullRequestService;
         this.scmService = scmService;
         this.logger = loggerFactory.getLoggerForThis(this);
+        
+        this.properties = initializeProperties("stash-all-pull-requests.properties");
     }
     
     @Override
@@ -46,7 +49,6 @@ public class DefaultPullRequestExtendedFactory implements PullRequestExtendedFac
         boolean isConflicted = isConflicted(pullRequest);
         
         if (isConflicted) {
-            Properties properties = getProperties("stash-all-pull-requests-extra.properties");
             CustomPullRequestMergeVeto veto = new CustomPullRequestMergeVeto(
                     properties.getProperty("pullRequest.mergeConflict.summaryMessage"),
                     properties.getProperty("pullRequest.mergeConflict.detailedMessage"));
@@ -67,13 +69,14 @@ public class DefaultPullRequestExtendedFactory implements PullRequestExtendedFac
         return ((canMerge != null) && (!(canMerge.booleanValue())));
     }
     
-    private Properties getProperties(String fileName) {
+    private Properties initializeProperties(String fileName) throws IOException {
         InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(fileName);
         Properties properties = new Properties();
         try {
             properties.load(inputStream);
         } catch (IOException e) {
             logger.warn("Unable to load properties from given file: %s. Error mesage: %s", fileName, e.getMessage());
+            throw e;
         }
         return properties;
     }

@@ -8,19 +8,19 @@
         <param name="vendor-logo">images/vendor_logo72.png</param>
     </plugin-info>
 
-    <resource type="i18n" name="i18n" location="stash-all-pull-requests-extra"/>
+    <resource type="i18n" name="i18n" location="stash-all-pull-requests"/>
 
-    <servlet key="all-pull-requests-servlet-extra" class="com.infusion.stash.allpullrequests.AllPullRequestsServlet">
-        <url-pattern>/all-pull-requests-extra/*</url-pattern>
+    <servlet key="all-pull-requests-servlet" class="com.infusion.stash.allpullrequests.AllPullRequestsServlet">
+        <url-pattern>/all-pull-requests/*</url-pattern>
     </servlet>
 
-    <rest key="rest-all-pull-requests-extra" path="/all-pull-requests-extra" version="1.0">
+    <rest key="rest-all-pull-requests" path="/all-pull-requests" version="1.0">
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
         <package>com.infusion.stash.allpullrequests.rest</package>
     </rest>
 
-    <stash-resource key="server-side-soy-extra">
+    <stash-resource key="server-side-soy">
         <directory location="/soy/">
             <include>/**/*.soy</include>
         </directory>
@@ -28,44 +28,44 @@
         <dependency>com.atlassian.stash.stash-web-plugin:server-soy-templates</dependency>
     </stash-resource>
     
-    <web-resource key="general-pull-request-overview-extra">
+    <web-resource key="general-pull-request-overview">
     	<resource type="download" name="stash-all-pull-requests.css" location="/css/stash-all-pull-requests.css"/>
         <resource type="download" name="images/" location="/images"/>
         <context>atl.general</context>
     </web-resource>
 
-    <web-resource key="project-pull-requests-overview-resources-extra">
-        <resource type="download" name="all-pull-requests.js" location="/js/all-pull-requests-extra.js"/>
+    <web-resource key="project-pull-requests-overview-resources">
+        <resource type="download" name="all-pull-requests.js" location="/js/all-pull-requests.js"/>
         <context>stash.page.project.overview</context>
         <dependency>com.atlassian.stash.stash-web-plugin:global</dependency>
     </web-resource>
 
-    <web-resource key="project-pull-requests-resources-extra">
-        <resource type="download" name="all-pull-requests.js" location="/js/all-pull-requests-extra.js"/>
+    <web-resource key="project-pull-requests-resources">
+        <resource type="download" name="all-pull-requests.js" location="/js/all-pull-requests.js"/>
         <context>${project.groupId}.${project.artifactId}.project</context>
         <dependency>com.atlassian.stash.stash-web-plugin:global</dependency>
         <dependency>com.atlassian.stash.stash-web-plugin:pull-request-table</dependency>
     </web-resource>
 
-    <web-resource key="all-pull-requests-resources-extra">
+    <web-resource key="all-pull-requests-resources">
         <context>${project.groupId}.${project.artifactId}.all</context>
         <dependency>com.atlassian.stash.stash-web-plugin:global</dependency>
         <dependency>com.atlassian.stash.stash-web-plugin:pull-request-table</dependency>
     </web-resource>
 
-    <web-item key="project-pull-requests-tab-extra" section="atl.project.nav">
-        <label>Pull requests Extra</label>
+    <web-item key="project-pull-requests-tab" section="atl.project.nav">
+        <label>Pull requests</label>
         <tooltip>View pull requests for all repositories in this project</tooltip>
-        <link linkId="project-pull-requests-button-extra">/plugins/servlet/all-pull-requests-extra/project/${project.key}</link>
+        <link linkId="project-pull-requests-button">/plugins/servlet/all-pull-requests/project/${project.key}</link>
         <param name="stashIconClass">aui-icon icon-pull-requests</param>
         <styleClass>pullRequestExtraProjectLink</styleClass>
     </web-item>
 
-    <web-item key="all-pull-requests-ta-extrab" section="header.global.primary">
+    <web-item key="all-pull-requests-tab" section="header.global.primary">
         <condition class="com.atlassian.stash.web.conditions.IsLoggedInCondition"/>
-        <label>Pull requests Extra</label>
+        <label>Pull requests</label>
         <tooltip>View pull requests in all repositories</tooltip>
-        <link linkId="all-pull-requests-button-extra">/plugins/servlet/all-pull-requests-extra/all</link>
+        <link linkId="all-pull-requests-button">/plugins/servlet/all-pull-requests/all</link>
     </web-item>
 
 	<web-section key="mergeabilityColumnSection" name="Mergeability Column" location="stash.pull-request.table-column" weight="110">

@@ -54,7 +54,7 @@ public class DefaultPullrequestExtendedFactoryTest {
     private Properties properties;
     
     {
-        InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("stash-all-pull-requests-extra.properties");
+        InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("stash-all-pull-requests.properties");
         properties = new Properties();
         try {
             properties.load(inputStream);
@@ -64,7 +64,7 @@ public class DefaultPullrequestExtendedFactoryTest {
     }
     
     @Before
-    public void setup() {
+    public void setup() throws IOException {
         factory = new DefaultPullRequestExtendedFactory(pullRequestService, scmService, pluginLoggerFactory);
     }
     
