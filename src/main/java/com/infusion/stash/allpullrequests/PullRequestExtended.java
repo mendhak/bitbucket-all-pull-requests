@@ -46,7 +46,6 @@ public class PullRequestExtended {
 
     /* (non-Javadoc)
      * @see com.atlassian.stash.content.AttributeSupport#getAttributes()
-     * x
      */
     public AttributeMap getAttributes() {
         return pullRequest.getAttributes();
@@ -54,7 +53,6 @@ public class PullRequestExtended {
 
     /* (non-Javadoc)
      * @see com.atlassian.stash.pull.PullRequest#getAuthor()
-     * x
      */
     public PullRequestParticipant getAuthor() {
         return pullRequest.getAuthor();
@@ -69,7 +67,6 @@ public class PullRequestExtended {
     
     /* (non-Javadoc)
      * @see com.atlassian.stash.pull.PullRequest#getFromRef()
-     * x
      */
     public PullRequestRef getFromRef() {
         return pullRequest.getFromRef();
@@ -77,7 +74,6 @@ public class PullRequestExtended {
 
     /* (non-Javadoc)
      * @see com.atlassian.stash.pull.PullRequest#getId()
-     * x
      */
     public Long getId() {
         return pullRequest.getId();
@@ -85,7 +81,6 @@ public class PullRequestExtended {
 
     /* (non-Javadoc)
      * @see com.atlassian.stash.pull.PullRequest#getParticipants()
-     * x
      */
     public Set<PullRequestParticipant> getParticipants() {
         return pullRequest.getParticipants();
@@ -93,7 +88,6 @@ public class PullRequestExtended {
 
     /* (non-Javadoc)
      * @see com.atlassian.stash.pull.PullRequest#getReviewers()
-     * x
      */
     public Set<PullRequestParticipant> getReviewers() {
         return pullRequest.getReviewers();
@@ -101,7 +95,6 @@ public class PullRequestExtended {
 
     /* (non-Javadoc)
      * @see com.atlassian.stash.pull.PullRequest#getState()
-     * x
      */
     public PullRequestState getState() {
         return pullRequest.getState();
@@ -109,7 +102,6 @@ public class PullRequestExtended {
 
     /* (non-Javadoc)
      * @see com.atlassian.stash.pull.PullRequest#getTitle()
-     * x
      */
     public String getTitle() {
         return pullRequest.getTitle();
@@ -117,7 +109,6 @@ public class PullRequestExtended {
 
     /* (non-Javadoc)
      * @see com.atlassian.stash.pull.PullRequest#getToRef()
-     * x
      */
     public PullRequestRef getToRef() {
         return pullRequest.getToRef();
@@ -125,7 +116,6 @@ public class PullRequestExtended {
 
     /* (non-Javadoc)
      * @see com.atlassian.stash.pull.PullRequest#isOpen()
-     * x
      */
     public boolean isOpen() {
         return pullRequest.isOpen();
