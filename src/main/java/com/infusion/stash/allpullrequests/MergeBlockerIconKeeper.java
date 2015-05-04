@@ -3,13 +3,16 @@
  */
 package com.infusion.stash.allpullrequests;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Since somehow SOY templates doesn't support enum's
  * 
  * @author jwagan
  *
  */
-public class MergeBlockerIconKeeper {
+public final class MergeBlockerIconKeeper {
     
     public static final MergeBlockerIconKeeper INSUFFICIENT_BRANCH_PERMISSIONS = new MergeBlockerIconKeeper("Insufficient branch permissions", "user-minus_16.png", "user-minus");
     public static final MergeBlockerIconKeeper CROSS = new MergeBlockerIconKeeper("DEFAULT", "cross_16.png", "cross");
@@ -18,33 +21,39 @@ public class MergeBlockerIconKeeper {
     public static final MergeBlockerIconKeeper MERGE_CONFLICT = new MergeBlockerIconKeeper("Resolve all merge confilcts first", "github2_16.png", "github");
     public static final MergeBlockerIconKeeper ALL_TASKS = new MergeBlockerIconKeeper("Requires all tasks to be resolved", "paste_16.png", "paste");
     
-    public static final MergeBlockerIconKeeper[] values = new MergeBlockerIconKeeper[] {
-            INSUFFICIENT_BRANCH_PERMISSIONS, CROSS, SUCCESSFUL_BUILD, REQUIRES_APPROVERS, MERGE_CONFLICT, ALL_TASKS };
+    public static final Map<String, MergeBlockerIconKeeper> VALUES_MAP = new HashMap<String, MergeBlockerIconKeeper>();
+    
+    static {
+        VALUES_MAP.put(INSUFFICIENT_BRANCH_PERMISSIONS.getMessage(), INSUFFICIENT_BRANCH_PERMISSIONS);
+        VALUES_MAP.put(SUCCESSFUL_BUILD.getMessage(), SUCCESSFUL_BUILD);
+        VALUES_MAP.put(REQUIRES_APPROVERS.getMessage(), REQUIRES_APPROVERS);
+        VALUES_MAP.put(MERGE_CONFLICT.getMessage(), MERGE_CONFLICT);
+        VALUES_MAP.put(ALL_TASKS.getMessage(), ALL_TASKS);
+    }
+    
+    private final String message;
+    private final String iconFileName;
+    private final String cssStyleName;
 
-    private MergeBlockerIconKeeper(String message, String iconFileName, String cssStyleName) {
+    private MergeBlockerIconKeeper(final String message, final String iconFileName, final String cssStyleName) {
         this.message = message;
         this.iconFileName = iconFileName;
         this.cssStyleName = cssStyleName;
     }
     
-    private MergeBlockerIconKeeper(MergeBlockerIconKeeper mergeBlockerIconKeeper, String customMessage) {
+    private MergeBlockerIconKeeper(final MergeBlockerIconKeeper mergeBlockerIconKeeper, final String customMessage) {
         this.message = customMessage;
         this.iconFileName = mergeBlockerIconKeeper.iconFileName;
         this.cssStyleName = mergeBlockerIconKeeper.cssStyleName;
     }
 
-    private final String message;
-    private final String iconFileName;
-    private final String cssStyleName;
-    
-    public static MergeBlockerIconKeeper getMergeBlockerIconByMessage(String message) {
-        for(MergeBlockerIconKeeper mergeBlockerIcons : values) {
-            if(message.equalsIgnoreCase(mergeBlockerIcons.getMessage())) {
-                return mergeBlockerIcons;
-            }
+    public static MergeBlockerIconKeeper getMergeBlockerIconByMessage(final String message) {
+        MergeBlockerIconKeeper mergeBlockerIconKeeper = VALUES_MAP.get(message);
+        if (mergeBlockerIconKeeper == null) {
+            mergeBlockerIconKeeper = new MergeBlockerIconKeeper(CROSS, message);
         }
         
-        return new MergeBlockerIconKeeper(CROSS, message);
+        return mergeBlockerIconKeeper;
     }
     
     public String getIconFileName() {

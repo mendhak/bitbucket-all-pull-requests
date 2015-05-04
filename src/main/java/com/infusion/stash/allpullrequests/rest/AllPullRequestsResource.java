@@ -37,8 +37,6 @@ import com.sun.jersey.spi.resource.Singleton;
 @AnonymousAllowed
 public class AllPullRequestsResource extends RestResource {
 
-    private static final Logger log = LoggerFactory.getLogger(AllPullRequestsResource.class);
-
     private final PullRequestService pullRequestService;
     private final RepositoryService repositoryService;
     private final PermissionValidationService permissionValidationService;

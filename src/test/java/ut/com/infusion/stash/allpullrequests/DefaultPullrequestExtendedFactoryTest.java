@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -42,6 +43,8 @@ import com.infusion.stash.allpullrequests.utils.PluginLoggerFactory;
 @RunWith(MockitoJUnitRunner.class)
 public class DefaultPullrequestExtendedFactoryTest {
 
+    private static Properties properties;
+    
     @Mock
     private PullRequestService pullRequestService;
     
@@ -53,10 +56,9 @@ public class DefaultPullrequestExtendedFactoryTest {
     
     private DefaultPullRequestExtendedFactory factory;
     
-    private Properties properties;
-    
-    {
-        InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("stash-all-pull-requests.properties");
+    @BeforeClass
+    public static void initializeProperties() {
+        final InputStream inputStream = DefaultPullrequestExtendedFactoryTest.class.getClassLoader().getResourceAsStream("stash-all-pull-requests.properties");
         properties = new Properties();
         try {
             properties.load(inputStream);
@@ -66,9 +68,9 @@ public class DefaultPullrequestExtendedFactoryTest {
     }
     
     @Before
-    public void setup() throws IOException {
+    public void setUp() throws IOException {
         when(pluginLoggerFactory.getLoggerForThis(any())).thenReturn(mock(Logger.class));
-        factory = new DefaultPullRequestExtendedFactory(pullRequestService, scmService, pluginLoggerFactory);
+        factory = new DefaultPullRequestExtendedFactory(pullRequestService, scmService);
     }
     
     @Test
@@ -122,7 +124,7 @@ public class DefaultPullrequestExtendedFactoryTest {
         return pullRequest;
     }
     
-    private PullRequestMergeability getPullRequestMergeability(Boolean caMarge, PullRequestMergeVeto ... pullRequestMergeVetos) {
+    private PullRequestMergeability getPullRequestMergeability(final Boolean caMarge, final PullRequestMergeVeto ... pullRequestMergeVetos) {
         PullRequestMergeability pullRequestMergeability = mock(PullRequestMergeability.class);
         when(pullRequestMergeability.canMerge()).thenReturn(caMarge);
         when(pullRequestMergeability.getVetos()).thenReturn(Arrays.asList(pullRequestMergeVetos));
@@ -130,7 +132,7 @@ public class DefaultPullrequestExtendedFactoryTest {
         return pullRequestMergeability;
     }
     
-    private ScmPullRequestCommandFactory getScmPullRequestCommandFactory(Boolean canMerge) {
+    private ScmPullRequestCommandFactory getScmPullRequestCommandFactory(final Boolean canMerge) {
         ScmPullRequestCommandFactory commandFactory = mock (ScmPullRequestCommandFactory.class);
         Command<Boolean> command = mock(Command.class);
         

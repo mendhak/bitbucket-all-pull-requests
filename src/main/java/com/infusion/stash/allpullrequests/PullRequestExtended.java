@@ -8,9 +8,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import com.atlassian.stash.comment.CommentableVisitor;
 import com.atlassian.stash.content.AttributeMap;
-import com.atlassian.stash.property.PropertyMap;
 import com.atlassian.stash.pull.PullRequest;
 import com.atlassian.stash.pull.PullRequestMergeVeto;
 import com.atlassian.stash.pull.PullRequestMergeability;
@@ -19,8 +17,6 @@ import com.atlassian.stash.pull.PullRequestRef;
 import com.atlassian.stash.pull.PullRequestState;
 import com.atlassian.stash.task.TaskCount;
 import com.atlassian.stash.task.TaskState;
-import com.atlassian.stash.watcher.WatchableVisitor;
-import com.atlassian.stash.watcher.Watcher;
 
 
 /**

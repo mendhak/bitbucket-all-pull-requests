@@ -24,7 +24,7 @@ import com.atlassian.sal.api.ApplicationProperties;
 public class PluginLoggerFactory {
 
     private static final String ROOT = "com.infusion.stash.allpullrequests";
-    private static final Logger stashRootLogger = LoggerFactory.getLogger("ROOT");
+    private static final Logger STASH_ROOT_LOGGER = LoggerFactory.getLogger("ROOT");
 
     private LoggerContext context;
 
@@ -53,9 +53,9 @@ public class PluginLoggerFactory {
         InputStream is;
         is = this.getClass().getClassLoader().getResourceAsStream("logback-test.xml");
         if (is != null) {
-            stashRootLogger.info("Using logback-test.xml for logger settings");
+            STASH_ROOT_LOGGER.info("Using logback-test.xml for logger settings");
         } else {
-            stashRootLogger.info("Using logback.xml for logger settings");
+            STASH_ROOT_LOGGER.info("Using logback.xml for logger settings");
             is = this.getClass().getClassLoader().getResourceAsStream("logback.xml");
         }
 

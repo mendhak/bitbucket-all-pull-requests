@@ -15,7 +15,6 @@ import com.atlassian.stash.pull.PullRequestMergeVeto;
 import com.atlassian.stash.pull.PullRequestService;
 import com.atlassian.stash.pull.PullRequestTaskSearchRequest;
 import com.atlassian.stash.scm.ScmService;
-import com.atlassian.stash.server.ApplicationPropertiesService;
 import com.atlassian.stash.task.TaskCount;
 import com.infusion.stash.allpullrequests.utils.PluginLoggerFactory;
 
@@ -26,7 +25,7 @@ import com.infusion.stash.allpullrequests.utils.PluginLoggerFactory;
  */
 public class DefaultPullRequestExtendedFactory implements PullRequestExtendedFactory {
 
-    private final Logger logger;
+    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultPullRequestExtendedFactory.class);
     
     private final PullRequestService pullRequestService;
     private final ScmService scmService;
@@ -34,11 +33,9 @@ public class DefaultPullRequestExtendedFactory implements PullRequestExtendedFac
     private final Properties properties;
     
     public DefaultPullRequestExtendedFactory(PullRequestService pullRequestService,
-            ScmService scmService,
-            PluginLoggerFactory loggerFactory) throws IOException {
+            ScmService scmService) throws IOException {
         this.pullRequestService = pullRequestService;
         this.scmService = scmService;
-        this.logger = loggerFactory.getLoggerForThis(this);
         
         this.properties = initializeProperties("stash-all-pull-requests.properties");
     }
@@ -78,7 +75,7 @@ public class DefaultPullRequestExtendedFactory implements PullRequestExtendedFac
         try {
             properties.load(inputStream);
         } catch (IOException e) {
-            logger.warn("Unable to load properties from given file: %s. Error mesage: %s", fileName, e.getMessage());
+            LOGGER.warn("Unable to load properties from given file: %s. Error mesage: %s", fileName, e.getMessage());
             throw e;
         }
         return properties;

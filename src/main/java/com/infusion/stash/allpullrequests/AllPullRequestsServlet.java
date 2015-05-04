@@ -11,9 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.atlassian.plugin.webresource.WebResourceManager;
 import com.atlassian.soy.renderer.SoyException;
 import com.atlassian.soy.renderer.SoyTemplateRenderer;
@@ -24,8 +21,6 @@ import com.atlassian.stash.pull.PullRequestOrder;
 import com.atlassian.stash.pull.PullRequestSearchRequest;
 import com.atlassian.stash.pull.PullRequestService;
 import com.atlassian.stash.pull.PullRequestState;
-import com.atlassian.stash.repository.RepositoryMetadataService;
-import com.atlassian.stash.scm.ScmService;
 import com.atlassian.stash.user.StashAuthenticationContext;
 import com.atlassian.stash.util.Page;
 import com.atlassian.stash.util.PageImpl;
@@ -33,7 +28,6 @@ import com.atlassian.stash.util.PageRequest;
 import com.atlassian.stash.util.PageRequestImpl;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.infusion.stash.allpullrequests.utils.PluginLoggerFactory;
 
 public class AllPullRequestsServlet extends HttpServlet {
 
