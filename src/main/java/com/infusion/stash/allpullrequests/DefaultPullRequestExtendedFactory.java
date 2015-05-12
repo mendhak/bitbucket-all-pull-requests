@@ -17,6 +17,7 @@ import com.atlassian.stash.pull.PullRequestTaskSearchRequest;
 import com.atlassian.stash.scm.ScmService;
 import com.atlassian.stash.task.TaskCount;
 import com.infusion.stash.allpullrequests.utils.PluginLoggerFactory;
+import com.infusion.stash.allpullrequests.utils.PropertiesMapper;
 
 
 /**
@@ -26,6 +27,7 @@ import com.infusion.stash.allpullrequests.utils.PluginLoggerFactory;
 public class DefaultPullRequestExtendedFactory implements PullRequestExtendedFactory {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultPullRequestExtendedFactory.class);
+    public static final String STASH_PROPERTIES_FILENAME = "stash-all-pull-requests.properties";
     
     private final PullRequestService pullRequestService;
     private final ScmService scmService;
@@ -37,7 +39,7 @@ public class DefaultPullRequestExtendedFactory implements PullRequestExtendedFac
         this.pullRequestService = pullRequestService;
         this.scmService = scmService;
         
-        this.properties = initializeProperties("stash-all-pull-requests.properties");
+        this.properties = initializeProperties(STASH_PROPERTIES_FILENAME);
     }
     
     @Override
@@ -50,8 +52,8 @@ public class DefaultPullRequestExtendedFactory implements PullRequestExtendedFac
         
         if (isConflicted) {
             CustomPullRequestMergeVeto veto = new CustomPullRequestMergeVeto(
-                    properties.getProperty("pullRequest.mergeConflict.summaryMessage"),
-                    properties.getProperty("pullRequest.mergeConflict.detailedMessage"));
+                    properties.getProperty(PropertiesMapper.MERGE_CONFLICT_SUMMARY_MESSAGE),
+                    properties.getProperty(PropertiesMapper.MERGE_CONFLICT_DETAILED_MESSAGE));
             pullRequestExtended.addCustomMergeVeto(veto);
         }
         

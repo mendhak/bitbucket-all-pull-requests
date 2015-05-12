@@ -38,6 +38,7 @@ public class AllPullRequestsServlet extends HttpServlet {
     private final StashAuthenticationContext stashAuthenticationContext;
     
     private final PullRequestExtendedFactory pullRequestExtendedFactory;
+    private static final int MAX_RESULTS_PER_PAGE = 100;
 
     public AllPullRequestsServlet(ProjectService projectService,
                                   PullRequestService pullRequestService,
@@ -79,7 +80,7 @@ public class AllPullRequestsServlet extends HttpServlet {
             activeTab = "open";
         }
 
-        PageRequest pageRequest = new PageRequestImpl(0, 100);
+        PageRequest pageRequest = new PageRequestImpl(0, MAX_RESULTS_PER_PAGE);
         Page<PullRequestExtended> pullRequestPage = findPullRequests(project, state, pageRequest);
 
         Map<String, Object> context = Maps.newHashMap();
