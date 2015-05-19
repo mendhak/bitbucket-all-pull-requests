@@ -4,18 +4,20 @@
         <version>${project.version}</version>
         <vendor name="${project.organization.name}" url="${project.organization.url}" />
         <logo image="images/logo.png"/>
+        <param name="vendor-icon">images/vendor_logo16.png</param>
+        <param name="vendor-logo">images/vendor_logo72.png</param>
     </plugin-info>
 
     <resource type="i18n" name="i18n" location="stash-all-pull-requests"/>
 
-    <servlet key="all-pull-requests-servlet" class="sk.oxygene.stash.allpullrequests.AllPullRequestsServlet">
+    <servlet key="all-pull-requests-servlet" class="com.infusion.stash.allpullrequests.AllPullRequestsServlet">
         <url-pattern>/all-pull-requests/*</url-pattern>
     </servlet>
 
     <rest key="rest-all-pull-requests" path="/all-pull-requests" version="1.0">
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
-        <package>sk.oxygene.stash.allpullrequests.rest</package>
+        <package>com.infusion.stash.allpullrequests.rest</package>
     </rest>
 
     <stash-resource key="server-side-soy">
@@ -25,6 +27,12 @@
         <dependency>com.atlassian.stash.stash-web-plugin:global</dependency>
         <dependency>com.atlassian.stash.stash-web-plugin:server-soy-templates</dependency>
     </stash-resource>
+    
+    <web-resource key="general-pull-request-overview">
+    	<resource type="download" name="stash-all-pull-requests.css" location="/css/stash-all-pull-requests.css"/>
+        <resource type="download" name="images/" location="/images"/>
+        <context>atl.general</context>
+    </web-resource>
 
     <web-resource key="project-pull-requests-overview-resources">
         <resource type="download" name="all-pull-requests.js" location="/js/all-pull-requests.js"/>
@@ -50,6 +58,7 @@
         <tooltip>View pull requests for all repositories in this project</tooltip>
         <link linkId="project-pull-requests-button">/plugins/servlet/all-pull-requests/project/${project.key}</link>
         <param name="stashIconClass">aui-icon icon-pull-requests</param>
+        <styleClass>pullRequestExtraProjectLink</styleClass>
     </web-item>
 
     <web-item key="all-pull-requests-tab" section="header.global.primary">
@@ -59,6 +68,27 @@
         <link linkId="all-pull-requests-button">/plugins/servlet/all-pull-requests/all</link>
     </web-item>
 
+	<web-section key="mergeabilityColumnSection" name="Mergeability Column" location="stash.pull-request.table-column" weight="110">
+        <label key="mergeabilityColumnHeader">Mergeability</label>
+    </web-section>
+
+	<web-panel key="mergeabilityColumnPanel" location="stash.pull-request.table-column/mergeabilityColumnSection">
+    	<resource name="view" type="soy" location="${project.groupId}.${project.artifactId}:mergeability-column-template/plugin.pullRequest.tableExtraData.mergeabilityColumn"/>
+        <dependency>plugin.pullRequest.tableExtraData:mergeability-column-template</dependency>
+    </web-panel>
+    
+    <stash-resource key="mergeability-column-template" name="Mergeability template">
+        <resource type="download" name="mergeability-column.soy" location="/soy/mergeability-column.soy" />
+        <dependency>com.atlassian.stash.stash-web-plugin:global</dependency>
+    </stash-resource>
+
+	<component key="pullRequestLoggerFactory" class="com.infusion.stash.allpullrequests.utils.PluginLoggerFactory"/>
+
+    <component key="defaultPullRequestExtendedFactory" class="com.infusion.stash.allpullrequests.DefaultPullRequestExtendedFactory">
+        <description>Factory for PullRequestExtended</description>
+        <interface>com.infusion.stash.allpullrequests.PullRequestExtendedFactory</interface>
+    </component>
+
     <component-import key="i18nService" interface="com.atlassian.stash.i18n.I18nService"/>
     <component-import key="projectService" interface="com.atlassian.stash.project.ProjectService"/>
     <component-import key="repositoryService" interface="com.atlassian.stash.repository.RepositoryService"/>
@@ -66,5 +96,6 @@
     <component-import key="soyTemplateRenderer" interface="com.atlassian.soy.renderer.SoyTemplateRenderer"/>
     <component-import key="applicationPropertiesService" interface="com.atlassian.stash.server.ApplicationPropertiesService"/>
     <component-import key="webResourceManager" interface="com.atlassian.plugin.webresource.WebResourceManager"/>
+    <component-import key="repositoryMetadataService" interface="com.atlassian.stash.repository.RepositoryMetadataService" />
 
 </atlassian-plugin>

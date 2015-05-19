@@ -1,0 +1,14 @@
+{namespace plugin.pullRequest.tableExtraData}
+
+/**
+ * @param pullRequest
+ **/
+{template .mergeabilityColumn}
+	{if $pullRequest.mergeable }
+		<div class="pullRequestStatusBox mergeStatusOk"></div>
+	{elseif not $pullRequest.mergeable}
+		{foreach $veto in $pullRequest.vetoIcons}
+			<div class="pullRequestStatusBox {$veto.cssStyleName}" title="{$veto.message}"></div>
+		{/foreach}
+	{/if}
+{/template}

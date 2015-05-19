@@ -1,4 +1,17 @@
-package sk.oxygene.stash.allpullrequests.rest;
+package com.infusion.stash.allpullrequests.rest;
+
+import java.util.Map;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.atlassian.plugins.rest.common.security.AnonymousAllowed;
 import com.atlassian.stash.i18n.I18nService;
@@ -16,13 +29,6 @@ import com.atlassian.stash.util.PageRequest;
 import com.atlassian.stash.util.PageRequestImpl;
 import com.google.common.collect.Maps;
 import com.sun.jersey.spi.resource.Singleton;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.util.Map;
 
 @Path("/")
 @Consumes({MediaType.APPLICATION_JSON})
@@ -30,8 +36,6 @@ import java.util.Map;
 @Singleton
 @AnonymousAllowed
 public class AllPullRequestsResource extends RestResource {
-
-    private static final Logger log = LoggerFactory.getLogger(AllPullRequestsResource.class);
 
     private final PullRequestService pullRequestService;
     private final RepositoryService repositoryService;
