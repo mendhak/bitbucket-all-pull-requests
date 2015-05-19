@@ -31,6 +31,11 @@ import com.google.common.collect.Maps;
 
 public class AllPullRequestsServlet extends HttpServlet {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -8400576920477105409L;
+    
     private final ProjectService projectService;
     private final PullRequestService pullRequestService;
     private final SoyTemplateRenderer soyTemplateRenderer;
@@ -38,14 +43,15 @@ public class AllPullRequestsServlet extends HttpServlet {
     private final StashAuthenticationContext stashAuthenticationContext;
     
     private final PullRequestExtendedFactory pullRequestExtendedFactory;
-    private static final int MAX_RESULTS_PER_PAGE = 100;
+    private static final int MAX_RESULTS = 100;
+    private static final int MAX_RESULTS_PER_PAGE = 10;
 
-    public AllPullRequestsServlet(ProjectService projectService,
-                                  PullRequestService pullRequestService,
-                                  SoyTemplateRenderer soyTemplateRenderer,
-                                  WebResourceManager webResourceManager,
-                                  StashAuthenticationContext stashAuthenticationContext,
-                                  PullRequestExtendedFactory pullRequestExtendedFactory) {
+    public AllPullRequestsServlet(final ProjectService projectService,
+            final PullRequestService pullRequestService,
+            final SoyTemplateRenderer soyTemplateRenderer,
+            final WebResourceManager webResourceManager,
+            final StashAuthenticationContext stashAuthenticationContext,
+            final PullRequestExtendedFactory pullRequestExtendedFactory) {
         this.projectService = projectService;
         this.pullRequestService = pullRequestService;
         this.soyTemplateRenderer = soyTemplateRenderer;
@@ -55,9 +61,9 @@ public class AllPullRequestsServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
         Project project;
-        String[] path = request.getPathInfo().split("/");
+        final String[] path = request.getPathInfo().split("/");
         if (path.length == 2 && path[1].equals("all")) {
             project = null;
         } else if (path.length == 3 && path[1].equals("project") && !path[2].isEmpty()) {
@@ -80,10 +86,10 @@ public class AllPullRequestsServlet extends HttpServlet {
             activeTab = "open";
         }
 
-        PageRequest pageRequest = new PageRequestImpl(0, MAX_RESULTS_PER_PAGE);
-        Page<PullRequestExtended> pullRequestPage = findPullRequests(project, state, pageRequest);
+        final PageRequest pageRequest = new PageRequestImpl(0, MAX_RESULTS);
+        final Page<PullRequestExtended> pullRequestPage = findPullRequests(project, state, pageRequest);
 
-        Map<String, Object> context = Maps.newHashMap();
+        final Map<String, Object> context = Maps.newHashMap();
         context.put("pullRequestPage", pullRequestPage);
         context.put("activeTab", activeTab);
         context.put("currentUser", stashAuthenticationContext.getCurrentUser());
@@ -115,17 +121,17 @@ public class AllPullRequestsServlet extends HttpServlet {
         }
     }
 
-    protected Page<PullRequestExtended> findPullRequests(Project project, PullRequestState state, PageRequest pageRequest) {
-        PullRequestSearchRequest searchRequest = (new PullRequestSearchRequest.Builder()).
+    protected Page<PullRequestExtended> findPullRequests(final Project project, final PullRequestState state, final PageRequest pageRequest) {
+        final PullRequestSearchRequest searchRequest = (new PullRequestSearchRequest.Builder()).
                 state(state).order(PullRequestOrder.NEWEST).build();
 
         if (project == null) {
-            Page<PullRequest> page = pullRequestService.search(searchRequest, pageRequest);
-            SortedMap<Integer, PullRequest> pageRequestsMap = page.getOrdinalIndexedValues();
-            List<PullRequestExtended> values = Lists.newLinkedList();
+            final Page<PullRequest> page = pullRequestService.search(searchRequest, pageRequest);
+            final SortedMap<Integer, PullRequest> pageRequestsMap = page.getOrdinalIndexedValues();
+            final List<PullRequestExtended> values = Lists.newLinkedList();
             for(Entry<Integer, PullRequest> entry: pageRequestsMap.entrySet()) {
-                PullRequest pullRequest = entry.getValue();
-                PullRequestExtended pullRequestExtended = pullRequestExtendedFactory.getPullRequestExtended(pullRequest);
+                final PullRequest pullRequest = entry.getValue();
+                final PullRequestExtended pullRequestExtended = pullRequestExtendedFactory.getPullRequestExtended(pullRequest);
                 values.add(pullRequestExtended);
             }
             return new PageImpl<PullRequestExtended>(pageRequest, values, page.getIsLastPage());
@@ -133,20 +139,20 @@ public class AllPullRequestsServlet extends HttpServlet {
 
         // unfortunately, we can't use any PullRequestSearchRequest filter for this :/
 
-        List<PullRequestExtended> values = Lists.newLinkedList();
+        final List<PullRequestExtended> values = Lists.newLinkedList();
         boolean isLastPage = false;
 
         int offset = 0;
-        PageRequest tmpPageRequest = new PageRequestImpl(0, 10);
+        PageRequest tmpPageRequest = new PageRequestImpl(0, MAX_RESULTS_PER_PAGE);
         while (tmpPageRequest != null && values.size() < pageRequest.getLimit() && !isLastPage) {
-            Page<PullRequest> pullRequestPage = pullRequestService.search(searchRequest, tmpPageRequest);
+            final Page<PullRequest> pullRequestPage = pullRequestService.search(searchRequest, tmpPageRequest);
             if (pullRequestPage.getIsLastPage()) {
                 isLastPage = true;
             }
             for (PullRequest pullRequest : pullRequestPage.getValues()) {
                 if (pullRequest.getToRef().getRepository().getProject().getId().equals(project.getId())) {
                     if (offset >= pageRequest.getStart() && values.size() < pageRequest.getLimit()) {
-                        PullRequestExtended pullRequestExtended = pullRequestExtendedFactory.getPullRequestExtended(pullRequest);
+                        final PullRequestExtended pullRequestExtended = pullRequestExtendedFactory.getPullRequestExtended(pullRequest);
                         values.add(pullRequestExtended);
                     }
                     offset += 1;
