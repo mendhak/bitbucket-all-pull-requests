@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 All Pull Requests Add-on for Atlassian Stash with Mergeability status
 =====================================================================
 
@@ -25,5 +26,4 @@ Useful Atlassian SDK commands:
 * atlas-help  -- prints description for all commands in the SDK
 
 Full documentation is always available at:
-
 https://developer.atlassian.com/docs/getting-started
