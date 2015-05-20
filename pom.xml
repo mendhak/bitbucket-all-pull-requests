@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.infusion.stash</groupId>
     <artifactId>stash-all-pull-requests</artifactId>
-    <version>1.4.1-SNAPSHOT</version>
+    <version>1.4.0-SNAPSHOT</version>
 <!--     
     <distributionManagement>
         <repository>
