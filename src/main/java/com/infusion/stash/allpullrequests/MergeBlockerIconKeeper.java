@@ -18,7 +18,7 @@ public final class MergeBlockerIconKeeper {
     public static final MergeBlockerIconKeeper CROSS = new MergeBlockerIconKeeper("DEFAULT", "cross_16.png", "cross");
     public static final MergeBlockerIconKeeper SUCCESSFUL_BUILD = new MergeBlockerIconKeeper("Not all required builds are successful yet", "wrench_16.png", "wrench");
     public static final MergeBlockerIconKeeper REQUIRES_APPROVERS = new MergeBlockerIconKeeper("Requires approvers", "users_16.png", "users");
-    public static final MergeBlockerIconKeeper MERGE_CONFLICT = new MergeBlockerIconKeeper("Resolve all merge confilcts first", "github2_16.png", "github");
+    public static final MergeBlockerIconKeeper MERGE_CONFLICT = new MergeBlockerIconKeeper("Resolve all merge conflicts first", "github2_16.png", "github");
     public static final MergeBlockerIconKeeper ALL_TASKS = new MergeBlockerIconKeeper("Requires all tasks to be resolved", "paste_16.png", "paste");
     
     public static final Map<String, MergeBlockerIconKeeper> VALUES_MAP = new HashMap<String, MergeBlockerIconKeeper>();
