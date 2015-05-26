@@ -5,6 +5,8 @@ package com.infusion.stash.allpullrequests;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Properties;
 
 import org.slf4j.Logger;
@@ -12,11 +14,12 @@ import org.slf4j.LoggerFactory;
 
 import com.atlassian.stash.pull.PullRequest;
 import com.atlassian.stash.pull.PullRequestMergeVeto;
+import com.atlassian.stash.pull.PullRequestMergeability;
 import com.atlassian.stash.pull.PullRequestService;
+import com.atlassian.stash.pull.PullRequestState;
 import com.atlassian.stash.pull.PullRequestTaskSearchRequest;
 import com.atlassian.stash.scm.ScmService;
 import com.atlassian.stash.task.TaskCount;
-import com.infusion.stash.allpullrequests.utils.PluginLoggerFactory;
 import com.infusion.stash.allpullrequests.utils.PropertiesMapper;
 
 
@@ -45,16 +48,47 @@ public class DefaultPullRequestExtendedFactory implements PullRequestExtendedFac
     @Override
     public PullRequestExtended getPullRequestExtended(PullRequest pullRequest) {
         TaskCount taskCount = getTaskCountPerPullRequest(pullRequest);
-        PullRequestExtended pullRequestExtended = new PullRequestExtended(pullRequest, pullRequestService.canMerge(
-                pullRequest.getToRef().getRepository().getId(), pullRequest.getId()), taskCount);
+        PullRequestExtended pullRequestExtended;
 
-        boolean isConflicted = isConflicted(pullRequest);
-        
-        if (isConflicted) {
-            CustomPullRequestMergeVeto veto = new CustomPullRequestMergeVeto(
-                    properties.getProperty(PropertiesMapper.MERGE_CONFLICT_SUMMARY_MESSAGE),
-                    properties.getProperty(PropertiesMapper.MERGE_CONFLICT_DETAILED_MESSAGE));
-            pullRequestExtended.addCustomMergeVeto(veto);
+        if(pullRequest.getState().equals(PullRequestState.OPEN)) {
+            pullRequestExtended = new PullRequestExtended(pullRequest, pullRequestService.canMerge(
+                    pullRequest.getToRef().getRepository().getId(), pullRequest.getId()), taskCount);
+            
+            if (isConflicted(pullRequest)) {
+                CustomPullRequestMergeVeto veto = new CustomPullRequestMergeVeto(
+                        properties.getProperty(PropertiesMapper.MERGE_CONFLICT_SUMMARY_MESSAGE),
+                        properties.getProperty(PropertiesMapper.MERGE_CONFLICT_DETAILED_MESSAGE));
+                pullRequestExtended.addCustomMergeVeto(veto);
+            }
+        } else {
+            PullRequestMergeability mergeability = new PullRequestMergeability() {
+                
+                @Override
+                public boolean isConflicted() {
+                    return false;
+                }
+                
+                @Override
+                public Collection<PullRequestMergeVeto> getVetos() {
+                    return new ArrayList<PullRequestMergeVeto>();
+                }
+                
+                @Override
+                public boolean canMerge() {
+                    return false;
+                }
+            };
+            
+            pullRequestExtended = new PullRequestExtended(pullRequest, mergeability, taskCount);
+            String message;
+            if(pullRequest.getState().equals(PullRequestState.MERGED)) {
+                message = properties.getProperty("pullRequest.mergeability.alreadymerged");
+            //DECLINED
+            } else {
+                message = properties.getProperty("pullRequest.mergeability.declined");
+            }
+            
+            pullRequestExtended.addCustomMergeVeto(new CustomPullRequestMergeVeto(message, message));
         }
         
         return pullRequestExtended;

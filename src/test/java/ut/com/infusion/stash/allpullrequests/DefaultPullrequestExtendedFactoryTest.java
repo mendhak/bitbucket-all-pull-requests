@@ -1,6 +1,7 @@
 package ut.com.infusion.stash.allpullrequests;
 
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
@@ -28,11 +29,13 @@ import com.atlassian.stash.pull.PullRequestMergeVeto;
 import com.atlassian.stash.pull.PullRequestMergeability;
 import com.atlassian.stash.pull.PullRequestRef;
 import com.atlassian.stash.pull.PullRequestService;
+import com.atlassian.stash.pull.PullRequestState;
 import com.atlassian.stash.repository.Repository;
 import com.atlassian.stash.scm.Command;
 import com.atlassian.stash.scm.ScmService;
 import com.atlassian.stash.scm.pull.ScmPullRequestCommandFactory;
 import com.infusion.stash.allpullrequests.DefaultPullRequestExtendedFactory;
+import com.infusion.stash.allpullrequests.MergeBlockerIconKeeper;
 import com.infusion.stash.allpullrequests.PullRequestExtended;
 import com.infusion.stash.allpullrequests.utils.PluginLoggerFactory;
 
@@ -77,6 +80,7 @@ public class DefaultPullrequestExtendedFactoryTest {
     public void shouldMerge() {
         //given
         PullRequest pullRequest = getPullRequestMock();
+        when(pullRequest.getState()).thenReturn(PullRequestState.OPEN);
         
         PullRequestMergeability pullRequestMergeability = getPullRequestMergeability(true, new PullRequestMergeVeto[0]);
         when(pullRequestService.canMerge(anyInt(), anyLong())).thenReturn(pullRequestMergeability); 
@@ -96,6 +100,7 @@ public class DefaultPullrequestExtendedFactoryTest {
     public void shouldNotMergeDueToMergeConfilct() {
         //given
         PullRequest pullRequest = getPullRequestMock();
+        when(pullRequest.getState()).thenReturn(PullRequestState.OPEN);
         
         PullRequestMergeability pullRequestMergeability = getPullRequestMergeability(true, new PullRequestMergeVeto[0]);
         when(pullRequestService.canMerge(anyInt(), anyLong())).thenReturn(pullRequestMergeability); 
@@ -110,6 +115,34 @@ public class DefaultPullrequestExtendedFactoryTest {
         //then
         assertThat(vetos.size(), equalTo(1));
         assertThat(vetos.get(0), equalTo(properties.getProperty("pullRequest.mergeConflict.summaryMessage")));
+    }
+    
+    @Test
+    public void shouldReturnMergedPullRequest() {
+        //given
+        PullRequest pullRequest = getPullRequestMock();
+        when(pullRequest.getState()).thenReturn(PullRequestState.MERGED);
+        
+        //when
+        PullRequestExtended pullRequestExtended = factory.getPullRequestExtended(pullRequest);
+        
+        //then
+        List<MergeBlockerIconKeeper> vetoes = pullRequestExtended.getVetoIcons();
+        assertThat(MergeBlockerIconKeeper.CROSS.getIconFileName(), is(vetoes.get(0).getIconFileName()));      
+    }
+    
+    @Test
+    public void shouldReturnDeclinedPullRequest() {
+        //given
+        PullRequest pullRequest = getPullRequestMock();
+        when(pullRequest.getState()).thenReturn(PullRequestState.DECLINED);
+        
+        //when
+        PullRequestExtended pullRequestExtended = factory.getPullRequestExtended(pullRequest);
+        
+        //then
+        List<MergeBlockerIconKeeper> vetoes = pullRequestExtended.getVetoIcons();
+        assertThat(MergeBlockerIconKeeper.CROSS.getIconFileName(), is(vetoes.get(0).getIconFileName())); 
     }
     
     private PullRequest getPullRequestMock() {
