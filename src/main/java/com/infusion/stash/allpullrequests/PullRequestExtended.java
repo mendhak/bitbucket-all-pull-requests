@@ -109,6 +109,10 @@ public class PullRequestExtended {
     public PullRequestRef getToRef() {
         return pullRequest.getToRef();
     }
+    
+    public Date getUpdatedDate() {
+        return pullRequest.getUpdatedDate();
+    }
 
     /* (non-Javadoc)
      * @see com.atlassian.stash.pull.PullRequest#isOpen()
