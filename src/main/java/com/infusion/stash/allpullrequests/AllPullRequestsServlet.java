@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.atlassian.plugin.webresource.WebResourceManager;
 import com.atlassian.soy.renderer.SoyException;
 import com.atlassian.soy.renderer.SoyTemplateRenderer;
 import com.atlassian.bitbucket.project.Project;
@@ -26,6 +25,7 @@ import com.atlassian.bitbucket.util.PageImpl;
 import com.atlassian.bitbucket.util.PageRequest;
 import com.atlassian.bitbucket.util.PageRequestImpl;
 import com.atlassian.bitbucket.auth.AuthenticationContext;
+import com.atlassian.webresource.api.assembler.PageBuilderService;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
@@ -39,7 +39,7 @@ public class AllPullRequestsServlet extends HttpServlet {
     private final ProjectService projectService;
     private final PullRequestService pullRequestService;
     private final SoyTemplateRenderer soyTemplateRenderer;
-    private final WebResourceManager webResourceManager;
+    private final PageBuilderService pageBuilderService;
     private final AuthenticationContext authenticationContext;
     
     private final PullRequestExtendedFactory pullRequestExtendedFactory;
@@ -47,15 +47,15 @@ public class AllPullRequestsServlet extends HttpServlet {
     private static final int MAX_RESULTS_PER_PAGE = 10;
 
     public AllPullRequestsServlet(final ProjectService projectService,
-            final PullRequestService pullRequestService,
-            final SoyTemplateRenderer soyTemplateRenderer,
-            final WebResourceManager webResourceManager,
-            final AuthenticationContext authenticationContext,
-            final PullRequestExtendedFactory pullRequestExtendedFactory) {
+                                  final PullRequestService pullRequestService,
+                                  final SoyTemplateRenderer soyTemplateRenderer,
+                                  final PageBuilderService pageBuilderService,
+                                  final AuthenticationContext authenticationContext,
+                                  final PullRequestExtendedFactory pullRequestExtendedFactory) {
         this.projectService = projectService;
         this.pullRequestService = pullRequestService;
         this.soyTemplateRenderer = soyTemplateRenderer;
-        this.webResourceManager = webResourceManager;
+        this.pageBuilderService = pageBuilderService;
         this.authenticationContext = authenticationContext;
         this.pullRequestExtendedFactory = pullRequestExtendedFactory;
     }
@@ -96,11 +96,11 @@ public class AllPullRequestsServlet extends HttpServlet {
 
         String template;
         if (project == null) {
-            webResourceManager.requireResourcesForContext("com.infusion.stash.stash-all-pull-requests.all");
+            pageBuilderService.assembler().resources().requireContext("com.infusion.stash.stash-all-pull-requests.all");
             template = "plugin.page.allPullRequests";
         }
         else {
-            webResourceManager.requireResourcesForContext("com.infusion.stash.stash-all-pull-requests.project");
+            pageBuilderService.assembler().resources().requireContext("com.infusion.stash.stash-all-pull-requests.project");
             context.put("project", project);
             template = "plugin.page.projectPullRequests";
         }

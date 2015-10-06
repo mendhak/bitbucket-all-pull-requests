@@ -96,6 +96,6 @@
     <component-import key="repositoryService" interface="com.atlassian.bitbucket.repository.RepositoryService"/>
     <component-import key="permissionValidationService" interface="com.atlassian.bitbucket.permission.PermissionValidationService"/>
     <component-import key="soyTemplateRenderer" interface="com.atlassian.soy.renderer.SoyTemplateRenderer"/>
-    <component-import key="webResourceAssembler" interface="com.atlassian.webresource.api.assembler.WebResourceAssembler"/>
+    <component-import key="pageBuilderService" interface="com.atlassian.webresource.api.assembler.PageBuilderService"/>
 
 </atlassian-plugin>
