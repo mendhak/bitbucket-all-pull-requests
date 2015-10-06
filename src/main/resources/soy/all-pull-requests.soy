@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta name="decorator" content="stash.project.general">
+        <meta name="decorator" content="bitbucket.project.general">
         <meta name="projectKey" content="{$project.key}">
         <meta name="activeTab" content="project-pull-requests-tab">
     </head>
@@ -91,7 +91,7 @@
             {/call}
         {/param}
     {/call}
-    {call stash.feature.pullRequest.pullRequestTable}
+    {call bitbucket.feature.pullRequest.pullRequestTable}
         {param pullRequestPage: $pullRequestPage /}
         {param currentUser: $currentUser /}
         {param scope: 'global' /}

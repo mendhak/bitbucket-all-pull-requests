@@ -20,13 +20,13 @@
         <package>com.infusion.stash.allpullrequests.rest</package>
     </rest>
 
-    <stash-resource key="server-side-soy">
+    <client-resource key="server-side-soy">
         <directory location="/soy/">
             <include>/**/*.soy</include>
         </directory>
-        <dependency>com.atlassian.stash.stash-web-plugin:global</dependency>
-        <dependency>com.atlassian.stash.stash-web-plugin:server-soy-templates</dependency>
-    </stash-resource>
+        <dependency>com.atlassian.bitbucket.server.bitbucket-web:global</dependency>
+        <dependency>com.atlassian.bitbucket.server.bitbucket-web:server-soy-templates</dependency>
+    </client-resource>
 
     <web-resource key="general-pull-request-overview">
         <resource type="download" name="stash-all-pull-requests.css" location="/css/stash-all-pull-requests.css"/>
@@ -36,51 +36,51 @@
 
     <web-resource key="project-pull-requests-overview-resources">
         <resource type="download" name="all-pull-requests.js" location="/js/all-pull-requests.js"/>
-        <context>stash.page.project.overview</context>
-        <dependency>com.atlassian.stash.stash-web-plugin:global</dependency>
+        <context>bitbucket.page.project.overview</context>
+        <dependency>com.atlassian.bitbucket.server.bitbucket-web:global</dependency>
     </web-resource>
 
     <web-resource key="project-pull-requests-resources">
         <resource type="download" name="all-pull-requests.js" location="/js/all-pull-requests.js"/>
         <context>${project.groupId}.${project.artifactId}.project</context>
-        <dependency>com.atlassian.stash.stash-web-plugin:global</dependency>
-        <dependency>com.atlassian.stash.stash-web-plugin:pull-request-table</dependency>
+        <dependency>com.atlassian.bitbucket.server.bitbucket-web:global</dependency>
+        <dependency>com.atlassian.bitbucket.server.bitbucket-web:pull-request-table</dependency>
     </web-resource>
 
     <web-resource key="all-pull-requests-resources">
         <context>${project.groupId}.${project.artifactId}.all</context>
-        <dependency>com.atlassian.stash.stash-web-plugin:global</dependency>
-        <dependency>com.atlassian.stash.stash-web-plugin:pull-request-table</dependency>
+        <dependency>com.atlassian.bitbucket.server.bitbucket-web:global</dependency>
+        <dependency>com.atlassian.bitbucket.server.bitbucket-web:pull-request-table</dependency>
     </web-resource>
 
     <web-item key="project-pull-requests-tab" section="atl.project.nav">
         <label>Pull requests</label>
         <tooltip>View pull requests for all repositories in this project</tooltip>
         <link linkId="project-pull-requests-button">/plugins/servlet/all-pull-requests/project/${project.key}</link>
-        <param name="stashIconClass">aui-icon icon-pull-requests</param>
+        <param name="iconClass">aui-icon icon-pull-requests</param>
         <styleClass>pullRequestExtraProjectLink</styleClass>
     </web-item>
 
     <web-item key="all-pull-requests-tab" section="header.global.primary">
-        <condition class="com.atlassian.stash.web.conditions.IsLoggedInCondition"/>
+        <condition class="com.atlassian.bitbucket.web.conditions.IsLoggedInCondition"/>
         <label>Pull requests</label>
         <tooltip>View pull requests in all repositories</tooltip>
         <link linkId="all-pull-requests-button">/plugins/servlet/all-pull-requests/all</link>
     </web-item>
 
-	<web-section key="mergeabilityColumnSection" name="Mergeability Column" location="stash.pull-request.table-column" weight="110">
+	<web-section key="mergeabilityColumnSection" name="Mergeability Column" location="bitbucket.pull-request.table-column" weight="110">
         <label key="mergeabilityColumnHeader">Mergeability</label>
     </web-section>
 
-	<web-panel key="mergeabilityColumnPanel" location="stash.pull-request.table-column/mergeabilityColumnSection">
+	<web-panel key="mergeabilityColumnPanel" location="bitbucket.pull-request.table-column/mergeabilityColumnSection">
     	<resource name="view" type="soy" location="${project.groupId}.${project.artifactId}:mergeability-column-template/plugin.pullRequest.tableExtraData.mergeabilityColumn"/>
         <dependency>plugin.pullRequest.tableExtraData:mergeability-column-template</dependency>
     </web-panel>
     
-    <stash-resource key="mergeability-column-template" name="Mergeability template">
+    <web-resource key="mergeability-column-template" name="Mergeability template">
         <resource type="download" name="mergeability-column.soy" location="/soy/mergeability-column.soy" />
-        <dependency>com.atlassian.stash.stash-web-plugin:global</dependency>
-    </stash-resource>
+        <dependency>com.atlassian.bitbucket.server.bitbucket-web:global</dependency>
+    </web-resource>
 
 	<component key="pullRequestLoggerFactory" class="com.infusion.stash.allpullrequests.utils.PluginLoggerFactory"/>
 
@@ -97,6 +97,5 @@
     <component-import key="permissionValidationService" interface="com.atlassian.bitbucket.permission.PermissionValidationService"/>
     <component-import key="soyTemplateRenderer" interface="com.atlassian.soy.renderer.SoyTemplateRenderer"/>
     <component-import key="webResourceAssembler" interface="com.atlassian.webresource.api.assembler.WebResourceAssembler"/>
-    <component-import key="repositoryMetadataService" interface="com.atlassian.stash.repository.RepositoryMetadataService" />
 
 </atlassian-plugin>
