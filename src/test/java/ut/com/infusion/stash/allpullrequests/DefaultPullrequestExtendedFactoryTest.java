@@ -1,7 +1,7 @@
 package ut.com.infusion.stash.allpullrequests;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
@@ -24,16 +24,16 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.slf4j.Logger;
 
-import com.atlassian.stash.pull.PullRequest;
-import com.atlassian.stash.pull.PullRequestMergeVeto;
-import com.atlassian.stash.pull.PullRequestMergeability;
-import com.atlassian.stash.pull.PullRequestRef;
-import com.atlassian.stash.pull.PullRequestService;
-import com.atlassian.stash.pull.PullRequestState;
-import com.atlassian.stash.repository.Repository;
-import com.atlassian.stash.scm.Command;
-import com.atlassian.stash.scm.ScmService;
-import com.atlassian.stash.scm.pull.ScmPullRequestCommandFactory;
+import com.atlassian.bitbucket.pull.PullRequest;
+import com.atlassian.bitbucket.pull.PullRequestMergeVeto;
+import com.atlassian.bitbucket.pull.PullRequestMergeability;
+import com.atlassian.bitbucket.pull.PullRequestRef;
+import com.atlassian.bitbucket.pull.PullRequestService;
+import com.atlassian.bitbucket.pull.PullRequestState;
+import com.atlassian.bitbucket.repository.Repository;
+import com.atlassian.bitbucket.scm.Command;
+import com.atlassian.bitbucket.scm.ScmService;
+import com.atlassian.bitbucket.scm.pull.ScmPullRequestCommandFactory;
 import com.infusion.stash.allpullrequests.DefaultPullRequestExtendedFactory;
 import com.infusion.stash.allpullrequests.MergeBlockerIconKeeper;
 import com.infusion.stash.allpullrequests.PullRequestExtended;
@@ -160,7 +160,7 @@ public class DefaultPullrequestExtendedFactoryTest {
     private PullRequestMergeability getPullRequestMergeability(final Boolean caMarge, final PullRequestMergeVeto ... pullRequestMergeVetos) {
         PullRequestMergeability pullRequestMergeability = mock(PullRequestMergeability.class);
         when(pullRequestMergeability.canMerge()).thenReturn(caMarge);
-        when(pullRequestMergeability.getVetos()).thenReturn(Arrays.asList(pullRequestMergeVetos));
+        when(pullRequestMergeability.getVetoes()).thenReturn(Arrays.asList(pullRequestMergeVetos));
         
         return pullRequestMergeability;
     }

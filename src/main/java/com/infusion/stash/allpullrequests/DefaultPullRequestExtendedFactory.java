@@ -9,18 +9,21 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Properties;
 
+import com.atlassian.bitbucket.property.PropertyMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.atlassian.stash.pull.PullRequest;
-import com.atlassian.stash.pull.PullRequestMergeVeto;
-import com.atlassian.stash.pull.PullRequestMergeability;
-import com.atlassian.stash.pull.PullRequestService;
-import com.atlassian.stash.pull.PullRequestState;
-import com.atlassian.stash.pull.PullRequestTaskSearchRequest;
-import com.atlassian.stash.scm.ScmService;
-import com.atlassian.stash.task.TaskCount;
+import com.atlassian.bitbucket.pull.PullRequest;
+import com.atlassian.bitbucket.pull.PullRequestMergeVeto;
+import com.atlassian.bitbucket.pull.PullRequestMergeability;
+import com.atlassian.bitbucket.pull.PullRequestService;
+import com.atlassian.bitbucket.pull.PullRequestState;
+import com.atlassian.bitbucket.pull.PullRequestTaskSearchRequest;
+import com.atlassian.bitbucket.scm.ScmService;
+import com.atlassian.bitbucket.task.TaskCount;
 import com.infusion.stash.allpullrequests.utils.PropertiesMapper;
+
+import javax.annotation.Nonnull;
 
 
 /**
@@ -69,13 +72,19 @@ public class DefaultPullRequestExtendedFactory implements PullRequestExtendedFac
                 }
                 
                 @Override
-                public Collection<PullRequestMergeVeto> getVetos() {
+                public Collection<PullRequestMergeVeto> getVetoes() {
                     return new ArrayList<PullRequestMergeVeto>();
                 }
                 
                 @Override
                 public boolean canMerge() {
                     return false;
+                }
+
+                @Nonnull
+                @Override
+                public PropertyMap getProperties() {
+                    return PropertyMap.EMPTY;
                 }
             };
             

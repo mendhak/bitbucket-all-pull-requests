@@ -13,20 +13,21 @@ import javax.ws.rs.core.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.atlassian.bitbucket.i18n.I18nService;
+import com.atlassian.bitbucket.permission.PermissionValidationService;
+import com.atlassian.bitbucket.pull.PullRequestDirection;
+import com.atlassian.bitbucket.pull.PullRequestSearchRequest;
+import com.atlassian.bitbucket.pull.PullRequestService;
+import com.atlassian.bitbucket.pull.PullRequestState;
+import com.atlassian.bitbucket.repository.Repository;
+import com.atlassian.bitbucket.repository.RepositoryService;
+import com.atlassian.bitbucket.rest.RestResource;
+import com.atlassian.bitbucket.rest.util.ResponseFactory;
+import com.atlassian.bitbucket.rest.util.RestUtils;
+import com.atlassian.bitbucket.util.Page;
+import com.atlassian.bitbucket.util.PageRequest;
+import com.atlassian.bitbucket.util.PageRequestImpl;
 import com.atlassian.plugins.rest.common.security.AnonymousAllowed;
-import com.atlassian.stash.i18n.I18nService;
-import com.atlassian.stash.pull.PullRequestDirection;
-import com.atlassian.stash.pull.PullRequestService;
-import com.atlassian.stash.pull.PullRequestState;
-import com.atlassian.stash.repository.Repository;
-import com.atlassian.stash.repository.RepositoryService;
-import com.atlassian.stash.rest.util.ResponseFactory;
-import com.atlassian.stash.rest.util.RestResource;
-import com.atlassian.stash.rest.util.RestUtils;
-import com.atlassian.stash.user.PermissionValidationService;
-import com.atlassian.stash.util.Page;
-import com.atlassian.stash.util.PageRequest;
-import com.atlassian.stash.util.PageRequestImpl;
 import com.google.common.collect.Maps;
 import com.sun.jersey.spi.resource.Singleton;
 
@@ -58,7 +59,11 @@ public class AllPullRequestsResource extends RestResource {
         while (pageRequest != null) {
             Page<? extends Repository> page = repositoryService.findByProjectKey(projectKey, pageRequest);
             for (Repository repository : page.getValues()) {
-                count += pullRequestService.countInDirection(PullRequestDirection.INCOMING, repository.getId(), PullRequestState.OPEN);
+                count += pullRequestService.count(
+                        new PullRequestSearchRequest.Builder()
+                                .state(PullRequestState.OPEN)
+                                .repositoryAndBranch(PullRequestDirection.INCOMING, repository.getId(), null)
+                                .build());
             }
             if (page.getIsLastPage()) {
                 break;

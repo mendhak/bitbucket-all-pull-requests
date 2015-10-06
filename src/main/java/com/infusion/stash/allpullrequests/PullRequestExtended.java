@@ -8,15 +8,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import com.atlassian.stash.content.AttributeMap;
-import com.atlassian.stash.pull.PullRequest;
-import com.atlassian.stash.pull.PullRequestMergeVeto;
-import com.atlassian.stash.pull.PullRequestMergeability;
-import com.atlassian.stash.pull.PullRequestParticipant;
-import com.atlassian.stash.pull.PullRequestRef;
-import com.atlassian.stash.pull.PullRequestState;
-import com.atlassian.stash.task.TaskCount;
-import com.atlassian.stash.task.TaskState;
+import com.atlassian.bitbucket.property.PropertyMap;
+import com.atlassian.bitbucket.pull.PullRequest;
+import com.atlassian.bitbucket.pull.PullRequestMergeVeto;
+import com.atlassian.bitbucket.pull.PullRequestMergeability;
+import com.atlassian.bitbucket.pull.PullRequestParticipant;
+import com.atlassian.bitbucket.pull.PullRequestRef;
+import com.atlassian.bitbucket.pull.PullRequestState;
+import com.atlassian.bitbucket.task.TaskCount;
+import com.atlassian.bitbucket.task.TaskState;
+import com.atlassian.bitbucket.validation.annotation.OptionalString;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 
 /**
@@ -40,16 +44,36 @@ public class PullRequestExtended {
         this.customVetoes = new ArrayList<PullRequestMergeVeto>();
     }
 
-    /* (non-Javadoc)
-     * @see com.atlassian.stash.content.AttributeSupport#getAttributes()
-     */
-    public AttributeMap getAttributes() {
-        return pullRequest.getAttributes();
+    @Nullable
+    @OptionalString(size = 32768)
+    public String getDescription() {
+        return pullRequest.getDescription();
+    }
+
+    @Nonnull
+    public PropertyMap getProperties() {
+        return pullRequest.getProperties();
+    }
+
+    public boolean isLocked() {
+        return pullRequest.isLocked();
+    }
+
+    public boolean isClosed() {
+        return pullRequest.isClosed();
+    }
+
+    public boolean isCrossRepository() {
+        return pullRequest.isCrossRepository();
+    }
+
+    public int getVersion() {
+        return pullRequest.getVersion();
     }
 
     /* (non-Javadoc)
-     * @see com.atlassian.stash.pull.PullRequest#getAuthor()
-     */
+         * @see com.atlassian.stash.pull.PullRequest#getAuthor()
+         */
     public PullRequestParticipant getAuthor() {
         return pullRequest.getAuthor();
     }
@@ -131,7 +155,7 @@ public class PullRequestExtended {
     
     public List<String> getVetos() {
         List<String> allVetoes = new ArrayList<String>();
-        for(PullRequestMergeVeto veto: mergeability.getVetos()) {
+        for(PullRequestMergeVeto veto: mergeability.getVetoes()) {
             allVetoes.add(veto.getSummaryMessage());
         }
         
@@ -144,7 +168,7 @@ public class PullRequestExtended {
     
     public List<MergeBlockerIconKeeper> getVetoIcons() {
         List<MergeBlockerIconKeeper> allVetoes = new ArrayList<MergeBlockerIconKeeper>();
-        for(PullRequestMergeVeto veto: mergeability.getVetos()) {
+        for(PullRequestMergeVeto veto: mergeability.getVetoes()) {
             allVetoes.add(MergeBlockerIconKeeper.getMergeBlockerIconByMessage(veto.getSummaryMessage()));
         }
         

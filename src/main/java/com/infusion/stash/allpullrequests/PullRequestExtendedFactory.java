@@ -1,6 +1,6 @@
 package com.infusion.stash.allpullrequests;
 
-import com.atlassian.stash.pull.PullRequest;
+import com.atlassian.bitbucket.pull.PullRequest;
 
 
 /**
