@@ -59,12 +59,14 @@
         <link linkId="all-pull-requests-button">/plugins/servlet/all-pull-requests/all</link>
     </web-item>
 
-    <component-import key="i18nService" interface="com.atlassian.stash.i18n.I18nService"/>
-    <component-import key="projectService" interface="com.atlassian.stash.project.ProjectService"/>
-    <component-import key="repositoryService" interface="com.atlassian.stash.repository.RepositoryService"/>
-    <component-import key="permissionValidationService" interface="com.atlassian.stash.user.PermissionValidationService"/>
+    <component-import key="pullRequestService" interface="com.atlassian.bitbucket.pull.PullRequestService"/>
+    <component-import key="repositoryService" interface="com.atlassian.bitbucket.repository.RepositoryService"/>
+    <component-import key="permissionValidationService" interface="com.atlassian.bitbucket.permission.PermissionValidationService"/>
+    <component-import key="i18nService" interface="com.atlassian.bitbucket.i18n.I18nService"/>
+    <component-import key="projectService" interface="com.atlassian.bitbucket.project.ProjectService"/>
     <component-import key="soyTemplateRenderer" interface="com.atlassian.soy.renderer.SoyTemplateRenderer"/>
-    <component-import key="applicationPropertiesService" interface="com.atlassian.stash.server.ApplicationPropertiesService"/>
-    <component-import key="webResourceManager" interface="com.atlassian.plugin.webresource.WebResourceManager"/>
+    <component-import key="webResourceAssembler" interface="com.atlassian.webresource.api.assembler.WebResourceAssembler"/>
+
+    <component-import key="authenticationContext" interface="com.atlassian.bitbucket.auth.AuthenticationContext"/>
 
 </atlassian-plugin>

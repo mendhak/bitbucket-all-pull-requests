@@ -1,20 +1,20 @@
 package sk.oxygene.stash.allpullrequests;
 
-import com.atlassian.plugin.webresource.WebResourceManager;
 import com.atlassian.soy.renderer.SoyException;
 import com.atlassian.soy.renderer.SoyTemplateRenderer;
-import com.atlassian.stash.project.Project;
-import com.atlassian.stash.project.ProjectService;
-import com.atlassian.stash.pull.PullRequest;
-import com.atlassian.stash.pull.PullRequestOrder;
-import com.atlassian.stash.pull.PullRequestService;
-import com.atlassian.stash.pull.PullRequestState;
-import com.atlassian.stash.pull.PullRequestSearchRequest;
-import com.atlassian.stash.util.Page;
-import com.atlassian.stash.util.PageImpl;
-import com.atlassian.stash.util.PageRequest;
-import com.atlassian.stash.util.PageRequestImpl;
-import com.atlassian.stash.user.StashAuthenticationContext;
+import com.atlassian.bitbucket.project.Project;
+import com.atlassian.bitbucket.project.ProjectService;
+import com.atlassian.bitbucket.pull.PullRequest;
+import com.atlassian.bitbucket.pull.PullRequestOrder;
+import com.atlassian.bitbucket.pull.PullRequestService;
+import com.atlassian.bitbucket.pull.PullRequestState;
+import com.atlassian.bitbucket.pull.PullRequestSearchRequest;
+import com.atlassian.bitbucket.util.Page;
+import com.atlassian.bitbucket.util.PageImpl;
+import com.atlassian.bitbucket.util.PageRequest;
+import com.atlassian.bitbucket.util.PageRequestImpl;
+import com.atlassian.bitbucket.auth.AuthenticationContext;
+import com.atlassian.webresource.api.assembler.WebResourceAssembler;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.slf4j.Logger;
@@ -35,19 +35,19 @@ public class AllPullRequestsServlet extends HttpServlet {
     private final ProjectService projectService;
     private final PullRequestService pullRequestService;
     private final SoyTemplateRenderer soyTemplateRenderer;
-    private final WebResourceManager webResourceManager;
-    private final StashAuthenticationContext stashAuthenticationContext;
+    private final WebResourceAssembler webResourceAssembler;
+    private final AuthenticationContext authenticationContext;
 
     public AllPullRequestsServlet(ProjectService projectService,
                                   PullRequestService pullRequestService,
                                   SoyTemplateRenderer soyTemplateRenderer,
-                                  WebResourceManager webResourceManager,
-                                  StashAuthenticationContext stashAuthenticationContext) {
+                                  WebResourceAssembler webResourceAssembler,
+                                  AuthenticationContext authenticationContext) {
         this.projectService = projectService;
         this.pullRequestService = pullRequestService;
         this.soyTemplateRenderer = soyTemplateRenderer;
-        this.webResourceManager = webResourceManager;
-        this.stashAuthenticationContext = stashAuthenticationContext;
+        this.webResourceAssembler = webResourceAssembler;
+        this.authenticationContext = authenticationContext;
     }
 
     @Override
@@ -83,15 +83,15 @@ public class AllPullRequestsServlet extends HttpServlet {
         Map<String, Object> context = Maps.newHashMap();
         context.put("pullRequestPage", pullRequestPage);
         context.put("activeTab", activeTab);
-        context.put("currentUser", stashAuthenticationContext.getCurrentUser());
+        context.put("currentUser", authenticationContext.getCurrentUser());
 
         String template;
         if (project == null) {
-            webResourceManager.requireResourcesForContext("sk.oxygene.stash.stash-all-pull-requests.all");
+            webResourceAssembler.resources().requireContext("sk.oxygene.stash.stash-all-pull-requests.all");
             template = "plugin.page.allPullRequests";
         }
         else {
-            webResourceManager.requireResourcesForContext("sk.oxygene.stash.stash-all-pull-requests.project");
+            webResourceAssembler.resources().requireContext("sk.oxygene.stash.stash-all-pull-requests.project");
             context.put("project", project);
             template = "plugin.page.projectPullRequests";
         }
@@ -133,7 +133,7 @@ public class AllPullRequestsServlet extends HttpServlet {
                 isLastPage = true;
             }
             for (PullRequest pullRequest : pullRequestPage.getValues()) {
-                if (pullRequest.getToRef().getRepository().getProject().getId().equals(project.getId())) {
+                if (pullRequest.getToRef().getRepository().getProject().getId() == project.getId()) {
                     if (offset >= pageRequest.getStart() && values.size() < pageRequest.getLimit()) {
                         values.add(pullRequest);
                     }
