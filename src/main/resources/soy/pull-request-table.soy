@@ -13,7 +13,7 @@
  * @param? hideAuthorName toggles the rendering of the author name in addition to their avatar (defaults to false)
  */
 {template .pullRequestTable}
-    {call stash.widget.pagedTable}
+    {call bitbucket.internal.widget.pagedTable}
         {param id: $id ? $id : 'pull-requests-table' /}
         {param page: $pullRequestPage /}
         {param extraClasses: 'pull-requests-table' + ($extraClasses ? ' ' + $extraClasses : '') /}
@@ -31,7 +31,7 @@
                 <th class="author">{getText('stash.web.pullrequest.list.col.author')}</th>
                 <th class="reviewers">{getText('stash.web.pullrequest.list.col.reviewers')}</th>
                 <th class="comment-count"></th>
-				{foreach $webSection in getWebSections('stash.pull-request.table-column')}
+				{foreach $webSection in getWebSections('bitbucket.pull-request.table-column')}
 					<th class="{$webSection.key}" title="{$webSection.labelText}">{$webSection.labelText}</th>
 				{/foreach}
                 <th class="source">{getText('stash.web.pullrequest.list.col.source')}</th>
@@ -83,7 +83,7 @@
 
         {if $scope == 'global'}
         <td class="repository">
-            {call stash.feature.project.avatar}
+            {call bitbucket.internal.feature.project.avatar}
                 {param size: 'small' /}
                 {param project: $pullRequest.toRef.repository.project /}
             {/call}
@@ -101,7 +101,7 @@
         </td>
         {if $showStatus}
          <td class="status">
-            {call stash.widget.lozenge.pullRequestState}
+            {call bitbucket.internal.widget.lozenge.pullRequestState}
                 {param state: $pullRequest.state /}
                 {param extraClasses: ' aui-lozenge-subtle' /}
             {/call}
@@ -109,13 +109,13 @@
         {/if}
         <td class="author">
             {if $hideAuthorName}
-                {call stash.widget.avatar}
+                {call bitbucket.internal.widget.avatar}
                     {param size: 'small' /}
                     {param person: $pullRequest.author.user /}
                     {param tooltip: $pullRequest.author.user.displayName /}
                 {/call}
             {else}
-                {call stash.widget.avatarWithName}
+                {call bitbucket.internal.widget.avatarWithName}
                     {param size: 'small' /}
                     {param person: $pullRequest.author.user /}
                     {param link: true /}
@@ -124,7 +124,7 @@
             {/if}
         </td>
         <td class="reviewers">
-            {call stash.widget.avatarList.participantList}
+            {call bitbucket.internal.widget.avatarList.participantList}
                 {param participants: $pullRequest.reviewers /}
                 {param menuId: 'reviewers-' + $pullRequest.id /}
                 {param menuClass: 'pull-request-table-reviewers' /}
@@ -137,25 +137,25 @@
             {if $pullRequest.attributes and $pullRequest.attributes.commentCount}
                 // looped because $changeset.attributes has sets of values, should only ever loop once
                 {foreach $count in $pullRequest.attributes.commentCount}
-                    {call stash.feature.commentCount}
+                    {call bitbucket.internal.feature.commentCount}
                         {param count: $count /}
                     {/call}
                 {/foreach}
             {/if}
             //{if $pullRequest.properties and $pullRequest.properties.commentCount}
-            //    {call stash.feature.commentCount}
+            //    {call bitbucket.internal.feature.commentCount}
             //        {param count: $pullRequest.properties.commentCount /}
             //    {/call}
 
         </td>
-        {foreach $webSection in getWebSections('stash.pull-request.table-column')}
+        {foreach $webSection in getWebSections('bitbucket.pull-request.table-column')}
         	{call .pullRequestRowExtras}
         		{param webSection: $webSection /}
         		{param pullRequest: $pullRequest /}
         	{/call}
         {/foreach}
         <td class="source">
-            {call stash.feature.repository.refLozenge}
+            {call bitbucket.internal.feature.repository.refLozenge}
                 {param repository: $alwaysDisplayRepositories or $pullRequest.fromRef.repository.id != $pullRequest.toRef.repository.id ?
                     $pullRequest.fromRef.repository :
                     null /}
@@ -163,7 +163,7 @@
             {/call}
         </td>
         <td class="destination">
-            {call stash.feature.repository.refLozenge}
+            {call bitbucket.internal.feature.repository.refLozenge}
                 {param repository: $alwaysDisplayRepositories ?
                     $pullRequest.toRef.repository :
                     null /}
@@ -171,7 +171,7 @@
             {/call}
         </td>
         <td class="updated">
-            {call stash.widget.date.shortAge}
+            {call bitbucket.internal.widget.date.shortAge}
                 {param date: $pullRequest.updatedDate /}
             {/call}
         </td>
@@ -196,7 +196,7 @@
  * @param webSection
  */
 {template .pullRequestRowExtras private="true"}
-	{foreach $webPanelHtml in getWebPanels('stash.pull-request.table-column/' + $webSection.key, [ 'pullRequest' : $pullRequest ])}
+	{foreach $webPanelHtml in getWebPanels('bitbucket.pull-request.table-column/' + $webSection.key, [ 'pullRequest' : $pullRequest ])}
         <td class="{$webSection.key}-value">
 			{$webPanelHtml}
         </td>

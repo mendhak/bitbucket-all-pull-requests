@@ -9,6 +9,7 @@
     </plugin-info>
 
     <resource type="i18n" name="i18n" location="stash-all-pull-requests"/>
+    <resource type="i18n" name="Stash Web Pull Request i18n" location="i18n.stash-webapp-pullrequest" />
 
     <servlet key="all-pull-requests-servlet" class="com.infusion.stash.allpullrequests.AllPullRequestsServlet">
         <url-pattern>/all-pull-requests/*</url-pattern>
