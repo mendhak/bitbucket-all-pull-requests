@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.infusion.stash</groupId>
     <artifactId>stash-all-pull-requests</artifactId>
-    <version>1.4.3-SNAPSHOT</version>
+    <version>1.5</version>
 
     <distributionManagement>
         <repository>
@@ -21,7 +21,7 @@
     <scm>
         <connection>scm:git:https://bitbucket.org/infusiondev/stash-all-pull-requests-extra.git</connection>
         <url>https://bitbucket.org/infusiondev/infusion-project-status</url>
-        <tag>HEAD</tag>
+        <tag>v1.5</tag>
     </scm>
     
 	<repositories>
