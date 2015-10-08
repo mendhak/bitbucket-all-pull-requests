@@ -1,4 +1,4 @@
-All Pull Requests Add-on for Atlassian Stash with Mergeability status
+All Pull Requests Add-on for Atlassian Bitbucket Server with Mergeability status
 =====================================================================
 
 
