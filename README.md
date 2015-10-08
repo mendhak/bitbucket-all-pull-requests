@@ -6,6 +6,7 @@ All Pull Requests Add-on for Atlassian Bitbucket Server with Mergeability status
 
 
 It displays as an icon information about what is blocking you to do the merge:
+
  * Insufficient branch permissions
  * Not all required builds are successful yet
  * Requires approvers
