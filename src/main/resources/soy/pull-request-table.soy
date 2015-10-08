@@ -133,20 +133,11 @@
             {/call}
         </td>
         <td class="comment-count">
-            // Replace with properties in 4.0
-            {if $pullRequest.attributes and $pullRequest.attributes.commentCount}
-                // looped because $changeset.attributes has sets of values, should only ever loop once
-                {foreach $count in $pullRequest.attributes.commentCount}
-                    {call bitbucket.internal.feature.commentCount}
-                        {param count: $count /}
-                    {/call}
-                {/foreach}
+            {if $pullRequest.properties and $pullRequest.properties.commentCount}
+                {call bitbucket.internal.feature.commentCount}
+                    {param count: $pullRequest.properties.commentCount /}
+                {/call}
             {/if}
-            //{if $pullRequest.properties and $pullRequest.properties.commentCount}
-            //    {call bitbucket.internal.feature.commentCount}
-            //        {param count: $pullRequest.properties.commentCount /}
-            //    {/call}
-
         </td>
         {foreach $webSection in getWebSections('bitbucket.pull-request.table-column')}
         	{call .pullRequestRowExtras}
