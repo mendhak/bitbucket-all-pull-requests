@@ -3,24 +3,18 @@
  */
 package com.infusion.stash.allpullrequests;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-
 import com.atlassian.bitbucket.property.PropertyMap;
-import com.atlassian.bitbucket.pull.PullRequest;
-import com.atlassian.bitbucket.pull.PullRequestMergeVeto;
-import com.atlassian.bitbucket.pull.PullRequestMergeability;
-import com.atlassian.bitbucket.pull.PullRequestParticipant;
-import com.atlassian.bitbucket.pull.PullRequestRef;
-import com.atlassian.bitbucket.pull.PullRequestState;
+import com.atlassian.bitbucket.pull.*;
 import com.atlassian.bitbucket.task.TaskCount;
 import com.atlassian.bitbucket.task.TaskState;
 import com.atlassian.bitbucket.validation.annotation.OptionalString;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -182,7 +176,11 @@ public class PullRequestExtended {
     public long getOpenedTasksCount() {
         return taskCount.getCount(TaskState.OPEN);
     }
-    
+
+    public long getClosedTasksCount() {
+        return taskCount.getCount(TaskState.RESOLVED);
+    }
+
     public void addCustomMergeVeto(PullRequestMergeVeto pullRequestMergeVeto) {
         customVetoes.add(pullRequestMergeVeto);
     }

@@ -1,33 +1,28 @@
 package com.infusion.stash.allpullrequests;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.SortedMap;
+import com.atlassian.bitbucket.auth.AuthenticationContext;
+import com.atlassian.bitbucket.project.Project;
+import com.atlassian.bitbucket.project.ProjectService;
+import com.atlassian.bitbucket.pull.*;
+import com.atlassian.bitbucket.util.Page;
+import com.atlassian.bitbucket.util.PageImpl;
+import com.atlassian.bitbucket.util.PageRequest;
+import com.atlassian.bitbucket.util.PageRequestImpl;
+import com.atlassian.soy.renderer.SoyException;
+import com.atlassian.soy.renderer.SoyTemplateRenderer;
+import com.atlassian.webresource.api.assembler.PageBuilderService;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.atlassian.soy.renderer.SoyException;
-import com.atlassian.soy.renderer.SoyTemplateRenderer;
-import com.atlassian.bitbucket.project.Project;
-import com.atlassian.bitbucket.project.ProjectService;
-import com.atlassian.bitbucket.pull.PullRequest;
-import com.atlassian.bitbucket.pull.PullRequestOrder;
-import com.atlassian.bitbucket.pull.PullRequestService;
-import com.atlassian.bitbucket.pull.PullRequestState;
-import com.atlassian.bitbucket.pull.PullRequestSearchRequest;
-import com.atlassian.bitbucket.util.Page;
-import com.atlassian.bitbucket.util.PageImpl;
-import com.atlassian.bitbucket.util.PageRequest;
-import com.atlassian.bitbucket.util.PageRequestImpl;
-import com.atlassian.bitbucket.auth.AuthenticationContext;
-import com.atlassian.webresource.api.assembler.PageBuilderService;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.SortedMap;
 
 public class AllPullRequestsServlet extends HttpServlet {
 
@@ -64,9 +59,9 @@ public class AllPullRequestsServlet extends HttpServlet {
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
         Project project;
         final String[] path = request.getPathInfo().split("/");
-        if (path.length == 2 && path[1].equals("all")) {
+        if (path.length == 2 && "all".equals(path[1])) {
             project = null;
-        } else if (path.length == 3 && path[1].equals("project") && !path[2].isEmpty()) {
+        } else if (path.length == 3 && "project".equals(path[1]) && !path[2].isEmpty()) {
             String projectKey = path[2];
             project = projectService.getByKey(projectKey);
         }
@@ -77,9 +72,9 @@ public class AllPullRequestsServlet extends HttpServlet {
 
         PullRequestState state;
         String activeTab = request.getParameter("state");
-        if (activeTab != null && activeTab.equals("merged")) {
+        if (activeTab != null && "merged".equals(activeTab)) {
             state = PullRequestState.MERGED;
-        } else if (activeTab != null && activeTab.equals("declined")) {
+        } else if (activeTab != null && "declined".equals(activeTab)) {
             state = PullRequestState.DECLINED;
         } else {
             state = PullRequestState.OPEN;
