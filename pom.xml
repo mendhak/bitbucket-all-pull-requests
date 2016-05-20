@@ -23,7 +23,7 @@
         <url>https://bitbucket.org/infusiondev/infusion-project-status</url>
         <tag>HEAD</tag>
     </scm>
-    
+
 	<repositories>
 		<repository>
 			<id>atlassian-public</id>
@@ -54,7 +54,7 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
-	
+
     <organization>
         <name>Infusion</name>
         <url>http://www.infusion.com/</url>
@@ -170,9 +170,9 @@
             <artifactId>gson</artifactId>
             <version>2.2.2-atlassian-1</version>
         </dependency>
-        
+
         <!-- TESTING -->
-        
+
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
@@ -185,9 +185,9 @@
             <version>4.10</version>
             <scope>test</scope>
         </dependency>
-        
+
         <!-- LOGGING -->
-        
+
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
@@ -228,11 +228,11 @@
         </plugins>
     </build>
     <properties>
-        <bitbucket.version>4.0.0</bitbucket.version>
+        <bitbucket.version>4.6.1</bitbucket.version>
         <bitbucket.data.version>${bitbucket.version}</bitbucket.data.version>
         <plugins.rest.version>3.0.8</plugins.rest.version>
         <plugins.webresource.version>3.4.3</plugins.webresource.version>
-        <amps.version>6.1.0</amps.version>
+        <amps.version>6.2.4</amps.version>
         <plugin.testrunner.version>1.1.1</plugin.testrunner.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
