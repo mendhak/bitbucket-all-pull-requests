@@ -15,7 +15,7 @@ It displays as an icon information about what is blocking you to do the merge:
  * Requires all tasks to be resolved
 
 
-Development
+# Development #
 -----------
 
 Useful Atlassian SDK commands:
@@ -28,3 +28,7 @@ Useful Atlassian SDK commands:
 
 Full documentation is always available at:
 https://developer.atlassian.com/docs/getting-started
+
+# Support #
+We offer very limited support - only when we have volunteers that want to contribute.
+Pull requests are welcomed!
