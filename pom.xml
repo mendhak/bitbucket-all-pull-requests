@@ -100,6 +100,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.atlassian.plugins</groupId>
+            <artifactId>atlassian-plugins-core</artifactId>
+            <version>4.5.0</version> </dependency>
+        <dependency>
             <groupId>com.atlassian.bitbucket.server</groupId>
             <artifactId>bitbucket-api</artifactId>
             <version>${bitbucket.version}</version>
@@ -228,7 +232,7 @@
         </plugins>
     </build>
     <properties>
-        <bitbucket.version>4.6.1</bitbucket.version>
+        <bitbucket.version>5.0.1</bitbucket.version>
         <bitbucket.data.version>${bitbucket.version}</bitbucket.data.version>
         <plugins.rest.version>3.0.8</plugins.rest.version>
         <plugins.webresource.version>3.4.3</plugins.webresource.version>

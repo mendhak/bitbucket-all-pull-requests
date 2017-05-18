@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
+import com.atlassian.bitbucket.pull.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -24,12 +25,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.slf4j.Logger;
 
-import com.atlassian.bitbucket.pull.PullRequest;
-import com.atlassian.bitbucket.pull.PullRequestMergeVeto;
-import com.atlassian.bitbucket.pull.PullRequestMergeability;
-import com.atlassian.bitbucket.pull.PullRequestRef;
-import com.atlassian.bitbucket.pull.PullRequestService;
-import com.atlassian.bitbucket.pull.PullRequestState;
 import com.atlassian.bitbucket.repository.Repository;
 import com.atlassian.bitbucket.scm.Command;
 import com.atlassian.bitbucket.scm.ScmService;
@@ -85,7 +80,7 @@ public class DefaultPullrequestExtendedFactoryTest {
         PullRequestMergeability pullRequestMergeability = getPullRequestMergeability(true, new PullRequestMergeVeto[0]);
         when(pullRequestService.canMerge(anyInt(), anyLong())).thenReturn(pullRequestMergeability); 
         
-        ScmPullRequestCommandFactory commandFactory = getScmPullRequestCommandFactory(true);
+        ScmPullRequestCommandFactory commandFactory = getScmPullRequestCommandFactory(true, pullRequest);
         when(scmService.getPullRequestCommandFactory(eq(pullRequest))).thenReturn(commandFactory);
         
         //when
@@ -105,7 +100,7 @@ public class DefaultPullrequestExtendedFactoryTest {
         PullRequestMergeability pullRequestMergeability = getPullRequestMergeability(true, new PullRequestMergeVeto[0]);
         when(pullRequestService.canMerge(anyInt(), anyLong())).thenReturn(pullRequestMergeability); 
         
-        ScmPullRequestCommandFactory commandFactory = getScmPullRequestCommandFactory(false);
+        ScmPullRequestCommandFactory commandFactory = getScmPullRequestCommandFactory(false, pullRequest);
         when(scmService.getPullRequestCommandFactory(eq(pullRequest))).thenReturn(commandFactory);
         
         //when
@@ -165,13 +160,16 @@ public class DefaultPullrequestExtendedFactoryTest {
         return pullRequestMergeability;
     }
     
-    private ScmPullRequestCommandFactory getScmPullRequestCommandFactory(final Boolean canMerge) {
+    private ScmPullRequestCommandFactory getScmPullRequestCommandFactory(final Boolean canMerge, final PullRequest pullRequest) {
         ScmPullRequestCommandFactory commandFactory = mock (ScmPullRequestCommandFactory.class);
-        Command<Boolean> command = mock(Command.class);
-        
-        when(command.call()).thenReturn(canMerge);
-        when(commandFactory.canMerge()).thenReturn(command);
-        
+        //Command<Boolean> command = mock(Command.class);
+        Command<PullRequestMergeResult> mergeResultCommand = mock(Command.class);
+        PullRequestMergeResult result = mock(PullRequestMergeResult.class);
+
+        when(commandFactory.tryMerge(pullRequest)).thenReturn(mergeResultCommand);
+        when(mergeResultCommand.call()).thenReturn(result);
+        when(result.getOutcome()).thenReturn(canMerge ? PullRequestMergeOutcome.CLEAN : PullRequestMergeOutcome.CONFLICTED);
+
         return commandFactory;
     }
     
