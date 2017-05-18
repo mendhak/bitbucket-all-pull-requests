@@ -10,15 +10,10 @@ import java.util.Collection;
 import java.util.Properties;
 
 import com.atlassian.bitbucket.property.PropertyMap;
+import com.atlassian.bitbucket.pull.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.atlassian.bitbucket.pull.PullRequest;
-import com.atlassian.bitbucket.pull.PullRequestMergeVeto;
-import com.atlassian.bitbucket.pull.PullRequestMergeability;
-import com.atlassian.bitbucket.pull.PullRequestService;
-import com.atlassian.bitbucket.pull.PullRequestState;
-import com.atlassian.bitbucket.pull.PullRequestTaskSearchRequest;
 import com.atlassian.bitbucket.scm.ScmService;
 import com.atlassian.bitbucket.task.TaskCount;
 import com.infusion.stash.allpullrequests.utils.PropertiesMapper;
@@ -64,7 +59,7 @@ public class DefaultPullRequestExtendedFactory implements PullRequestExtendedFac
                 pullRequestExtended.addCustomMergeVeto(veto);
             }
         } else {
-            PullRequestMergeability mergeability = new PullRequestMergeability() {
+            final PullRequestMergeability mergeability = new PullRequestMergeability() {
                 
                 @Override
                 public boolean isConflicted() {
@@ -79,6 +74,12 @@ public class DefaultPullRequestExtendedFactory implements PullRequestExtendedFac
                 @Override
                 public boolean canMerge() {
                     return false;
+                }
+
+                @Nonnull
+                @Override
+                public PullRequestMergeOutcome getOutcome() {
+                    return PullRequestMergeOutcome.CLEAN;
                 }
 
                 @Nonnull
@@ -109,9 +110,11 @@ public class DefaultPullRequestExtendedFactory implements PullRequestExtendedFac
     }
     
     private boolean isConflicted(PullRequest pullRequest) {
-        Boolean canMerge = this.scmService.getPullRequestCommandFactory(pullRequest).canMerge().call();
+        //Boolean canMerge = this.scmService.getPullRequestCommandFactory(pullRequest).canMerge().call();
+        PullRequestMergeResult mergeResult = this.scmService.getPullRequestCommandFactory(pullRequest).tryMerge(pullRequest).call();
 
-        return ((canMerge != null) && (!(canMerge.booleanValue())));
+        //return ((canMerge != null) && (!(canMerge.booleanValue())));
+        return  mergeResult.getOutcome() == PullRequestMergeOutcome.CONFLICTED;
     }
     
     private Properties initializeProperties(String fileName) throws IOException {

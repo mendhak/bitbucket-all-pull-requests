@@ -32,3 +32,9 @@ https://developer.atlassian.com/docs/getting-started
 # Support #
 We offer very limited support - only when we have volunteers that want to contribute.
 Pull requests are welcomed!
+
+# Bitbucket 5.0 #
+To run bitbucket 5.0 run `atlas-run -u 6.3.0`
+
+# To Release #
+`atlas-mvn release:prepare release:perform`
