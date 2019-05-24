@@ -44,3 +44,37 @@
 .paste {
 	background-image: url("images/paste_16.png");
 }
+
+.bitbucket-theme .recent-repositories-menu {
+  max-width: 421px;
+  min-width: 320px;
+}
+.bitbucket-theme .recent-repositories-menu li {
+  margin-bottom: 0;
+}
+.bitbucket-theme .recent-repositories-menu .public-repo-list-link-section {
+  margin: 0 10px;
+}
+.bitbucket-theme .recent-repositories-menu .public-repo-list-link-section > ul {
+  margin: 0 -10px;
+}
+.bitbucket-theme .recent-repositories-menu .public-repo-list-link-section .public-repos-link.icon-repository,
+.bitbucket-theme .recent-repositories-menu .public-repo-list-link-section .public-repos-link.icon-repository:hover {
+  display: flex;
+  background-repeat: no-repeat;
+  background-position: 15px 8px;
+  padding: 10px;
+  padding-left: 46.5px;
+  color: #172b4d;
+}
+.bitbucket-theme .recent-repositories-menu.aui-dropdown2 .aui-dropdown2-heading {
+  padding-top: 10px;
+}
+.bitbucket-theme .recent-repositories-menu.aui-dropdown2 ul.repository-list li a {
+  color: #172b4d;
+}
+.bitbucket-theme .recent-repositories-menu.aui-dropdown2 ul.repository-list li a:focus,
+.bitbucket-theme .recent-repositories-menu.aui-dropdown2 ul.repository-list li a:hover {
+  background-color: #f4f5f7;
+  color: #172b4d;
+}

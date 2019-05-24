@@ -37,13 +37,11 @@
     </web-resource>
 
     <web-resource key="project-pull-requests-overview-resources">
-        <resource type="download" name="all-pull-requests.js" location="/js/all-pull-requests.js"/>
         <context>bitbucket.page.project.overview</context>
         <dependency>com.atlassian.bitbucket.server.bitbucket-web:global</dependency>
     </web-resource>
 
     <web-resource key="project-pull-requests-resources">
-        <resource type="download" name="all-pull-requests.js" location="/js/all-pull-requests.js"/>
         <context>${project.groupId}.${project.artifactId}.project</context>
         <dependency>com.atlassian.bitbucket.server.bitbucket-web:global</dependency>
         <dependency>com.atlassian.bitbucket.server.bitbucket-web:pull-request-table</dependency>

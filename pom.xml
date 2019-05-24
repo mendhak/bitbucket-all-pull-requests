@@ -214,14 +214,16 @@
                             <dataVersion>${bitbucket.data.version}</dataVersion>
                         </product>
                     </products>
+                    <enableQuickReload>true</enableQuickReload>
+                    <enableFastdev>false</enableFastdev>
                 </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.3</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -232,11 +234,11 @@
         </plugins>
     </build>
     <properties>
-        <bitbucket.version>5.0.1</bitbucket.version>
+        <bitbucket.version>6.0.0</bitbucket.version>
         <bitbucket.data.version>${bitbucket.version}</bitbucket.data.version>
         <plugins.rest.version>3.0.8</plugins.rest.version>
         <plugins.webresource.version>3.4.3</plugins.webresource.version>
-        <amps.version>6.2.4</amps.version>
+        <amps.version>8.0.0</amps.version>
         <plugin.testrunner.version>1.1.1</plugin.testrunner.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>

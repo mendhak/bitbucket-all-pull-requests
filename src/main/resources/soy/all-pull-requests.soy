@@ -64,33 +64,20 @@
  * @param currentUser
  */
 {template .pullRequests}
-    {call widget.aui.tabChrome data="all"}
-        {param isDisabled: true /}
-        {param tabItemsContent}
-            {call widget.aui.tabMenuItem}
-                {param url: '?state=open' /}
-                {param text: 'Open' /}
-                {param isActive: $activeTab == 'open' ? true : false /}
-            {/call}
-            {call widget.aui.tabMenuItem}
-                {param url: '?state=merged' /}
-                {param text: 'Merged' /}
-                {param isActive: $activeTab == 'merged' ? true : false /}
-            {/call}
-            {call widget.aui.tabMenuItem}
-                {param url: '?state=declined' /}
-                {param text: 'Declined' /}
-                {param isActive: $activeTab == 'declined' ? true : false /}
-            {/call}
-        {/param}
-        {param tabPanesContent}
-            {call widget.aui.tabPane}
-                {param isActive: true /}
-                {param extraClasses: 'pull-request-content' /}
-                {param content}{/param}
-            {/call}
-        {/param}
-    {/call}
+    <div class="aui-tabs horizontal-tabs aui-tabs-disabled">
+      <ul class="tabs-menu" role="tablist">
+        <li class="menu-item {if $activeTab == 'open'} active-tab{/if}" data-module-key="open">
+		<a href="?state=open"><strong>Open</strong></a>
+	</li>
+        <li class="menu-item {if $activeTab == 'mergedn'} active-tab{/if}" data-module-key="merged">
+		<a href="?state=merged"><strong>Merged</strong></a>
+	</li>
+        <li class="menu-item {if $activeTab == 'declined'} active-tab{/if}" data-module-key="declined">
+		<a href="?state=declined"><strong>Declined</strong></a>
+	</li>
+      </ul>
+      <div class="tabs-pane active-pane pull-request-content"></div>
+    </div>
     {call stash.feature.pullRequest.pullRequestTable}
         {param pullRequestPage: $pullRequestPage /}
         {param currentUser: $currentUser /}

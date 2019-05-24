@@ -13,10 +13,24 @@
  * @param? hideAuthorName toggles the rendering of the author name in addition to their avatar (defaults to false)
  */
 {template .pullRequestTable}
-    {call bitbucket.internal.widget.pagedTable}
+    {let $page: $pullRequestPage /}
+    {let $pageAttributes: $page ? concat([
+           'start' : $page.start,
+           'size' : $page.size,
+           'lastpage' : $page.isLastPage
+        ], $page.nextPageRequest ? [
+           'nextpagestart' : $page.nextPageRequest.start
+        ] : [:]) : [:] /}
+    {let $prExtraClasses: 'pull-requests-table' + ($extraClasses ? ' ' + $extraClasses : '') /}
+    {call widget.aui.table}
         {param id: $id ? $id : 'pull-requests-table' /}
-        {param page: $pullRequestPage /}
-        {param extraClasses: 'pull-requests-table' + ($extraClasses ? ' ' + $extraClasses : '') /}
+
+        {param dataAttributes: $pageAttributes /}
+        {param extraClasses}
+            paged-table
+            {if $extraClasses}{sp}{$prExtraClasses}{/if}
+            {if not $page or $page.size == 0}{sp}no-rows{/if}
+        {/param}
         {param theadContent}
             <tr>
                 {if $scope == 'global'}
@@ -85,7 +99,7 @@
 
         {if $scope == 'global'}
         <td class="repository">
-            {call bitbucket.internal.feature.project.avatar}
+            {call bitbucket.internal.feature.project.projectAvatar.projectAvatar.avatar}
                 {param size: 'small' /}
                 {param project: $pullRequest.toRef.repository.project /}
             {/call}
@@ -103,7 +117,7 @@
         </td>
         {if $showStatus}
          <td class="status">
-            {call bitbucket.internal.widget.lozenge.pullRequestState}
+            {call bitbucket.internal.widget.lozenge.lozenge.pullRequestState}
                 {param state: $pullRequest.state /}
                 {param extraClasses: ' aui-lozenge-subtle' /}
             {/call}
@@ -111,13 +125,13 @@
         {/if}
         <td class="author">
             {if $hideAuthorName}
-                {call bitbucket.internal.widget.avatar}
+                {call bitbucket.internal.widget.avatar.avatar.avatar}
                     {param size: 'small' /}
                     {param person: $pullRequest.author.user /}
                     {param tooltip: $pullRequest.author.user.displayName /}
                 {/call}
             {else}
-                {call bitbucket.internal.widget.avatarWithName}
+                {call bitbucket.internal.widget.avatar.avatar.avatarWithName}
                     {param size: 'small' /}
                     {param person: $pullRequest.author.user /}
                     {param link: true /}
@@ -126,7 +140,7 @@
             {/if}
         </td>
         <td class="reviewers">
-            {call bitbucket.internal.widget.avatarList.participantList}
+            {call bitbucket.internal.widget.avatarList.avatarList.participantList}
                 {param participants: $pullRequest.reviewers /}
                 {param menuId: 'reviewers-' + $pullRequest.id /}
                 {param menuClass: 'pull-request-table-reviewers' /}
@@ -136,9 +150,15 @@
         </td>
         <td class="comment-count">
             {if $pullRequest.properties and $pullRequest.properties.commentCount}
-                {call bitbucket.internal.feature.commentCount}
-                    {param count: $pullRequest.properties.commentCount /}
-                {/call}
+                <span class="comment-count" title="{getText('bitbucket.web.comment.count', to_int($pullRequest.properties.commentCount))}">
+                    {call aui.icons.icon}
+                        {param icon: 'comment' /}
+                        {param size: 'small' /}
+                        {param useIconFont: true /}
+                        {param accessibilityText: getText('bitbucket.web.comment.count', to_int($pullRequest.properties.commentCount)) /}
+                    {/call}
+                   <span class="count">{cap_int($pullRequest.properties.commentCount, 99)}</span>
+                </span>
             {/if}
         </td>
         {foreach $webSection in getWebSections('bitbucket.pull-request.table-column')}
@@ -154,7 +174,7 @@
             <span title="{getText('stash.web.pullrequest.list.col.closedTasks')}">{$pullRequest.closedTasksCount}</span>
         </td>
         <td class="source">
-            {call bitbucket.internal.feature.repository.refLozenge}
+            {call bitbucket.internal.feature.repository.refLozenge.refLozenge.refLozenge}
                 {param repository: $alwaysDisplayRepositories or $pullRequest.fromRef.repository.id != $pullRequest.toRef.repository.id ?
                     $pullRequest.fromRef.repository :
                     null /}
@@ -162,7 +182,7 @@
             {/call}
         </td>
         <td class="destination">
-            {call bitbucket.internal.feature.repository.refLozenge}
+            {call bitbucket.internal.feature.repository.refLozenge.refLozenge.refLozenge}
                 {param repository: $alwaysDisplayRepositories ?
                     $pullRequest.toRef.repository :
                     null /}
@@ -170,7 +190,7 @@
             {/call}
         </td>
         <td class="updated">
-            {call bitbucket.internal.widget.date.shortAge}
+            {call bitbucket.internal.widget.date.time.shortAge}
                 {param date: $pullRequest.updatedDate /}
             {/call}
         </td>
