@@ -1,5 +1,5 @@
-Forked from the original at https://bitbucket.org/infusiondev/stash-all-pull-requests-extra/src/master/
-With changes to get it working with Bitbucket 6 by @goochjj
+Forked from the [original](https://bitbucket.org/infusiondev/stash-all-pull-requests-extra/src/master/)  
+With changes to get it working with [Bitbucket 6 by goochjj](https://bitbucket.org/goochjj/stash-all-pull-requests-extra/branch/BB6)
 
 
 
