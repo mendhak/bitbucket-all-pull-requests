@@ -1,6 +1,5 @@
-Forked from the [original](https://bitbucket.org/infusiondev/stash-all-pull-requests-extra/src/master/)  
-With changes to get it working with [Bitbucket 6 by goochjj](https://bitbucket.org/goochjj/stash-all-pull-requests-extra/branch/BB6)  
-Zip file uploaded to [Releases](https://github.com/mendhak/bitbucket-all-pull-requests/releases)
+Forked from the [original](https://bitbucket.org/infusiondev/stash-all-pull-requests-extra/src/master/), with [goochjj's Bitbucket 6 fix](https://bitbucket.org/goochjj/stash-all-pull-requests-extra/branch/BB6)  
+Zip file uploaded to [Releases](https://github.com/mendhak/bitbucket-all-pull-requests/releases) 
 
 
 All Pull Requests Add-on for Atlassian Bitbucket Server with Mergeability status
