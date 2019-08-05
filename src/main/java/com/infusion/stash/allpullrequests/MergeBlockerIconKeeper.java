@@ -15,7 +15,7 @@ import java.util.Map;
 public final class MergeBlockerIconKeeper {
     
     public static final MergeBlockerIconKeeper INSUFFICIENT_BRANCH_PERMISSIONS = new MergeBlockerIconKeeper("Insufficient branch permissions", "user-minus_16.png", "user-minus");
-    public static final MergeBlockerIconKeeper CROSS = new MergeBlockerIconKeeper("DEFAULT", "cross_16.png", "cross");
+    public static final MergeBlockerIconKeeper CROSS = new MergeBlockerIconKeeper("DEFAULT", "cross_16.png", "times-circle");
     public static final MergeBlockerIconKeeper SUCCESSFUL_BUILD = new MergeBlockerIconKeeper("Not all required builds are successful yet", "wrench_16.png", "wrench");
     public static final MergeBlockerIconKeeper REQUIRES_APPROVERS = new MergeBlockerIconKeeper("Requires approvers", "users_16.png", "users");
     public static final MergeBlockerIconKeeper MERGE_CONFLICT = new MergeBlockerIconKeeper("Resolve all merge conflicts first", "github2_16.png", "github");

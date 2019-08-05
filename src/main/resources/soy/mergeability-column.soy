@@ -5,10 +5,10 @@
  **/
 {template .mergeabilityColumn}
 	{if $pullRequest.mergeable }
-		<div class="pullRequestStatusBox mergeStatusOk"></div>
+		<i class="fas fa-check"></i>
 	{elseif not $pullRequest.mergeable}
 		{foreach $veto in $pullRequest.vetoIcons}
-			<div class="pullRequestStatusBox {$veto.cssStyleName}" title="{$veto.message}"></div>
+			<i class="fas fa-{$veto.cssStyleName}" title="{$veto.message}"></i>
 		{/foreach}
 	{/if}
 {/template}

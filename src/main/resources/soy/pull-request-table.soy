@@ -151,12 +151,13 @@
         <td class="comment-count">
             {if $pullRequest.properties and $pullRequest.properties.commentCount}
                 <span class="comment-count" title="{getText('bitbucket.web.comment.count', to_int($pullRequest.properties.commentCount))}">
-                    {call aui.icons.icon}
-                        {param icon: 'comment' /}
-                        {param size: 'small' /}
-                        {param useIconFont: true /}
-                        {param accessibilityText: getText('bitbucket.web.comment.count', to_int($pullRequest.properties.commentCount)) /}
-                    {/call}
+                    <i class="far fa-comments"></i>
+                    // {call aui.icons.icon}
+                    //     {param icon: 'comment' /}
+                    //     {param size: 'small' /}
+                    //     {param useIconFont: true /}
+                    //     {param accessibilityText: getText('bitbucket.web.comment.count', to_int($pullRequest.properties.commentCount)) /}
+                    // {/call}
                    <span class="count">{cap_int($pullRequest.properties.commentCount, 99)}</span>
                 </span>
             {/if}
@@ -168,7 +169,7 @@
         	{/call}
         {/foreach}
         <td class="opened-tasks">
-            <span title="{getText('stash.web.pullrequest.list.col.openedTasks')}">{$pullRequest.openedTasksCount}</span>
+            <span title="{getText('stash.web.pullrequest.list.col.openedTasks')}"><i class="fas fa-tasks"></i>{$pullRequest.openedTasksCount}</span>
         </td>
         <td class="closed-tasks">
             <span title="{getText('stash.web.pullrequest.list.col.closedTasks')}">{$pullRequest.closedTasksCount}</span>
