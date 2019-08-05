@@ -64,12 +64,13 @@ Browse to http://localhost:7990/bitbucket,  then login with `admin/admin` and th
 Full documentation is always available at:
 https://developer.atlassian.com/docs/getting-started
 
-## Support
 
-
-
-## Bitbucket 5.0 
-To run bitbucket 5.0 run `atlas-run -u 6.3.0`
 
 ## To Release 
-`atlas-mvn release:prepare release:perform`
+
+    atlas-mvn release:prepare release:perform
+
+This appears to perform some versioning convention in Java/Maven I'm not familiar with, where the `-SNAPSHOT` is removed and the branch is tagged. 
+It also attempts to release to bitbucket.org.  
+
+Instead I'll just create `-SNAPSHOT.jar` builds and attempt to use those.  Hopefully this has no adverse effects.  
