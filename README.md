@@ -1,3 +1,8 @@
+Forked from the original at https://bitbucket.org/infusiondev/stash-all-pull-requests-extra/src/master/
+With changes to get it working with Bitbucket 6 by @goochjj
+
+
+
 All Pull Requests Add-on for Atlassian Bitbucket Server with Mergeability status
 =====================================================================
 
@@ -15,7 +20,7 @@ It displays as an icon information about what is blocking you to do the merge:
  * Requires all tasks to be resolved
 
 
-# Development #
+# Development 
 -----------
 
 ## ~/.m2/settings.xml
