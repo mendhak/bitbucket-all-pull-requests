@@ -19,8 +19,8 @@
     </distributionManagement>
 
     <scm>
-        <connection>scm:git:https://bitbucket.org/infusiondev/stash-all-pull-requests-extra.git</connection>
-        <url>https://bitbucket.org/infusiondev/infusion-project-status</url>
+        <connection>scm:git:git@github.com:mendhak/bitbucket-all-pull-requests.git</connection>
+        <url>https://github.com/mendhak/bitbucket-all-pull-requests</url>
         <tag>HEAD</tag>
     </scm>
 
@@ -56,8 +56,8 @@
 	</pluginRepositories>
 
     <organization>
-        <name>Infusion</name>
-        <url>http://www.infusion.com/</url>
+        <name>Mendhak</name>
+        <url>http://code.mendhak.com/</url>
     </organization>
     <developers>
 	    <developer>
@@ -70,14 +70,24 @@
 	        <role>author</role>
 	      </roles>
 	    </developer>
-  	</developers>
-  	<contributors>
-	    <contributor>
-	      <name>Jacob Wagan</name>
+        <developer>
+        <name>Jacob Wagan</name>
 	      <email>jwagan@infusion.com</email>
 	      <url>http://www.infusion.com/</url>
 	      <organization>Infusion</organization>
 	      <organizationUrl>http://www.infusion.com/</organizationUrl>
+	      <roles>
+	        <role>developer</role>
+	      </roles>
+        </developer>
+  	</developers>
+  	<contributors>
+	    <contributor>
+	      <name>Mendhak</name>
+	      <email></email>
+	      <url>http://code.mendhak.com/</url>
+	      <organization>Mendhak</organization>
+	      <organizationUrl>http://code.mendhak.com/</organizationUrl>
 	      <roles>
 	        <role>developer</role>
 	      </roles>
