@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.infusion.stash.allpullrequests;
+package com.mendhak.bitbucket.allpullrequests;
 
 import com.atlassian.bitbucket.property.PropertyMap;
 import com.atlassian.bitbucket.pull.*;

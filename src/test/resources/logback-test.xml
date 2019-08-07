@@ -10,7 +10,7 @@
         </encoder>
     </appender>
 
-    <logger name="com.infusion.stash.allpullrequests" level="DEBUG">
+    <logger name="com.mendhak.bitbucket.allpullrequests" level="DEBUG">
         <appender-ref ref="allPullRequest" />
         <appender-ref ref="allPullRequest-debug" />
     </logger>

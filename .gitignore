@@ -1,8 +1,9 @@
 .idea/
 target/
-stash-all-pull-requests.iml
+bitbucket-all-pull-requests.iml
 .buildpath
 .classpath
 .project
 generated-test-resources.zip
 .settings/
+logs/

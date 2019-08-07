@@ -1,4 +1,4 @@
-package ut.com.infusion.stash.allpullrequests;
+package ut.com.mendhak.bitbucket.allpullrequests;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -29,10 +29,10 @@ import com.atlassian.bitbucket.repository.Repository;
 import com.atlassian.bitbucket.scm.Command;
 import com.atlassian.bitbucket.scm.ScmService;
 import com.atlassian.bitbucket.scm.pull.ScmPullRequestCommandFactory;
-import com.infusion.stash.allpullrequests.DefaultPullRequestExtendedFactory;
-import com.infusion.stash.allpullrequests.MergeBlockerIconKeeper;
-import com.infusion.stash.allpullrequests.PullRequestExtended;
-import com.infusion.stash.allpullrequests.utils.PluginLoggerFactory;
+import com.mendhak.bitbucket.allpullrequests.DefaultPullRequestExtendedFactory;
+import com.mendhak.bitbucket.allpullrequests.MergeBlockerIconKeeper;
+import com.mendhak.bitbucket.allpullrequests.PullRequestExtended;
+import com.mendhak.bitbucket.allpullrequests.utils.PluginLoggerFactory;
 
 /**
  * @author jwagan
@@ -56,7 +56,7 @@ public class DefaultPullrequestExtendedFactoryTest {
     
     @BeforeClass
     public static void initializeProperties() {
-        final InputStream inputStream = DefaultPullrequestExtendedFactoryTest.class.getClassLoader().getResourceAsStream("stash-all-pull-requests.properties");
+        final InputStream inputStream = DefaultPullrequestExtendedFactoryTest.class.getClassLoader().getResourceAsStream("bitbucket-all-pull-requests.properties");
         properties = new Properties();
         try {
             properties.load(inputStream);

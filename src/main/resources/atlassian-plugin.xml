@@ -9,17 +9,17 @@
         <param name="vendor-logo">images/vendor_logo72.png</param>
     </plugin-info>
 
-    <resource type="i18n" name="i18n" location="stash-all-pull-requests"/>
-    <resource type="i18n" name="Stash Web Pull Request i18n" location="i18n.stash-webapp-pullrequest" />
+    <resource type="i18n" name="i18n" location="bitbucket-all-pull-requests"/>
+    <resource type="i18n" name="Stash Web Pull Request i18n" location="i18n.bitbucket-webapp-pullrequest" />
 
-    <servlet key="all-pull-requests-servlet" class="com.infusion.stash.allpullrequests.AllPullRequestsServlet">
+    <servlet key="all-pull-requests-servlet" class="com.mendhak.bitbucket.allpullrequests.AllPullRequestsServlet">
         <url-pattern>/all-pull-requests/*</url-pattern>
     </servlet>
 
     <rest key="rest-all-pull-requests" path="/all-pull-requests" version="1.0">
         <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
-        <package>com.infusion.stash.allpullrequests.rest</package>
+        <package>com.mendhak.bitbucket.allpullrequests.rest</package>
     </rest>
 
     <client-resource key="server-side-soy">
@@ -31,7 +31,7 @@
     </client-resource>
 
     <web-resource key="general-pull-request-overview">
-        <resource type="download" name="stash-all-pull-requests.css" location="/css/stash-all-pull-requests.css"/>
+        <resource type="download" name="bitbucket-all-pull-requests.css" location="/css/bitbucket-all-pull-requests.css"/>
         <resource type="download" name="images/" location="/images"/>
         <context>atl.general</context>
     </web-resource>
@@ -82,11 +82,11 @@
         <dependency>com.atlassian.bitbucket.server.bitbucket-web:global</dependency>
     </web-resource>
 
-	<component key="pullRequestLoggerFactory" class="com.infusion.stash.allpullrequests.utils.PluginLoggerFactory"/>
+	<component key="pullRequestLoggerFactory" class="com.mendhak.bitbucket.allpullrequests.utils.PluginLoggerFactory"/>
 
-    <component key="defaultPullRequestExtendedFactory" class="com.infusion.stash.allpullrequests.DefaultPullRequestExtendedFactory">
+    <component key="defaultPullRequestExtendedFactory" class="com.mendhak.bitbucket.allpullrequests.DefaultPullRequestExtendedFactory">
         <description>Factory for PullRequestExtended</description>
-        <interface>com.infusion.stash.allpullrequests.PullRequestExtendedFactory</interface>
+        <interface>com.mendhak.bitbucket.allpullrequests.PullRequestExtendedFactory</interface>
     </component>
 
     <component-import key="authenticationContext" interface="com.atlassian.bitbucket.auth.AuthenticationContext"/>

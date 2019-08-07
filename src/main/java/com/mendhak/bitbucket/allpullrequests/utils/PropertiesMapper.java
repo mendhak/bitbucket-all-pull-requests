@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.infusion.stash.allpullrequests.utils;
+package com.mendhak.bitbucket.allpullrequests.utils;
 
 
 /**

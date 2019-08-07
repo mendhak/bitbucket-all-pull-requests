@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.infusion.stash.allpullrequests;
+package com.mendhak.bitbucket.allpullrequests;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.infusion.stash.allpullrequests;
+package com.mendhak.bitbucket.allpullrequests;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import com.atlassian.bitbucket.scm.ScmService;
 import com.atlassian.bitbucket.task.TaskCount;
-import com.infusion.stash.allpullrequests.utils.PropertiesMapper;
+import com.mendhak.bitbucket.allpullrequests.utils.PropertiesMapper;
 
 import javax.annotation.Nonnull;
 
@@ -28,7 +28,7 @@ import javax.annotation.Nonnull;
 public class DefaultPullRequestExtendedFactory implements PullRequestExtendedFactory {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultPullRequestExtendedFactory.class);
-    public static final String STASH_PROPERTIES_FILENAME = "stash-all-pull-requests.properties";
+    public static final String STASH_PROPERTIES_FILENAME = "bitbucket-all-pull-requests.properties";
     
     private final PullRequestService pullRequestService;
     private final ScmService scmService;

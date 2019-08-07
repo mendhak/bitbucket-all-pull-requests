@@ -1,4 +1,4 @@
-package com.infusion.stash.allpullrequests.utils;
+package com.mendhak.bitbucket.allpullrequests.utils;
 
 
 import java.io.File;
@@ -23,7 +23,7 @@ import com.atlassian.sal.api.ApplicationProperties;
  */
 public class PluginLoggerFactory {
 
-    private static final String ROOT = "com.infusion.stash.allpullrequests";
+    private static final String ROOT = "com.mendhak.bitbucket.allpullrequests";
     private static final Logger STASH_ROOT_LOGGER = LoggerFactory.getLogger("ROOT");
 
     private LoggerContext context;

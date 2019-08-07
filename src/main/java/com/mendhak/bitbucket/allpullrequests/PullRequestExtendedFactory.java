@@ -1,4 +1,4 @@
-package com.infusion.stash.allpullrequests;
+package com.mendhak.bitbucket.allpullrequests;
 
 import com.atlassian.bitbucket.pull.PullRequest;
 

@@ -1,4 +1,4 @@
-package com.infusion.stash.allpullrequests.rest;
+package com.mendhak.bitbucket.allpullrequests.rest;
 
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package com.infusion.stash.allpullrequests;
+package com.mendhak.bitbucket.allpullrequests;
 
 import com.atlassian.bitbucket.auth.AuthenticationContext;
 import com.atlassian.bitbucket.project.Project;
@@ -91,11 +91,11 @@ public class AllPullRequestsServlet extends HttpServlet {
 
         String template;
         if (project == null) {
-            pageBuilderService.assembler().resources().requireContext("com.infusion.stash.stash-all-pull-requests.all");
+            pageBuilderService.assembler().resources().requireContext("com.mendhak.bitbucket.bitbucket-all-pull-requests.all");
             template = "plugin.page.allPullRequests";
         }
         else {
-            pageBuilderService.assembler().resources().requireContext("com.infusion.stash.stash-all-pull-requests.project");
+            pageBuilderService.assembler().resources().requireContext("com.mendhak.bitbucket.bitbucket-all-pull-requests.project");
             context.put("project", project);
             template = "plugin.page.projectPullRequests";
         }
@@ -104,7 +104,7 @@ public class AllPullRequestsServlet extends HttpServlet {
         try {
             soyTemplateRenderer.render(
                     response.getWriter(),
-                    "com.infusion.stash.stash-all-pull-requests:server-side-soy",
+                    "com.mendhak.bitbucket.bitbucket-all-pull-requests:server-side-soy",
                     template, context);
         } catch (SoyException e) {
             Throwable cause = e.getCause();
