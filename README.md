@@ -5,7 +5,7 @@ Zip file uploaded to [Releases](https://github.com/mendhak/bitbucket-all-pull-re
 All Pull Requests Add-on for Atlassian Bitbucket Server with Mergeability status
 =====================================================================
 
-![plugin_screen.PNG](screenshotmain.png)]
+![plugin_screen.PNG](screenshotmain.png)
 
 
 It displays as an icon information about what is blocking you to do the merge:
