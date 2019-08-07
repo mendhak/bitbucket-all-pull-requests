@@ -5,10 +5,8 @@ Zip file uploaded to [Releases](https://github.com/mendhak/bitbucket-all-pull-re
 All Pull Requests Add-on for Atlassian Bitbucket Server with Mergeability status
 =====================================================================
 
-
 [![plugin_screen.PNG](https://bitbucket.org/repo/Lx9E7y/images/573324582-plugin_screen.PNG)](https://marketplace.atlassian.com/vendors/1212031)
 
-Install from [Atlassian Marketplace](https://marketplace.atlassian.com/plugins/com.infusion.stash.stash-all-pull-requests).
 
 It displays as an icon information about what is blocking you to do the merge:
 
@@ -17,6 +15,20 @@ It displays as an icon information about what is blocking you to do the merge:
  * Requires approvers
  * Resolve all merge conflicts first
  * Requires all tasks to be resolved
+
+
+# Installing
+
+Download a .jar from the [releases](https://github.com/mendhak/bitbucket-all-pull-requests/releases) page.
+
+In Bitbucket, go to *Manage Apps* and choose to *Upload App*
+
+You can then upload the .jar. 
+
+![upload](screenshot.png)
+
+
+
 
 
 # Development 
