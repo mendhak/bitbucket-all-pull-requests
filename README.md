@@ -1,3 +1,7 @@
+This repo is no longer maintained, please fork it if you wish to continue developing or fixing features. From what I can tell, Bitbucket Server has been pretty much abandoned, so this plugin _should_ continue working until it is End Of Life.
+
+---
+
 Forked from the [original](https://bitbucket.org/infusiondev/stash-all-pull-requests-extra/src/master/), with [goochjj's Bitbucket 6 fix](https://bitbucket.org/goochjj/stash-all-pull-requests-extra/branch/BB6)  
 Zip file uploaded to [Releases](https://github.com/mendhak/bitbucket-all-pull-requests/releases) 
 
